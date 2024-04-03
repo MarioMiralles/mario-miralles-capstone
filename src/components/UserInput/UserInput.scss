@@ -1,0 +1,32 @@
+.form {
+    width: 100%;
+    max-width: 600px;
+    max-height: 600px;
+
+    &__button {
+        width: 100%;
+        padding: 0.25rem;
+        transition: transform 0.3s ease;
+
+        &:active {
+            background-color: rgb(239, 142, 109, 0.8);
+            border: 1px solid grey;
+            transform: scale(0.96);
+        }
+    }
+
+    &__input {
+        width: 100%;
+        height: 10rem;
+        resize: none;
+        padding: 0.5rem;
+        border-radius: 3px;
+        scrollbar-color: black rgb(26, 25, 25);
+
+        &:focus {
+            outline: 1px solid #EF8E6D;
+            border-radius: 3px;
+            box-shadow: 0 0 5px #EF8E6D;
+        }
+    }
+}
