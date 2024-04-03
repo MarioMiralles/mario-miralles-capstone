@@ -1,0 +1,16 @@
+.gallery {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+
+    &__heading {
+        padding-bottom: 0.25rem;
+    }
+
+    &__image {
+        width: calc((100% - 2rem) / 3);
+    }
+}
