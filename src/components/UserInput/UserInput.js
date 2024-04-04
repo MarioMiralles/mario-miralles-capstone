@@ -3,6 +3,7 @@ import logo from '../../../src/assets/images/Logo2024.png';
 import loadingGif from '../../assets/images/Loading_GIF.gif'
 import React, { useState, useEffect } from "react";
 import PublicGallery from '../PublicGallery/PublicGallery';
+import BreakingNews from '../BreakingNews/BreakingNews';
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -142,7 +143,8 @@ function UserInput() {
                     </section>
                 )}
             </article>
-            <PublicGallery key={publicGalleryKey} refreshPublicGallery={handleCreateNew} />
+            <PublicGallery key={publicGalleryKey} />
+            <BreakingNews />
         </>
     );
 

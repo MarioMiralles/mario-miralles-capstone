@@ -1,7 +1,7 @@
 import '../PublicGallery/PublicGallery.scss'
 import React, { useState, useEffect } from 'react';
 
-const PublicGallery = ({ refreshPublicGallery }) => {
+const PublicGallery = () => {
     const [publicGalleryImages, setPublicGalleryImages] = useState([]); // State to hold gallery images
     const [error, setError] = useState(null);
     const apiKey = process.env.REACT_APP_API_KEY;
@@ -58,7 +58,6 @@ const PublicGallery = ({ refreshPublicGallery }) => {
                     <img key={index} src={image} className='gallery__image' alt={`Public Gallery Image ${index}`} />
                 ))}
             </div>
-            {/* No need for a button to refresh the gallery */}
         </section>
     );
 };
