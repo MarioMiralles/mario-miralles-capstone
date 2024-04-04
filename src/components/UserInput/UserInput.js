@@ -118,28 +118,30 @@ function UserInput() {
 
     return (
         <>
-            {!isLoading && !generatedImage && (
-                <form className='form' onSubmit={handleSubmit}>
-                    <fieldset>
-                        <legend><img src={logo} className='logo' alt="ON THE Dai AI Art Generator Logo" /></legend>
-                        <textarea
-                            className='form__input'
-                            placeholder='What would you like to create?'
-                            value={inputText}
-                            onChange={(event) => setInputText(event.target.value)}>
-                        </textarea>
-                        <button type='submit' className='form__button'>GENERATE</button>
-                    </fieldset>
-                </form>
-            )}
-            {error && <div>{error}</div>}
-            {isLoading && <img className="generated__loading" src={loadingGif} alt="generating image..." />} {/* Loading indicator */}
-            {generatedImage && imageLoaded && (
-                <section className="generated__container">
-                    <img src={generatedImage} className='generated__image' alt="Generated Artwork" />
-                    <button onClick={handleCreateNew} className='generated__create-new-button'>CREATE NEW ART</button>
-                </section>
-            )}
+            <article className='form__article'>
+                {!isLoading && !generatedImage && (
+                    <form className='form' onSubmit={handleSubmit}>
+                        <fieldset>
+                            <legend><img src={logo} className='logo' alt="ON THE Dai AI Art Generator Logo" /></legend>
+                            <textarea
+                                className='form__input'
+                                placeholder='What would you like to create?'
+                                value={inputText}
+                                onChange={(event) => setInputText(event.target.value)}>
+                            </textarea>
+                            <button type='submit' className='form__button'>GENERATE</button>
+                        </fieldset>
+                    </form>
+                )}
+                {error && <div>{error}</div>}
+                {isLoading && <img className="generated__loading" src={loadingGif} alt="generating image..." />} {/* Loading indicator */}
+                {generatedImage && imageLoaded && (
+                    <section className="generated__container">
+                        <img src={generatedImage} className='generated__image' alt="Generated Artwork" />
+                        <button onClick={handleCreateNew} className='generated__create-new-button'>CREATE NEW ART</button>
+                    </section>
+                )}
+            </article>
             <PublicGallery key={publicGalleryKey} refreshPublicGallery={handleCreateNew} />
         </>
     );
