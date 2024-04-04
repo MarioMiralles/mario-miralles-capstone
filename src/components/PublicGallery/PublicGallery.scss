@@ -1,16 +1,41 @@
+@use '../../styles/partials/mixins' as *;
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/typography' as *;
+
 .gallery {
     width: 100%;
     max-width: 600px;
+    @include display (row, center, nowrap);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 1rem;
+    gap: 0.25rem;
+    @include tablet {
+       gap: 0.5rem; 
+    }
 
     &__heading {
-        padding-bottom: 0.25rem;
+        padding: 0.25rem;
+        border-top: 1.5px solid $primary1;
+        border-radius: 3px 3px 0 0;
+
+        &-container {
+            padding-bottom: 0.25rem;
+            @include display (row, space-between, nowrap);
+        }
+
+        &--inactive {
+            color: rgba(255, 255, 255, 0.34);
+            border-top: 1.5px solid transparent;
+            padding: 0.25rem;
+        }
     }
 
     &__image {
-        width: calc((100% - 2rem) / 3);
+        width: calc((100% - 0.5rem) / 3);
+        @include tablet {
+           width: calc((100% - 1rem) / 3); 
+        }
+        
     }
 }

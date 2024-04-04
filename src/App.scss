@@ -1,9 +1,15 @@
+@use '../src/styles/partials/typography' as *;
+@use '../src/styles/partials/mixins' as *;
+@use '../src/styles/partials/variables' as *;
+
 * {
     margin: 0;
     padding: 0;
     background-color: black;
     color: white;
     box-sizing: border-box;
+    @include mobile { @include typography-mobile };
+    @include tablet { @include typography-tab-desktop };
   }
   
   main {
