@@ -1,12 +1,27 @@
+@use '../../styles/partials/mixins' as *;
+@use '../../styles/partials/variables' as *;
+
 .form {
     width: 100%;
-    max-width: 600px;
-    max-height: 600px;
+
+    &__article {
+        height: 100%;
+        width: 100%;
+        max-width: 38rem;
+        min-height: 18rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        @include tablet {
+            min-height: 24rem;
+        }
+    }
 
     &__button {
         width: 100%;
         padding: 0.25rem;
         transition: transform 0.3s ease;
+        cursor: pointer;
 
         &:active {
             background-color: rgb(239, 142, 109, 0.8);
@@ -28,5 +43,26 @@
             border-radius: 3px;
             box-shadow: 0 0 5px #EF8E6D;
         }
+    }
+}
+
+.generated {
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    &__create-new-button {
+        width: 50%;
+        margin-left: auto;
+        cursor: pointer;
+    }
+
+    &__image,
+    &__loading {
+        width: 100%;
+        max-width: 38rem;
     }
 }

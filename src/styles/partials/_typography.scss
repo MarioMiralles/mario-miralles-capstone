@@ -1,0 +1,88 @@
+@use '../partials/mixins' as *;
+
+/*=============
+    MOBILE
+==============*/
+
+@mixin typography-mobile {
+    // M H1 - Page Header
+    h1 {
+        @include typography-style (1.75rem, 2.25rem, 600);
+    }
+
+    // M H2 - Subheader
+    h2 {
+        @include typography-style (1.25rem, 1.75rem, 600);
+    }
+    
+    // M H3 - Labels, Links & Buttons
+    h3, a {
+        @include typography-style (0.8125rem, 1.25rem, 600);
+    }
+
+    // M H4 - Table Header
+    h4 {
+        @include typography-style (0.6875rem, 1rem, 400);
+    }
+
+    // M P1 - Body Large
+    h5 {
+        @include typography-style (0.9375rem, 1.625rem, 400);
+    }
+
+    // M P2 - Body Medium
+    h6, .p2 {
+        @include typography-style (0.8125rem, 1.25rem, 400);
+    }
+
+    // M P3 - Body Small
+    p {
+        @include typography-style (0.6875rem, 1rem, 400);
+    }
+
+}
+
+/*=======================
+    TABLET & DESKTOP
+========================*/
+
+@mixin typography-tab-desktop {
+    // H1 - Page Header
+    h1 {
+        @include typography-style (2rem, 2.5rem, 600);
+    }
+
+    // H2 - Subheader
+    h2 {
+        @include typography-style (1.5rem, 2rem, 600);
+    }
+    
+    // H3 - Labels, Links & Buttons
+    h3 {
+        @include typography-style (0.875rem, 1.375rem, 600);
+    }
+
+    // H4 - Table Header
+    h4 {
+        @include typography-style (0.75rem, 1.125rem, 400);
+    }
+
+    // P1 - Body Large
+    h5 {
+        @include typography-style (1rem, 1.75rem, 400);
+    }
+
+    // P2 - Body Medium
+    h6 {
+        @include typography-style (0.875rem, 1.375rem, 400);
+    }
+
+    // P3 - Body Small
+    p {
+        @include typography-style (0.75rem, 1.125rem, 400);
+    }
+}
+
+/*==========
+    FONTS
+===========*/

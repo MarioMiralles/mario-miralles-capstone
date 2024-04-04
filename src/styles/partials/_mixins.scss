@@ -1,0 +1,36 @@
+@use './variables' as *;
+
+/*==================
+    RESPONSIVENESS
+===================*/
+
+// Mobile
+@mixin mobile {
+    @media (min-width: $mobile-breakpoint) and (max-width: 767px) {
+       @content;
+    }
+}
+
+// Tablet & Desktop
+@mixin tablet {
+    @media (min-width: $tablet-breakpoint) {
+       @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: $desktop-breakpoint) {
+       @content;
+    }
+}
+
+/*=============
+    FLEXBOX
+==============*/
+
+@mixin display ($direction, $justify, $wrap) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    flex-wrap: $wrap;
+}
