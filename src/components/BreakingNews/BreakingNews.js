@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './BreakingNews.scss';
 import axios from 'axios';
 import he from 'he';
@@ -13,9 +13,20 @@ const BreakingNews = () => {
     const [loading, setLoading] = useState(true); // Track loading state
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
+    const [activePaginationButton, setActivePaginationButton] = useState(0);
+    const breakingNewsRef = useRef(null);
 
     useEffect(() => {
         breakingNewsPages();
+        // Focus on Breaking News component when it mounts
+        breakingNewsRef.current.focus();
+        // Add event listener to handle blur event
+        document.body.addEventListener('click', handleBodyClick);
+
+        return () => {
+            // Remove event listener when component unmounts
+            document.body.removeEventListener('click', handleBodyClick);
+        };
     }, []);
 
     const breakingNewsPages = async () => {
@@ -41,12 +52,20 @@ const BreakingNews = () => {
     const indexOfFirstTitle = indexOfLastTitle - titlesPerPage;
     const currentTitles = pages.slice(indexOfFirstTitle, indexOfLastTitle);
 
-    const handlePageChange = (pageNumber) => {
+    const handlePageChange = (pageNumber, index) => {
         setCurrentPage(pageNumber);
+        setActivePaginationButton(pageNumber); // Update active button state
+    }
+
+    const handleBodyClick = (event) => {
+        // Clear active pagination button when user clicks elsewhere
+        if (!event.target.closest('.news__pagination-button')) {
+            setActivePaginationButton(0); // Update active button state
+        }
     }
 
     return (
-        <article className="news__container">
+        <article className="news__container" ref={breakingNewsRef}>
             {loading ? ( // Show the loadingNews gif while loading is true
                 <div className='news__loading-container'>
                     <img src={loadingNews} className="news__loading" alt="Loading news..." />
@@ -55,12 +74,18 @@ const BreakingNews = () => {
                 <section className='news__pagination-container'>
                     <div className='news__pages'>
                         {currentTitles.map((page, index) => (
-                            <h3 key={index} className='news__page-title'>{page.title.rendered}</h3>
+                            <h3 key={index} className='news__page-title'>
+                            {page.title.rendered.split(' ').slice(0, 21).join(' ')} {/* Display only the first 21 words */}
+                            {page.title.rendered.split(' ').length > 21 ? '...' : ''} {/* Add ellipsis if the title exceeds 21 words */}
+                        </h3>
                         ))}
                     </div>
                     <div className='news__pagination'>
                         {Array.from({ length: totalPages }, (_, index) => (
-                            <button key={index + 1} className={currentPage === index + 1 ? "active" : ""} id="pagination__button" onClick={() => handlePageChange(index + 1)}>
+                            <button
+                            key={index + 1}
+                            className={`news__pagination-button ${index + 1 === activePaginationButton ? "active" : ""} ${index === 0 ? "first-page" : ""}`}
+                            onClick={() => handlePageChange(index + 1, index)}>
                                 {index + 1}
                             </button>
                         ))}

@@ -35,7 +35,7 @@
     }
 
     &__page-title {
-        padding: 1rem;
+        padding: 1.25rem;
         margin-bottom: 0.25rem;
         background-color: #FFFFFFB5;
         color: black;
@@ -48,21 +48,26 @@
     &__pagination {
         @include display (row, flex-end, nowrap);
         padding: 0.25rem;
-    }
-}
+        margin-bottom: 1.5rem;
 
-#pagination__button {
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    border-top: 1px solid $primary1;
-    border-bottom: 1px solid $primary1;
-    margin-right: 0.25rem;
+        &-button {
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            margin-right: 0.5rem;
+            background-color: #33333385;
+            border-style: none;
 
-    &:focus {
-        background-color: $primary1;
-    }
+            &.first-page {
+                background-color: $primary1;
+            }
 
-    &:first-of-type:focus {
-        background-color: $primary1;
+            &.active {
+                background-color: #33333385;
+            }
+
+            &:focus {
+                background-color: $primary1;
+            }
+        }
     }
 }
