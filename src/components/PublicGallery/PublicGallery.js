@@ -49,10 +49,6 @@ const PublicGallery = () => {
 
     return (
         <section className="gallery__container">
-            <div className="gallery__heading-container">
-                <h2 className="gallery__heading">Public Gallery</h2>
-                <h2 className="gallery__heading--inactive">Breaking News</h2>
-            </div>
             <div className="gallery">
                 {publicGalleryImages.map((image, index) => (
                     <img key={index} src={image} className='gallery__image' alt={`Public Gallery Image ${index}`} />

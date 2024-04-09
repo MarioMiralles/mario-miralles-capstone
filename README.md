@@ -16,7 +16,7 @@ The app caters to both guests and members who sign-up. In this version(2.0), any
 - Generator
     - User Input
 - Dynamic Section
-    - Public Photo Gallery
+    - Public Gallery
     - Breaking News Stories
     - My Art Gallery (nice to have feature for members)
 
@@ -62,7 +62,11 @@ This is one page where users can input prompts to generate AI art, plus componen
 
 ### Mockups
 
-See images.
+<img src="./src/assets/mockup/App.png" width="250" height="250" />
+<img src="./src/assets/mockup/Loading.png" width="250" height="250" />
+<img src="./src/assets/mockup/GeneratedImage.png" width="250" height="250" />
+<img src="./src/assets/mockup/BreakingNews.png" width="250" height="250" />
+<img src="./src/assets/mockup/Headlines.png" width="250" height="250" />
 
 ### Data
 

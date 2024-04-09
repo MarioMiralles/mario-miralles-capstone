@@ -16,6 +16,11 @@ function UserInput() {
     const [isLoading, setIsLoading] = useState(false); // Track fetching image state
     const [imageLoaded, setImageLoaded] = useState(false); // Track whether the image has been successfully loaded
     const [publicGalleryKey, setPublicGalleryKey] = useState(0); // Key to force re-render PublicGallery component
+    const [showPublicGallery, setShowPublicGallery] = useState(true);
+
+    const toggleComponent = () => {
+        setShowPublicGallery(prevState => !prevState);
+    }
 
     useEffect(() => {
         if (generationId) {
@@ -143,8 +148,13 @@ function UserInput() {
                     </section>
                 )}
             </article>
-            <PublicGallery key={publicGalleryKey} />
-            <BreakingNews />
+            <section className='gallery__news'>
+                <div className="gallery__heading-container">
+                    <h2 className={showPublicGallery ? "gallery__heading" : "gallery__heading--inactive"} onClick={toggleComponent}>Public Gallery</h2>
+                    <h2 className={showPublicGallery ? "gallery__heading--inactive" : "gallery__heading"} id="breaking-news__heading" onClick={toggleComponent}>Breaking News</h2>
+                </div>
+                {showPublicGallery ? <PublicGallery /> : <BreakingNews />}
+            </section>
         </>
     );
 
