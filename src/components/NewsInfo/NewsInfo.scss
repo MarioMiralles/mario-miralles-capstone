@@ -1,0 +1,82 @@
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/mixins' as *;
+
+.news-info {
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.25rem;
+    background-color: #FFFFFFB5;
+    color: black;
+    border-radius: 8px;
+    border-top: 2px solid $primary1;
+    border-bottom: 2px solid $primary1;
+    box-shadow: inset 0 0 10px 5px #000000;
+    min-height: 12rem;
+
+    &__button {
+        background-color: transparent;
+        color: rgba(0, 0, 0, 0.6);
+        border: none;
+        text-decoration: none;
+        margin: auto;
+        text-align: center;
+        font-size: 0.75rem;
+
+        &-container {
+            background-color: transparent;
+            @include display (column, center, nowrap);
+            align-items: center;
+            cursor: pointer;
+        }
+    }
+
+    &__buttons {
+        @include display (row, space-between, nowrap);
+        background-color: transparent;
+        border-top: 1px solid rgba(0, 0, 0, 0.15);
+        padding-top: 0.5rem;
+    }
+
+    &__headline {
+        background-color: transparent;
+        color: black;
+        padding: 1rem 0;
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    &__nav {
+        background-color: transparent;
+        width: 100%;
+        @include display (row, space-between, nowrap);
+        align-items: center;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+        padding-bottom: 0.5rem;
+
+        &-back {
+            background-color: transparent;
+            color: rgba(0, 0, 0, 0.6);
+            text-decoration: none;
+
+            &:hover {
+                color: black;
+            }
+        }
+
+        &-copy {
+            background-color: transparent;
+            border: none;
+            color: rgba(0, 0, 0, 0.6);
+            cursor: pointer;
+
+            &:hover {
+                color: black;
+            }
+
+            &--img {
+                height: 1rem;
+                background-color: transparent;
+                color: rgba(0, 0, 0, 0.6);
+            }
+        }
+    }
+}

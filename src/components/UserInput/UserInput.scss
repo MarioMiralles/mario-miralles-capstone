@@ -65,6 +65,23 @@
         width: 100%;
         max-width: 38rem;
     }
+
+    &__logo {
+        width: 100%;
+        max-width: 8rem;
+        padding-bottom: 0.25rem;
+
+        @include tablet {
+            max-width: 10rem;
+        }
+    }
+
+    &__section {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: start;
+    }
 }
 
 #breaking-news__heading {

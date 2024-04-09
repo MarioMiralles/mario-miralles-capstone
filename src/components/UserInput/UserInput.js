@@ -1,5 +1,6 @@
 import './UserInput.scss'
 import logo from '../../../src/assets/images/Logo2024.png';
+import otdLogo from '../../../src/assets/images/OTDLogo.png';
 import loadingGif from '../../assets/images/Loading_GIF.gif'
 import React, { useState, useEffect } from "react";
 import PublicGallery from '../PublicGallery/PublicGallery';
@@ -139,14 +140,20 @@ function UserInput() {
                         </fieldset>
                     </form>
                 )}
-                {error && <div>{error}</div>}
-                {isLoading && <img className="generated__loading" src={loadingGif} alt="generating image..." />} {/* Loading indicator */}
-                {generatedImage && imageLoaded && (
-                    <section className="generated__container">
-                        <img src={generatedImage} className='generated__image' alt="Generated Artwork" />
-                        <button onClick={handleCreateNew} className='generated__create-new-button'>CREATE NEW ART</button>
-                    </section>
-                )}
+                <figure className='generated__section'>
+                    {/* Show the otdLogo only when isLoading and generatedImage are both true */}
+                    {(isLoading || generatedImage) && (
+                        <img className='generated__logo' src={otdLogo} alt='OTDNews' />
+                    )}
+                    {error && <div>{error}</div>}
+                    {isLoading && <img className="generated__loading" src={loadingGif} alt="generating image..." />} {/* Loading indicator */}
+                    {generatedImage && imageLoaded && (
+                        <section className="generated__container">
+                            <img src={generatedImage} className='generated__image' alt="Generated Artwork" />
+                            <button onClick={handleCreateNew} className='generated__create-new-button'>CREATE NEW ART</button>
+                        </section>
+                    )}
+                </figure>
             </article>
             <section className='gallery__news'>
                 <div className="gallery__heading-container">
