@@ -5,11 +5,12 @@ import loadingGif from '../../assets/images/Loading_GIF.gif'
 import React, { useState, useEffect } from "react";
 import PublicGallery from '../PublicGallery/PublicGallery';
 import BreakingNews from '../BreakingNews/BreakingNews';
+import { useNavigate } from 'react-router-dom';
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
 function UserInput() {
-
+    const navigate = useNavigate()
     const [inputText, setInputText] = useState('');
     const [generatedImage, setGeneratedImage] = useState(null);
     const [generationId, setGenerationId] = useState(null);
@@ -18,6 +19,7 @@ function UserInput() {
     const [imageLoaded, setImageLoaded] = useState(false); // Track whether the image has been successfully loaded
     const [publicGalleryKey, setPublicGalleryKey] = useState(0); // Key to force re-render PublicGallery component
     const [showPublicGallery, setShowPublicGallery] = useState(true);
+    const [promptGenerated, setPromptGenerated] = useState(false);
 
     const toggleComponent = () => {
         setShowPublicGallery(prevState => !prevState);
@@ -33,46 +35,52 @@ function UserInput() {
         setIsLoading(true); // Set loading to true when generating image
         setGeneratedImage(null); // Reset generated image when generating new image
         try {
-            const requestData = {
-                height: 576,
-                modelId: '1e60896f-3c26-4296-8ecc-53e2afecc132',
-                prompt: inputText,
-                width: 1024,
-                alchemy: false,
-                guidance_scale: 7,
-                nsfw: true,
-                highResolution: true,
-                num_images: 1,
-                photoReal: false,
-                presetStyle: 'NONE',
-                promptMagic: false,
-                public: false,
-                sd_version: 'v2'
-            };
-
-            const options = {
-                method: 'POST',
-                headers: {
-                    accept: 'application/json',
-                    'content-type': 'application/json',
-                    authorization: `Bearer ${apiKey}`
-                },
-                body: JSON.stringify(requestData)
-            };
-
-            const response = await fetch('https://cloud.leonardo.ai/api/rest/v1/generations', options);
-            if (!response.ok) {
-                throw new Error('Failed to generate image');
+            // Only initiate generation if generationId is null
+            if (!generationId) {
+                const requestData = {
+                    height: 576,
+                    modelId: '1e60896f-3c26-4296-8ecc-53e2afecc132',
+                    prompt: inputText,
+                    width: 1024,
+                    alchemy: false,
+                    guidance_scale: 7,
+                    nsfw: true,
+                    highResolution: true,
+                    num_images: 1,
+                    photoReal: false,
+                    presetStyle: 'NONE',
+                    promptMagic: false,
+                    public: false,
+                    sd_version: 'v2'
+                };
+    
+                const options = {
+                    method: 'POST',
+                    headers: {
+                        accept: 'application/json',
+                        'content-type': 'application/json',
+                        authorization: `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify(requestData)
+                };
+    
+                const response = await fetch('https://cloud.leonardo.ai/api/rest/v1/generations', options);
+                if (!response.ok) {
+                    throw new Error('Failed to generate image');
+                }
+                const responseData = await response.json();
+                setGenerationId(responseData.sdGenerationJob.generationId);
+                setError(null);
+            } else {
+                console.log('Generation already in progress');
             }
-            const responseData = await response.json();
-            setGenerationId(responseData.sdGenerationJob.generationId);
-            setError(null);
         } catch (error) {
             console.error('Error generating image:', error);
             setError('Error generating image. Please try again.');
             setIsLoading(false); // Set loading to false if error occurs
         }
     };
+    
 
     const handleFetchImage = async () => {
         setIsLoading(true); // Set loading to true when fetching image
@@ -121,6 +129,7 @@ function UserInput() {
         setInputText(''); // Reset input text
         setGeneratedImage(null); // Reset generated image
         setPublicGalleryKey(prevKey => prevKey + 1);
+        navigate(0);
     };
 
     return (
@@ -143,10 +152,10 @@ function UserInput() {
                 <figure className='generated__section'>
                     {/* Show the otdLogo only when isLoading and generatedImage are both true */}
                     {(isLoading || generatedImage) && (
-                        <img className='generated__logo' src={otdLogo} alt='OTDNews' />
+                        <img onClick={handleCreateNew} className='generated__logo' src={otdLogo} alt='OTDNews' />
                     )}
                     {error && <div>{error}</div>}
-                    {isLoading && <img className="generated__loading" src={loadingGif} alt="generating image..." />} {/* Loading indicator */}
+                    {isLoading && <img className="generated__loading" src={loadingGif} alt="Loading..." />} {/* Loading indicator */}
                     {generatedImage && imageLoaded && (
                         <section className="generated__container">
                             <img src={generatedImage} className='generated__image' alt="Generated Artwork" />
@@ -160,7 +169,7 @@ function UserInput() {
                     <h2 className={showPublicGallery ? "gallery__heading" : "gallery__heading--inactive"} onClick={toggleComponent}>Public Gallery</h2>
                     <h2 className={showPublicGallery ? "gallery__heading--inactive" : "gallery__heading"} id="breaking-news__heading" onClick={toggleComponent}>Breaking News</h2>
                 </div>
-                {showPublicGallery ? <PublicGallery /> : <BreakingNews />}
+                {showPublicGallery ? <PublicGallery /> : <BreakingNews setInputText={setInputText} userInputVisible={!isLoading && !generatedImage} promptGenerated={promptGenerated} />}
             </section>
         </>
     );
