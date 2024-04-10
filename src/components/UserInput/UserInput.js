@@ -16,7 +16,7 @@ function UserInput() {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false); // Track fetching image state
     const [imageLoaded, setImageLoaded] = useState(false); // Track whether the image has been successfully loaded
-    const [publicGalleryKey, setPublicGalleryKey] = useState(0); // Key to force re-render PublicGallery component
+    const [setPublicGalleryKey] = useState(0); // Key to force re-render PublicGallery component
     const [showPublicGallery, setShowPublicGallery] = useState(true);
 
     const toggleComponent = () => {
@@ -27,7 +27,7 @@ function UserInput() {
         if (generationId) {
             handleFetchImage();
         }
-    }, [generationId]);
+    });
 
     const handleGenerate = async (inputText) => {
         setIsLoading(true); // Set loading to true when generating image
@@ -146,7 +146,7 @@ function UserInput() {
                         <img className='generated__logo' src={otdLogo} alt='OTDNews' />
                     )}
                     {error && <div>{error}</div>}
-                    {isLoading && <img className="generated__loading" src={loadingGif} alt="generating image..." />} {/* Loading indicator */}
+                    {isLoading && <img className="generated__loading" src={loadingGif} alt="Loading..." />} {/* Loading indicator */}
                     {generatedImage && imageLoaded && (
                         <section className="generated__container">
                             <img src={generatedImage} className='generated__image' alt="Generated Artwork" />
@@ -160,7 +160,7 @@ function UserInput() {
                     <h2 className={showPublicGallery ? "gallery__heading" : "gallery__heading--inactive"} onClick={toggleComponent}>Public Gallery</h2>
                     <h2 className={showPublicGallery ? "gallery__heading--inactive" : "gallery__heading"} id="breaking-news__heading" onClick={toggleComponent}>Breaking News</h2>
                 </div>
-                {showPublicGallery ? <PublicGallery /> : <BreakingNews />}
+                {showPublicGallery ? <PublicGallery /> : <BreakingNews setInputText={setInputText} />}
             </section>
         </>
     );
