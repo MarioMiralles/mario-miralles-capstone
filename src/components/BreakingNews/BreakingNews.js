@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import './BreakingNews.scss';
 import axios from 'axios';
 import he from 'he';
@@ -17,19 +18,9 @@ const BreakingNews = () => {
     const [activePaginationButton, setActivePaginationButton] = useState(0);
     const [selectedHeadline, setSelectedHeadline] = useState(null); // Track selected headline
     const [showNewsInfo, setShowNewsInfo] = useState(false); // Track visibility of NewsInfo component
-    const breakingNewsRef = useRef(null);
 
     useEffect(() => {
         breakingNewsPages();
-        // Focus on Breaking News component when it mounts
-        breakingNewsRef.current.focus();
-        // Add event listener to handle blur event
-        document.body.addEventListener('click', handleBodyClick);
-
-        return () => {
-            // Remove event listener when component unmounts
-            document.body.removeEventListener('click', handleBodyClick);
-        };
     }, []);
 
     const breakingNewsPages = async () => {
@@ -55,20 +46,14 @@ const BreakingNews = () => {
     const indexOfFirstTitle = indexOfLastTitle - titlesPerPage;
     const currentTitles = pages.slice(indexOfFirstTitle, indexOfLastTitle);
 
-    const handlePageChange = (pageNumber, index) => {
+    const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
         setActivePaginationButton(pageNumber); // Update active button state
     }
 
-    const handleBodyClick = (event) => {
-        // Clear active pagination button when user clicks elsewhere
-        if (!event.target.closest('.news__pagination-button')) {
-            setActivePaginationButton(0); // Update active button state
-        }
-    }
-
-    const handleHeadlineClick = (headline) => {
-        setSelectedHeadline(headline);
+    const handleHeadlineClick = (page) => {
+        const { link, title } = page; // Extract link and title from the page object
+        setSelectedHeadline({ title: title.rendered, storyUrl: link }); // Pass both title and URL
         setShowNewsInfo(true); // Show NewsInfo component
     }
 
@@ -78,18 +63,18 @@ const BreakingNews = () => {
     }
 
     return (
-        <article className="news__container" ref={breakingNewsRef}>
+        <article className="news__container">
             {loading ? ( // Show the loadingNews gif while loading is true
                 <div className='news__loading-container'>
                     <img src={loadingNews} className="news__loading" alt="Loading news..." />
                 </div>
             ) : (
                 <>
-                    {!showNewsInfo &&  ( // Only render if no headline is selected
+                    {!showNewsInfo && ( // Only render if no headline is selected
                         <section className='news__pagination-container'>
                             <div className='news__pages'>
                                 {currentTitles.map((page, index) => (
-                                    <h3 key={index} className='news__page-title' onClick={() => handleHeadlineClick(page.title.rendered)}>
+                                    <h3 key={index} className='news__page-title' onClick={() => handleHeadlineClick(page)}>
                                         {page.title.rendered.split(' ').slice(0, 21).join(' ')} {/* Display only the first 21 words */}
                                         {page.title.rendered.split(' ').length > 21 ? '...' : ''} {/* Add ellipsis if the title exceeds 21 words */}
                                     </h3>
@@ -97,12 +82,14 @@ const BreakingNews = () => {
                             </div>
                             <div className='news__pagination'>
                                 {Array.from({ length: totalPages }, (_, index) => (
-                                    <button
+                                    <NavLink
                                         key={index + 1}
+                                        to={`/${index + 1}`}
+                                        activeClassName="active"
                                         className={`news__pagination-button ${index + 1 === activePaginationButton ? "active" : ""} ${index === 0 ? "first-page" : ""}`}
                                         onClick={() => handlePageChange(index + 1, index)}>
                                         {index + 1}
-                                    </button>
+                                    </NavLink>
                                 ))}
                             </div>
                         </section>
@@ -111,9 +98,7 @@ const BreakingNews = () => {
 
             )}
             {error && <div className="error-message">{error}</div>} {/* Display error message if there's an error */}
-            {showNewsInfo && <NewsInfo headlineTitle={selectedHeadline} onBackClick={handleBackClick} />}
-
-
+            {showNewsInfo && <NewsInfo headlineTitle={selectedHeadline.title} storyUrl={selectedHeadline.storyUrl} onBackClick={handleBackClick} />}
         </article>
     );
 };

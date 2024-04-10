@@ -13,17 +13,26 @@
     min-height: 12rem;
 
     &__button {
-        background-color: transparent;
+        background-color: $background2;
         color: rgba(0, 0, 0, 0.6);
         border: none;
         text-decoration: none;
         margin: auto;
         text-align: center;
         font-size: 0.75rem;
+        width: 25%;
+        cursor: pointer;
 
         &-container {
-            background-color: transparent;
+            background-color: $background2;
             @include display (column, center, nowrap);
+            align-items: center;
+        }
+
+        &--randomize {
+            background-color: $background2;
+            width: 50%;
+            @include display (column, space-around, nowrap);
             align-items: center;
             cursor: pointer;
         }
@@ -33,11 +42,10 @@
         @include display (row, space-between, nowrap);
         background-color: transparent;
         border-top: 1px solid rgba(0, 0, 0, 0.15);
-        padding-top: 0.5rem;
     }
 
     &__headline {
-        background-color: transparent;
+        background-color: $background2;
         color: black;
         padding: 1rem 0;
         font-size: 1rem;
@@ -45,7 +53,7 @@
     }
 
     &__nav {
-        background-color: transparent;
+        background-color: $background2;
         width: 100%;
         @include display (row, space-between, nowrap);
         align-items: center;
@@ -53,7 +61,7 @@
         padding-bottom: 0.5rem;
 
         &-back {
-            background-color: transparent;
+            background-color: $background2;
             color: rgba(0, 0, 0, 0.6);
             text-decoration: none;
 
@@ -63,20 +71,42 @@
         }
 
         &-copy {
-            background-color: transparent;
+            background-color: $background2;
             border: none;
             color: rgba(0, 0, 0, 0.6);
             cursor: pointer;
+            display: flex;
+            align-items: center;
 
             &:hover {
                 color: black;
             }
+        }
+    }
 
-            &--img {
-                height: 1rem;
-                background-color: transparent;
-                color: rgba(0, 0, 0, 0.6);
-            }
+    &__p {
+        background-color: $background2;
+        color: black;
+        cursor: pointer;
+    }
+}
+
+#news-info__img {
+    background-color: $background2;
+    height: 1.5rem;
+
+    &-button {
+        background-color: $background2;
+        height: 2rem;
+        cursor: pointer;
+
+        @include tablet {
+            height: 3rem;
+        }
+        &--randomize {
+            background-color: $background2;
+            height: 5rem;
+            width: 100%;
         }
     }
 }

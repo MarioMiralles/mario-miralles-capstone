@@ -5,7 +5,7 @@
 .news {
     width: 100%;
     max-width: 600px;
-    @include display (row, center, nowrap);
+    @include display(row, center, nowrap);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -21,7 +21,6 @@
         @include tablet {
             width: calc((100% - 1rem) / 3);
         }
-
     }
 
     &__loading {
@@ -47,23 +46,20 @@
     }
 
     &__pagination {
-        @include display (row, flex-end, nowrap);
+        @include display(row, flex-end, nowrap);
         padding: 0.25rem;
         margin-bottom: 1.5rem;
 
         &-button {
-            padding: 0.5rem;
+            padding: 0.5rem 0.825rem;
             border-radius: 0.5rem;
             margin-right: 0.5rem;
             background-color: #33333385;
             border-style: none;
-
-            &.first-page {
-                background-color: $primary1;
-            }
+            text-decoration: none;
 
             &.active {
-                background-color: #33333385;
+                background-color: $primary1; // Updated to $primary1 to reflect the active state color change
             }
 
             &:focus {
