@@ -10,7 +10,7 @@ const wordpressPagesURL = "https://onthedai.com/wp-json/wp/v2/pages"
 const excludePageIds = [873, 2663, 3676, 3700, 25455, 25458];
 const titlesPerPage = 5;
 
-const BreakingNews = ({ setInputText, userInputVisible, promptGenerated }) => {
+const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleGenerate, inputText }) => {
     const [pages, setPages] = useState([]);
     const [loading, setLoading] = useState(true); // Track loading state
     const [error, setError] = useState(null);
@@ -98,7 +98,7 @@ const BreakingNews = ({ setInputText, userInputVisible, promptGenerated }) => {
 
             )}
             {error && <div className="error-message">{error}</div>} {/* Display error message if there's an error */}
-            {showNewsInfo && <NewsInfo headlineTitle={selectedHeadline.title} storyUrl={selectedHeadline.storyUrl} onBackClick={handleBackClick} setInputText={setInputText} userInputVisible={userInputVisible} promptGenerated={promptGenerated} />}
+            {showNewsInfo && <NewsInfo headlineTitle={selectedHeadline.title} storyUrl={selectedHeadline.storyUrl} onBackClick={handleBackClick} setInputText={setInputText} userInputVisible={userInputVisible} promptGenerated={promptGenerated} handleGenerate={handleGenerate} inputText={inputText} />}
         </article>
     );
 };

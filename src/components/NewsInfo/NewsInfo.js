@@ -6,7 +6,7 @@ import OpenAI from "openai";
 const assistantId = "asst_ACwD1N2Pv05I9mM9Ag497vQk";
 const openai = new OpenAI({ apiKey: process.env.REACT_APP_OPENAI_API_KEY, dangerouslyAllowBrowser: true });
 
-function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInputVisible, promptGenerated }) {
+function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInputVisible, promptGenerated, handleGenerate, inputText }) {
     const [copied, setCopied] = useState(false); // State variable to track whether the headline has been copied
     const [isLoading, setIsLoading] = useState(false); // State variable to track Loading of Prompt with AI
 
@@ -62,7 +62,7 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInpu
                 const combinedMessage = `${instructions}\n\n${headlineTitle}`;
                 console.log('Combined message:', combinedMessage);
 
-                // Call the OpenAI API (Assitant + headline) to generate the art style prompt
+                // Call the OpenAI API (Assistant + headline) to generate the art style prompt
                 const completionRequest = {
                     model: "gpt-3.5-turbo",
                     messages: [
@@ -95,6 +95,21 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInpu
         return null;
     }
 
+    //===========================//
+    // CREATE RANDOM ART FEATURE //
+    //===========================//
+    const handleRandomArt = async (event) => {
+        if (userInputVisible && !promptGenerated) {
+            if (event) {
+                event.preventDefault(); // Check if event is defined before calling preventDefault
+            }
+            // Generate prompt
+            await promptWithAI(); // Call promptWithAI without awaiting its result here
+            // Pass the generated prompt to handleGenerate
+            await handleGenerate(JSON.stringify(inputText)); // Pass the userInput (generated prompt) as a string
+        }
+    }
+
     return (
         <article className='news-info'>
             <div className='news-info__nav'>
@@ -122,7 +137,7 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInpu
                     </lord-icon>
                     <p className='news-info__p'>View Story</p>
                 </a>
-                <a className='news-info__button--randomize'>
+                <a className='news-info__button--randomize' onClick={handleRandomArt}>
                     <lord-icon
                         id="news-info__img-button--randomize"
                         src="https://cdn.lordicon.com/pbhjpofq.json"
