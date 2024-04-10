@@ -22,6 +22,8 @@
         padding: 0.25rem;
         transition: transform 0.3s ease;
         cursor: pointer;
+        background-color: black;
+        color: white;
 
         &:active {
             background-color: rgb(239, 142, 109, 0.8);
@@ -37,11 +39,13 @@
         padding: 0.5rem;
         border-radius: 3px;
         scrollbar-color: black rgb(26, 25, 25);
+        background-color: black;
+        color: white;
 
         &:focus {
-            outline: 1px solid #EF8E6D;
+            outline: 1px solid $primary1;
             border-radius: 3px;
-            box-shadow: 0 0 5px #EF8E6D;
+            box-shadow: 0 0 5px $primary1;
         }
     }
 }
@@ -64,6 +68,23 @@
     &__loading, &__news {
         width: 100%;
         max-width: 38rem;
+    }
+
+    &__logo {
+        width: 100%;
+        max-width: 8rem;
+        padding-bottom: 0.25rem;
+
+        @include tablet {
+            max-width: 10rem;
+        }
+    }
+
+    &__section {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: start;
     }
 }
 
