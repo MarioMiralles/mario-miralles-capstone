@@ -81,6 +81,11 @@ function UserInput() {
         }
     };
     
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        setImageLoaded(false); // Reset the imageLoaded state when submitting a new request
+        handleGenerate(inputText);
+    };
 
     const handleFetchImage = async () => {
         setIsLoading(true); // Set loading to true when fetching image
@@ -119,18 +124,15 @@ function UserInput() {
         }
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        setImageLoaded(false); // Reset the imageLoaded state when submitting a new request
-        handleGenerate(inputText);
-    };
-
     const handleCreateNew = () => {
         setInputText(''); // Reset input text
         setGeneratedImage(null); // Reset generated image
         setPublicGalleryKey(prevKey => prevKey + 1);
-        navigate(0);
     };
+
+    const handleRefreshBrowser = () => {
+        navigate(0);
+    }
 
     return (
         <>
@@ -152,7 +154,7 @@ function UserInput() {
                 <figure className='generated__section'>
                     {/* Show the otdLogo only when isLoading and generatedImage are both true */}
                     {(isLoading || generatedImage) && (
-                        <img onClick={handleCreateNew} className='generated__logo' src={otdLogo} alt='OTDNews' />
+                        <img onClick={handleRefreshBrowser} className='generated__logo' src={otdLogo} alt='OTDNews' />
                     )}
                     {error && <div>{error}</div>}
                     {isLoading && <img className="generated__loading" src={loadingGif} alt="Loading..." />} {/* Loading indicator */}
@@ -169,7 +171,7 @@ function UserInput() {
                     <h2 className={showPublicGallery ? "gallery__heading" : "gallery__heading--inactive"} onClick={toggleComponent}>Public Gallery</h2>
                     <h2 className={showPublicGallery ? "gallery__heading--inactive" : "gallery__heading"} id="breaking-news__heading" onClick={toggleComponent}>Breaking News</h2>
                 </div>
-                {showPublicGallery ? <PublicGallery /> : <BreakingNews setInputText={setInputText} userInputVisible={!isLoading && !generatedImage} promptGenerated={promptGenerated} />}
+                {showPublicGallery ? <PublicGallery /> : <BreakingNews setInputText={setInputText} userInputVisible={!isLoading && !generatedImage} promptGenerated={promptGenerated} handleGenerate={handleGenerate} inputText={inputText} />}
             </section>
         </>
     );
