@@ -21,10 +21,22 @@ function UserInput() {
     const [showPublicGallery, setShowPublicGallery] = useState(true);
     const [promptGenerated, setPromptGenerated] = useState(false);
     const [showButtonAnimation, setShowButtonAnimation] = useState(false);
+    const [showButtonAnimationTimeout, setShowButtonAnimationTimeout] = useState(null);
 
-    const toggleComponent = () => {
-        setShowPublicGallery(prevState => !prevState);
-    }
+    useEffect(() => {
+        return () => {
+            if (showButtonAnimationTimeout) {
+                clearTimeout(showButtonAnimationTimeout);
+            }
+        };
+    }, [showButtonAnimationTimeout]);
+
+    const toggleComponent = (section) => {
+        if ((section === 'Public Gallery' && showPublicGallery) || (section === 'Breaking News' && !showPublicGallery)) {
+            return; // If the clicked section is already active, return early
+        }
+        setShowPublicGallery((prev) => !prev);
+    };
 
     useEffect(() => {
         if (generationId) {
@@ -32,6 +44,9 @@ function UserInput() {
         }
     }, [generationId]);
 
+    //=========================//
+    // LEONARDO AI API REQUEST //
+    //=========================//
     const handleGenerate = async (inputText) => {
         try {
             setIsLoading(true); // Set loading to true when generating image
@@ -129,12 +144,22 @@ function UserInput() {
         }
     };
 
+    // Create New Art Button
     const handleCreateNew = () => {
         setInputText(''); // Reset input text
         setGeneratedImage(null); // Reset generated image
         setPublicGalleryKey(prevKey => prevKey + 1);
+        setPromptGenerated(false); // Reset promptGenerated state
     };
 
+    const handleButtonAnimation = () => {
+        setShowButtonAnimation(true);
+        setShowButtonAnimationTimeout(
+            setTimeout(() => setShowButtonAnimation(false), 3000)
+        );
+    }
+
+    // Logo Link Refreshes App to Homepage
     const handleRefreshBrowser = () => {
         navigate(0);
     }
@@ -173,10 +198,27 @@ function UserInput() {
             </article>
             <section className='gallery__news'>
                 <div className="gallery__heading-container">
-                    <h2 className={showPublicGallery ? "gallery__heading" : "gallery__heading--inactive"} onClick={toggleComponent}>Public Gallery</h2>
-                    <h2 className={showPublicGallery ? "gallery__heading--inactive" : "gallery__heading"} id="breaking-news__heading" onClick={toggleComponent}>Breaking News</h2>
+                    <h2
+                        className={showPublicGallery ? "gallery__heading" : "gallery__heading--inactive"}
+                        onClick={() => toggleComponent('Public Gallery')}>
+                        Public Gallery
+                    </h2>
+                    <h2
+                        className={showPublicGallery ? "gallery__heading--inactive" : "gallery__heading"}
+                        onClick={() => toggleComponent('Breaking News')}>
+                        Breaking News
+                    </h2>
                 </div>
-                {showPublicGallery ? <PublicGallery key={publicGalleryKey} /> : <BreakingNews setInputText={setInputText} userInputVisible={!isLoading && !generatedImage} promptGenerated={promptGenerated} handleGenerate={handleGenerate} inputText={inputText} setShowButtonAnimation={setShowButtonAnimation} setPromptGenerated={setPromptGenerated} />}
+                {showPublicGallery ? <PublicGallery key={publicGalleryKey} /> :
+                    <BreakingNews
+                        setInputText={setInputText}
+                        userInputVisible={!isLoading && !generatedImage}
+                        promptGenerated={promptGenerated}
+                        handleGenerate={handleGenerate}
+                        inputText={inputText}
+                        setShowButtonAnimation={setShowButtonAnimation}
+                        setPromptGenerated={setPromptGenerated}
+                        handleButtonAnimation={handleButtonAnimation} />}
             </section>
         </>
     );

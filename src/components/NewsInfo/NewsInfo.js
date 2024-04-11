@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './NewsInfo.scss';
 import OpenAI from "openai";
@@ -6,10 +6,9 @@ import OpenAI from "openai";
 const assistantId = "asst_ACwD1N2Pv05I9mM9Ag497vQk";
 const openai = new OpenAI({ apiKey: process.env.REACT_APP_OPENAI_API_KEY, dangerouslyAllowBrowser: true });
 
-function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInputVisible, promptGenerated, handleGenerate, setPromptGenerated }) {
+function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInputVisible, promptGenerated, handleGenerate, setPromptGenerated, handleButtonAnimation }) {
     const [copied, setCopied] = useState(false); // State variable to track whether the headline has been copied
     const [isLoading, setIsLoading] = useState(false); // State variable to track Loading of Prompt with AI
-    const [showButtonAnimation, setShowButtonAnimation] = useState(false); // State variable to control the button animation
 
     //=======================//
     // COPY HEADLINE FEATURE //
@@ -32,17 +31,14 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInpu
     const handleRandomArt = async (event) => {
         console.log('handleRandomArt called');
         window.scrollTo(0, 0);
-        if (userInputVisible && !promptGenerated) {
+        if (userInputVisible) {
             if (event) {
                 event.preventDefault(); // Check if event is defined before calling preventDefault
             }
             try {
-                // Toggle button animation on
-                setShowButtonAnimation(true);
-                // Generate prompt
-                const generatedPrompt = await promptWithAI(); // Call promptWithAI and get the generated prompt
-                // Pass the generated prompt to handleGenerate
-                await handleGenerate(generatedPrompt, () => setShowButtonAnimation(true)); // Pass the generated prompt to handleGenerate
+                const generatedPrompt = await promptWithAI();
+                await handleGenerate(generatedPrompt);
+                handleButtonAnimation();
             } catch (error) {
                 console.error('Error generating random art:', error);
             }
@@ -56,7 +52,7 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInpu
         console.log('promptWithAI called');
         window.scrollTo(0, 0);
         // Check if the UserInput section is active and that the prompt is not generated
-        if (userInputVisible && !promptGenerated) {
+        if (userInputVisible) {
             try {
                 setIsLoading(true); // Run Prompt with AI animation
                 // Create a Thread
@@ -106,13 +102,13 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInpu
 
                 // Set the response prompt in the UserInput textarea
                 setInputText(generatedPrompt);
-                console.log('Art style prompt set:', generatedPrompt);
+                setPromptGenerated(true);
+                handleButtonAnimation();
                 return generatedPrompt;
             } catch (error) {
                 console.error('Error prompting with AI:', error);
             } finally {
-                setIsLoading(false); // Set animation to false after the prompt is generated
-                setPromptGenerated(true); // Set promptGenerated to true
+                setIsLoading(false);
             }
         }
     }
@@ -149,7 +145,10 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInpu
                     </lord-icon>
                     <p className='news-info__p'>View Story</p>
                 </a>
-                <a className='news-info__button--randomize' onClick={handleRandomArt}>
+                <a className='news-info__button--randomize' onClick={() => {
+                    handleRandomArt();
+                    handleButtonAnimation(); // Call the handleButtonAnimation function here
+                }} disabled={!userInputVisible || promptGenerated}>
                     <lord-icon
                         id="news-info__img-button--randomize"
                         src="https://cdn.lordicon.com/pbhjpofq.json"
@@ -159,7 +158,10 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInpu
                     </lord-icon>
                     <p className='news-info__p'>Create a Random Artwork</p>
                 </a>
-                <a className='news-info__button' onClick={promptWithAI} disabled={!userInputVisible || promptGenerated}>
+                <a className='news-info__button' onClick={() => {
+                    promptWithAI();
+                    handleButtonAnimation(); // Call the handleButtonAnimation function here
+                }} disabled={!userInputVisible || promptGenerated}>
                     <lord-icon
                         id="news-info__img-button"
                         src="https://cdn.lordicon.com/zfzufhzk.json"
