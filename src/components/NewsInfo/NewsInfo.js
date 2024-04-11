@@ -6,9 +6,10 @@ import OpenAI from "openai";
 const assistantId = "asst_ACwD1N2Pv05I9mM9Ag497vQk";
 const openai = new OpenAI({ apiKey: process.env.REACT_APP_OPENAI_API_KEY, dangerouslyAllowBrowser: true });
 
-function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInputVisible, promptGenerated, handleGenerate, inputText }) {
+function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInputVisible, promptGenerated, handleGenerate, setPromptGenerated }) {
     const [copied, setCopied] = useState(false); // State variable to track whether the headline has been copied
     const [isLoading, setIsLoading] = useState(false); // State variable to track Loading of Prompt with AI
+    const [showButtonAnimation, setShowButtonAnimation] = useState(false); // State variable to control the button animation
 
     //=======================//
     // COPY HEADLINE FEATURE //
@@ -25,10 +26,34 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInpu
         }
     }
 
+    //===========================//
+    // CREATE RANDOM ART FEATURE //
+    //===========================//
+    const handleRandomArt = async (event) => {
+        console.log('handleRandomArt called');
+        window.scrollTo(0, 0);
+        if (userInputVisible && !promptGenerated) {
+            if (event) {
+                event.preventDefault(); // Check if event is defined before calling preventDefault
+            }
+            try {
+                // Toggle button animation on
+                setShowButtonAnimation(true);
+                // Generate prompt
+                const generatedPrompt = await promptWithAI(); // Call promptWithAI and get the generated prompt
+                // Pass the generated prompt to handleGenerate
+                await handleGenerate(generatedPrompt, () => setShowButtonAnimation(true)); // Pass the generated prompt to handleGenerate
+            } catch (error) {
+                console.error('Error generating random art:', error);
+            }
+        }
+    };
+
     //========================//
     // PROMPT WITH AI FEATURE //
     //========================//
     async function promptWithAI() {
+        console.log('promptWithAI called');
         window.scrollTo(0, 0);
         // Check if the UserInput section is active and that the prompt is not generated
         if (userInputVisible && !promptGenerated) {
@@ -82,10 +107,12 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInpu
                 // Set the response prompt in the UserInput textarea
                 setInputText(generatedPrompt);
                 console.log('Art style prompt set:', generatedPrompt);
+                return generatedPrompt;
             } catch (error) {
                 console.error('Error prompting with AI:', error);
             } finally {
                 setIsLoading(false); // Set animation to false after the prompt is generated
+                setPromptGenerated(true); // Set promptGenerated to true
             }
         }
     }
@@ -93,21 +120,6 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInpu
     // Render the component only if headlineTitle is provided
     if (!headlineTitle) {
         return null;
-    }
-
-    //===========================//
-    // CREATE RANDOM ART FEATURE //
-    //===========================//
-    const handleRandomArt = async (event) => {
-        if (userInputVisible && !promptGenerated) {
-            if (event) {
-                event.preventDefault(); // Check if event is defined before calling preventDefault
-            }
-            // Generate prompt
-            await promptWithAI(); // Call promptWithAI without awaiting its result here
-            // Pass the generated prompt to handleGenerate
-            await handleGenerate(JSON.stringify(inputText)); // Pass the userInput (generated prompt) as a string
-        }
     }
 
     return (
@@ -153,10 +165,9 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInpu
                         src="https://cdn.lordicon.com/zfzufhzk.json"
                         trigger="hover"
                         delay="1500"
-
-                        state="hover-line">
+                        state="default">
                     </lord-icon>
-                    <p className='news-info__p'>Prompt with AI</p>
+                    <p className='news-info__p'>AI Prompt</p>
                 </a>
             </section>
             {isLoading && (

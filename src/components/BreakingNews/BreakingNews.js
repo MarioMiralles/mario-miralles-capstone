@@ -10,7 +10,7 @@ const wordpressPagesURL = "https://onthedai.com/wp-json/wp/v2/pages"
 const excludePageIds = [873, 2663, 3676, 3700, 25455, 25458];
 const titlesPerPage = 5;
 
-const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleGenerate, inputText }) => {
+const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleGenerate, inputText, setShowButtonAnimation, setPromptGenerated }) => {
     const [pages, setPages] = useState([]);
     const [loading, setLoading] = useState(true); // Track loading state
     const [error, setError] = useState(null);
@@ -19,6 +19,9 @@ const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleG
     const [selectedHeadline, setSelectedHeadline] = useState(null); // Track selected headline
     const [showNewsInfo, setShowNewsInfo] = useState(false); // Track visibility of NewsInfo component
 
+    //============//
+    // PAGINATION //
+    //============//
     useEffect(() => {
         breakingNewsPages();
     }, []);
@@ -51,15 +54,18 @@ const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleG
         setActivePaginationButton(pageNumber); // Update active button state
     }
 
+    //============================//
+    // NEWSINFO NAV - BACK & COPY //
+    //============================//
+    const handleBackClick = () => {
+        setSelectedHeadline(null); // Clear selected headline
+        setShowNewsInfo(false); // Hide NewsInfo component
+    }
+
     const handleHeadlineClick = (page) => {
         const { link, title } = page; // Extract link and title from the page object
         setSelectedHeadline({ title: title.rendered, storyUrl: link }); // Pass both title and URL
         setShowNewsInfo(true); // Show NewsInfo component
-    }
-
-    const handleBackClick = () => {
-        setSelectedHeadline(null); // Clear selected headline
-        setShowNewsInfo(false); // Hide NewsInfo component
     }
 
     return (
@@ -98,7 +104,7 @@ const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleG
 
             )}
             {error && <div className="error-message">{error}</div>} {/* Display error message if there's an error */}
-            {showNewsInfo && <NewsInfo headlineTitle={selectedHeadline.title} storyUrl={selectedHeadline.storyUrl} onBackClick={handleBackClick} setInputText={setInputText} userInputVisible={userInputVisible} promptGenerated={promptGenerated} handleGenerate={handleGenerate} inputText={inputText} />}
+            {showNewsInfo && <NewsInfo headlineTitle={selectedHeadline.title} storyUrl={selectedHeadline.storyUrl} onBackClick={handleBackClick} setInputText={setInputText} userInputVisible={userInputVisible} promptGenerated={promptGenerated} handleGenerate={handleGenerate} inputText={inputText} setShowButtonAnimation={setShowButtonAnimation} setPromptGenerated={setPromptGenerated} />}
         </article>
     );
 };
