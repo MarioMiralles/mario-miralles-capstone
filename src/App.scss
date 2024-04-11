@@ -3,37 +3,58 @@
 @use '../src/styles/partials/variables' as *;
 
 * {
-    margin: 0;
-    padding: 0;
-    background-color: black;
-    color: white;
-    box-sizing: border-box;
-    @include mobile { @include typography-mobile };
-    @include tablet { @include typography-tab-desktop };
+  margin: 0;
+  padding: 0;
+  background-color: black;
+  color: white;
+  box-sizing: border-box;
+
+  @include mobile {
+    @include typography-mobile
   }
-  
-  main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    padding: 1rem;
+
+  ;
+
+  @include tablet {
+    @include typography-tab-desktop
   }
-  
-  fieldset {
-    padding: 0.5rem;
-  }
-  
-  .header {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .logo {
-    height: 100%;
-    object-fit: contain;
-    max-width: 20rem;
-    width: 100%;
-    max-height: 16rem;
-  }
+
+  ;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+fieldset {
+  padding: 0.5rem;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.logo {
+  height: 100%;
+  object-fit: contain;
+  max-width: 20rem;
+  width: 100%;
+  max-height: 16rem;
+}
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+  background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: -webkit-linear-gradient(#000);
+  background: linear-gradient(#EF8E6D, transparent, transparent, transparent, #EF8E6D);
+  border-radius: 0.1rem;
+}

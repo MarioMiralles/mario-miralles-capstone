@@ -1,0 +1,76 @@
+@use '../../styles/partials/mixins' as *;
+@use '../../styles/partials/variables' as *;
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.pg-modal {
+    background-color: $background1;
+    height: 100%;
+    width: 100vw;
+
+    &__delete-close {
+        background-color: rgb(0, 0, 0);
+        font-size: 1.25rem;
+        font-family: "Lovelo";
+        cursor: pointer;
+        display: inline;
+        padding: 0 0.375rem;
+        margin: 0.5rem;
+        border-top: 1px solid $primary1;
+        border-bottom: 1px solid $primary1;
+        border-radius: 3px;
+        float: right;
+        height: fit-content;
+    }
+
+    &__image {
+        width: 100%;
+        height: auto;
+        background-color: $background2;
+        object-fit: contain;
+        padding: 0.5rem;
+
+        &-container {
+            background-color: $background1;
+            height: 100vh;
+        }
+    }
+
+    &__logo {
+        width: 100%;
+        max-width: 32%;
+        padding-left: 0.25rem;
+    }
+
+    &__nav {
+        @include display (row, space-between, nowrap);
+        width: 100%;
+        padding-top: 0.25rem;
+        align-items: center;
+    }
+
+    &__prompt {
+        margin: 0.5rem 0.75rem;
+        padding: 1rem 0.5rem;
+        background-color: $background2;
+        border-top: 1px solid rgb(59, 59, 59);
+        border-bottom: 1px solid rgb(59, 59, 59);
+
+        &-heading {
+            padding-bottom: 0.25rem;
+            font-family: "Lovelo Black";
+            letter-spacing: 0.1rem;
+        }
+    }
+}

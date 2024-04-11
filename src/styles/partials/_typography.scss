@@ -37,7 +37,7 @@
 
     // M P3 - Body Small
     p {
-        @include typography-style (0.6875rem, 1rem, 400);
+        font-size: 0.6875rem;
     }
 
 }
@@ -79,7 +79,7 @@
 
     // P3 - Body Small
     p {
-        @include typography-style (0.75rem, 1.125rem, 400);
+        font-size: 0.75rem;
     }
 }
 
@@ -87,17 +87,64 @@
     FONTS
 ===========*/
 
+//LOVELO
 @font-face {
-    font-family: "Lovelo";
+    font-family: "Lovelo Black";
     src: url('../../assets/fonts/lovelo-2/Lovelo\ Black.otf') format('opentype');
 }
 
 @font-face {
-    font-family: "Lovelo";
+    font-family: "Lovelo Bold";
     src: url('../../assets/fonts/lovelo-2/Lovelo\ Line\ Bold.otf') format('opentype');
 }
 
 @font-face {
     font-family: "Lovelo";
     src: url('../../assets/fonts/lovelo-2/Lovelo\ Line\ Light.otf') format('opentype');
+}
+
+// INTER
+@font-face {
+    font-family: "Inter Black";
+    src: url('../../assets/fonts/Inter/static/Inter-Black.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: "Inter Bold";
+    src: url('../../assets/fonts/Inter/static/Inter-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: "Inter Extra Bold";
+    src: url('../../assets/fonts/Inter/static/Inter-ExtraBold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: "Inter Semi Bold";
+    src: url('../../assets/fonts/Inter/static/Inter-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: "Inter";
+    src: url('../../assets/fonts/Inter/static/Inter-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: "Inter Medium";
+    src: url('../../assets/fonts/Inter/static/Inter-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: "Inter Light";
+    src: url('../../assets/fonts/Inter/static/Inter-Light.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: "Inter Extra Light";
+    src: url('../../assets/fonts/Inter/static/Inter-ExtraLight.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: "Inter Thin";
+    src: url('../../assets/fonts/Inter/static/Inter-Thin.ttf') format('truetype');
 }

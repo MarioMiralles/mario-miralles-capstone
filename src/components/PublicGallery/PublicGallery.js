@@ -1,9 +1,12 @@
 import '../PublicGallery/PublicGallery.scss'
 import React, { useState, useEffect } from 'react';
+import PublicGalleryModal from '../PublicGalleryModal/PublicGalleryModal';
 
 const PublicGallery = () => {
     const [publicGalleryImages, setPublicGalleryImages] = useState([]); // State to hold gallery images
     const [error, setError] = useState(null);
+    const [selectedImage, setSelectedImage] = useState(null); // State to track selected image
+    const [prompt, setPrompt] = useState(null);
     const apiKey = process.env.REACT_APP_API_KEY;
 
     useEffect(() => {
@@ -29,14 +32,15 @@ const PublicGallery = () => {
             // Check if responseData contains the generations array
             if (responseData && responseData.generations) {
                 const images = [];
+                const prompt = [];
                 // Iterate over each generation
-                responseData.generations.forEach(generation => {
+                responseData.generations.forEach((generation, index) => {
                     // Iterate over each generated image within the generation
-                    generation.generated_images.forEach(image => {
-                        images.push(image.url);
-                    });
+                    const obj = { image: generation.generated_images[0].url, prompt: generation.prompt }
+                    images.push(obj)
                 });
                 setPublicGalleryImages(images);
+                setPrompt(prompt);
                 setError(null);
             } else {
                 throw new Error('Invalid response data format');
@@ -47,12 +51,30 @@ const PublicGallery = () => {
         }
     };
 
+    // Function to handle image click and open modal
+    const toggleModal = (image, prompt) => {
+        setSelectedImage(image);
+        setPrompt(prompt)
+    };
+
+    // Function to close modal
+    const closeModal = () => {
+        setSelectedImage(null);
+        setPrompt(null)
+    };
+
     return (
         <section className="gallery__container">
             <div className="gallery">
                 {publicGalleryImages.map((image, index) => (
-                    <img key={index} src={image} className='gallery__image' alt={`Public Gallery Image ${index}`} />
+                    <img key={index} src={image.image} className='gallery__image' alt={`Public Gallery Image ${index}`} onClick={() => toggleModal(image.image, image.prompt)} /> // Need to find the url for each image
                 ))}
+                {selectedImage &&
+                    <PublicGalleryModal
+                        toggleModal={closeModal}
+                        image={selectedImage}
+                        prompt={prompt}
+                    />}
             </div>
         </section>
     );

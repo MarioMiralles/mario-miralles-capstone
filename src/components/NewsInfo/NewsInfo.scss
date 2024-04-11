@@ -1,7 +1,7 @@
 @use '../../styles/partials/variables' as *;
 @use '../../styles/partials/mixins' as *;
 
-.loading-overlay {
+.overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -15,7 +15,7 @@
 }
 
 .news-info {
-    padding: 1rem 1.25rem;
+    padding: 1.25rem;
     margin-bottom: 0.25rem;
     background-color: #FFFFFFB5;
     color: black;
@@ -60,9 +60,10 @@
     &__headline {
         background-color: $background2;
         color: black;
-        padding: 1rem 0;
+        padding: 1.25rem 0;
         font-size: 1rem;
         line-height: 1.5rem;
+        font-family: "Inter bold";
     }
 
     &__nav {
@@ -75,8 +76,10 @@
 
         &-back {
             background-color: $background2;
-            color: rgba(0, 0, 0, 0.6);
+            color: rgb(60, 60, 60);
             text-decoration: none;
+            font-family: "Lovelo Black";
+            font-size: 0.7rem;
 
             &:hover {
                 color: black;
@@ -86,10 +89,12 @@
         &-copy {
             background-color: $background2;
             border: none;
-            color: rgba(0, 0, 0, 0.6);
+            color: rgb(60, 60, 60);
             cursor: pointer;
             display: flex;
             align-items: center;
+            font-family: "Lovelo Black";
+            font-size: 0.625rem;
 
             &:hover {
                 color: black;
@@ -99,8 +104,11 @@
 
     &__p {
         background-color: $background2;
-        color: black;
+        color: rgb(60, 60, 60);
         cursor: pointer;
+        font-family: "Lovelo Black";
+        font-size: 0.625rem;
+        text-align: center;
     }
 }
 
