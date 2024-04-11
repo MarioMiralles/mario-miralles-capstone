@@ -1,7 +1,7 @@
 @use '../../styles/partials/variables' as *;
 @use '../../styles/partials/mixins' as *;
 
-.loading-overlay {
+.overlay {
     position: fixed;
     top: 0;
     left: 0;

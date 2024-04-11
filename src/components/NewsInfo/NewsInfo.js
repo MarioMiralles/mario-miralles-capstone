@@ -173,7 +173,7 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInpu
                 </a>
             </section>
             {isLoading && (
-                <div className="loading-overlay">
+                <div className="overlay">
                     <lord-icon
                         id="loading-icon"
                         src="https://cdn.lordicon.com/zfzufhzk.json"

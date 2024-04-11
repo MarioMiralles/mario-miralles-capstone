@@ -209,7 +209,8 @@ function UserInput() {
                         Breaking News
                     </h2>
                 </div>
-                {showPublicGallery ? <PublicGallery key={publicGalleryKey} /> :
+                {showPublicGallery ?
+                <PublicGallery key={publicGalleryKey} inputText={inputText} /> :
                     <BreakingNews
                         setInputText={setInputText}
                         userInputVisible={!isLoading && !generatedImage}
