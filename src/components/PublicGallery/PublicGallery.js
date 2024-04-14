@@ -1,7 +1,7 @@
 import '../PublicGallery/PublicGallery.scss'
 import React, { useState, useEffect } from 'react';
 import PublicGalleryModal from '../PublicGalleryModal/PublicGalleryModal';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const PublicGallery = ({ handleFetchImage }) => {
     const [publicGalleryImages, setPublicGalleryImages] = useState([]); // State to hold gallery images
@@ -10,8 +10,7 @@ const PublicGallery = ({ handleFetchImage }) => {
     const [prompt, setPrompt] = useState(null);
     const [imageId, setImageId] = useState(null);
     const apiKey = process.env.REACT_APP_API_KEY;
-
-    const navigate = useNavigate();
+    const [isModalOpen, setIsModalOpen] = useState(false); // State to track whether the modal is open
 
     useEffect(() => {
         fetchPublicGalleryImages(); // Fetch gallery images when component mounts
@@ -52,18 +51,17 @@ const PublicGallery = ({ handleFetchImage }) => {
     };
 
     // Function to handle image click and open modal
-    const handleImageClick = (event, image) => {
-        event.preventDefault(); // Prevent default behavior of Link
-        setSelectedImage(image.image);
+    const handleImageClick = (image) => {
+        console.log("Selected image:", image); // Log selected image
+        setSelectedImage(image);
         setPrompt(image.prompt);
         setImageId(image.imageId);
+        setIsModalOpen(true); // Update state to open the modal
     };
 
     // Function to close modal
     const closeModal = () => {
-        setSelectedImage(null);
-        setPrompt(null);
-        setImageId(null);
+        setIsModalOpen(false);
     };
 
     return (
@@ -74,7 +72,10 @@ const PublicGallery = ({ handleFetchImage }) => {
                         className='gallery__link'
                         key={index}
                         to={`/gallery/${image.imageId}`}
-                        onClick={(event) => handleImageClick(event, image)}>
+                        onClick={(event) => {
+                            event.preventDefault(); // Prevent default link behavior
+                            handleImageClick(image); // Open modal instead
+                        }}>
                         <img
                             src={image.image}
                             className='gallery__image'
@@ -82,13 +83,16 @@ const PublicGallery = ({ handleFetchImage }) => {
                         />
                     </Link>
                 ))}
-                {selectedImage &&
+                {selectedImage && isModalOpen && (
                     <PublicGalleryModal
                         closeModal={closeModal}
                         handleFetchImage={handleFetchImage}
-                        imageUrl={selectedImage}
-                        prompt={prompt} imageId={imageId} />
-                }
+                        image={selectedImage}
+                        prompt={prompt}
+                        imageId={imageId}
+                        isOpen={isModalOpen}  // Pass isModalOpen state as isOpen prop
+                        onClose={closeModal} />
+                )}
             </div>
         </section>
     );

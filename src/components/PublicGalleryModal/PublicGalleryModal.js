@@ -3,11 +3,28 @@ import { Link, useParams } from 'react-router-dom';
 import './PublicGalleryModal.scss';
 import logo from '../../assets/images/OTDLogo.png';
 
-function PublicGalleryModal({ handleClose, imageUrl: propImageUrl, prompt, imageId }) {
+function PublicGalleryModal({ image, prompt, isOpen, onClose }) {
     const [copied, setCopied] = useState(false); // State variable to track whether the headline has been copied
-    const [promptState, setPrompt] = useState(null); // State to hold prompt
-    const [isModalOpen, setIsModalOpen] = useState(true); // State to track whether the modal is open
-    const [imageUrl, setImageUrl] = useState(propImageUrl); // Initialize imageUrl with propImageUrl
+    const [imageUrl, setImageUrl] = useState(image.image);
+
+    useEffect(() => {
+        if (image && image.image) {
+            setImageUrl(image.image);
+        }
+    }, [image]);
+
+    // Effect to handle body overflow
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, [isOpen]);
 
     //=====================//
     // COPY PROMPT FEATURE //
@@ -21,28 +38,22 @@ function PublicGalleryModal({ handleClose, imageUrl: propImageUrl, prompt, image
             .catch((error) => console.error(error));
     };
 
-    // Effect to handle body overflow
-    useEffect(() => {
-        // Disable scrolling when the modal is opened
-        document.body.style.overflow = 'hidden';
-
-        // Enable scrolling when the modal is closed
-        return () => {
-            document.body.style.overflow = 'auto';
-        };
-    }, []);
+    // Function to close the modal
+    const closeModal = () => {
+        onClose();
+    };
 
     return (
         <>
-            {isModalOpen && (
+            {isOpen && (
                 <main>
-                    <div className="overlay">
+                    <div className="overlay" onClick={closeModal}>
                         <article className='pg-modal' onClick={(e) => e.stopPropagation()}>
                             <div className='pg-modal__nav'>
-                                <Link className="pg-modal__logo-link" to=".." relative="path">
-                                    <img className='pg-modal__logo' src={logo} />
+                                <Link className="pg-modal__logo-link" to="/" onClick={closeModal}>
+                                    <img className='pg-modal__logo' src={logo} alt="OTDNews Logo" />
                                 </Link>
-                                <Link className="pg-modal__delete-close-link" to=".." relative="path">
+                                <Link className="pg-modal__delete-close-link" to="/" onClick={closeModal}>
                                     <p className='pg-modal__delete-close' alt='close button'>X</p>
                                 </Link>
                             </div>
