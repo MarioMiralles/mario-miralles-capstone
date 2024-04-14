@@ -10,7 +10,7 @@ const wordpressPagesURL = "https://onthedai.com/wp-json/wp/v2/pages"
 const excludePageIds = [873, 2663, 3676, 3700, 25455, 25458];
 const titlesPerPage = 5;
 
-const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleGenerate, inputText, setShowButtonAnimation, setPromptGenerated, handleButtonAnimation }) => {
+const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleGenerate, inputText, setShowButtonAnimation, setPromptGenerated, handleButtonAnimation, isDesktopView }) => {
     const [pages, setPages] = useState([]);
     const [loading, setLoading] = useState(true); // Track loading state
     const [error, setError] = useState(null);
@@ -76,6 +76,9 @@ const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleG
                 </div>
             ) : (
                 <>
+                    {isDesktopView && (
+                        <h2 className="news__heading">Breaking News</h2>
+                    )}
                     {!showNewsInfo && ( // Only render if no headline is selected
                         <section className='news__pagination-container'>
                             <div className='news__pages'>

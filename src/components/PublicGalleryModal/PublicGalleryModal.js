@@ -5,7 +5,7 @@ import logo from '../../assets/images/OTDLogo.png';
 
 function PublicGalleryModal({ image, prompt, isOpen, onClose }) {
     const [copied, setCopied] = useState(false); // State variable to track whether the headline has been copied
-    const [imageUrl, setImageUrl] = useState(image.image);
+    const [imageUrl, setImageUrl] = useState(null);
 
     useEffect(() => {
         if (image && image.image) {
@@ -42,6 +42,11 @@ function PublicGalleryModal({ image, prompt, isOpen, onClose }) {
     const closeModal = () => {
         onClose();
     };
+
+    // Check if image is undefined
+    if (!image || !image.image) {
+        return null; // or render a placeholder, loading state, or error message
+    }
 
     return (
         <>
