@@ -63,12 +63,13 @@
             font-size: 0.75rem;
 
             &.active {
-                background-color: $primary1; // Updated to $primary1 to reflect the active state color change
+                background-color: $primary1;
             }
 
             &:focus {
                 background-color: $primary1;
             }
+
         }
     }
 }

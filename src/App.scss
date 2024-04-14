@@ -5,7 +5,7 @@
 * {
   margin: 0;
   padding: 0;
-  background-color: black;
+  background-color: $background1;
   color: white;
   box-sizing: border-box;
 
@@ -50,11 +50,11 @@ fieldset {
 
 ::-webkit-scrollbar {
   width: 0.5rem;
-  background: #000;
+  background: $background1;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: -webkit-linear-gradient(#000);
+  background: -webkit-linear-gradient($background1);
   background: linear-gradient(#EF8E6D, transparent, transparent, transparent, #EF8E6D);
   border-radius: 0.1rem;
 }

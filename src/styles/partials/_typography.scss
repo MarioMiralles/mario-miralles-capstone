@@ -16,7 +16,7 @@
     }
     
     // M H3 - Labels, Links & Buttons
-    h3, a {
+    h3 {
         @include typography-style (0.8125rem, 1.25rem, 600);
     }
 

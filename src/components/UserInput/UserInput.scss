@@ -2,19 +2,26 @@
 @use '../../styles/partials/variables' as *;
 
 .form {
-    width: 100%;
+    min-width: 100%;
+
+    @include tablet {
+        min-height: 24rem;
+    }
+
 
     &__article {
         height: 100%;
         width: 100%;
         max-width: 38rem;
-        min-height: 18rem;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
 
         @include tablet {
             min-height: 24rem;
+            max-height: 27rem;
+            width: 100%;
         }
     }
 
@@ -46,10 +53,19 @@
         color: white;
         font-weight: 600;
 
+        @include tablet {
+            min-height: 17rem;
+        }
+
         &:focus {
             outline: 1px solid $primary1;
             border-radius: 3px;
             box-shadow: 0 0 5px $primary1;
+        }
+
+        &--invalid {
+            border: 1px solid $primary1;
+            animation: glowing 1s infinite;
         }
     }
 }
@@ -59,7 +75,10 @@
     &__container {
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
         gap: 0.5rem;
+        width: 100%;
+        min-height: 12rem;
     }
 
     &__create-new-button {
@@ -67,9 +86,8 @@
         margin-left: auto;
         cursor: pointer;
         font-family: "Lovelo Black";
-        box-shadow: 0 0 0px $primary1; /* Initially hide the box-shadow */
+        box-shadow: 0 0 0px $primary1;
 
-        // letter-spacing: 0.05rem;
         &.glowing {
             animation: glowing 1s infinite;
             box-shadow: 0 0 15px $primary1, 0 0 30px $primary1, 0 0 45px $primary1;
@@ -83,11 +101,24 @@
         max-width: 38rem;
     }
 
+    &__image {
+        height: 100%;
+        max-height: 24rem;
+        animation: fadeIn 3s;
+    }
+
+    &__loading {
+        min-height: 12rem;
+        max-height: 17rem;
+        object-fit: contain;
+    }
+
     &__logo {
         width: 100%;
         max-width: 8rem;
         padding-bottom: 0.25rem;
         cursor: pointer;
+        animation: fadeIn;
 
         @include tablet {
             max-width: 10rem;
@@ -97,8 +128,10 @@
     &__section {
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
+        justify-content: space-between;
         align-items: start;
+        width: 100%;
+        height: 100%;
     }
 }
 
@@ -106,6 +139,7 @@
     text-align: right;
 }
 
+// Validation error for random artwork and prompt generation
 @keyframes glowing {
     0% {
         box-shadow: 0 0 0px $primary1;
@@ -117,5 +151,18 @@
 
     100% {
         box-shadow: 0 0 0px $primary1;
+    }
+}
+
+// Fade-in logo during isLoading
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        /* Start with zero opacity */
+    }
+
+    to {
+        opacity: 1;
+        /* End with full opacity */
     }
 }
