@@ -1,12 +1,14 @@
 import '../PublicGallery/PublicGallery.scss'
 import React, { useState, useEffect } from 'react';
 import PublicGalleryModal from '../PublicGalleryModal/PublicGalleryModal';
+import { Link } from 'react-router-dom';
 
-const PublicGallery = () => {
+const PublicGallery = ({ handleFetchImage }) => {
     const [publicGalleryImages, setPublicGalleryImages] = useState([]); // State to hold gallery images
     const [error, setError] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null); // State to track selected image
     const [prompt, setPrompt] = useState(null);
+    const [imageId, setImageId] = useState(null);
     const apiKey = process.env.REACT_APP_API_KEY;
 
     useEffect(() => {
@@ -31,16 +33,12 @@ const PublicGallery = () => {
 
             // Check if responseData contains the generations array
             if (responseData && responseData.generations) {
-                const images = [];
-                const prompt = [];
-                // Iterate over each generation
-                responseData.generations.forEach((generation, index) => {
-                    // Iterate over each generated image within the generation
-                    const obj = { image: generation.generated_images[0].url, prompt: generation.prompt }
-                    images.push(obj)
-                });
+                const images = responseData.generations.map((generation) => ({
+                    image: generation.generated_images[0].url,
+                    prompt: generation.prompt,
+                    imageId: generation.id
+                }));
                 setPublicGalleryImages(images);
-                setPrompt(prompt);
                 setError(null);
             } else {
                 throw new Error('Invalid response data format');
@@ -52,29 +50,44 @@ const PublicGallery = () => {
     };
 
     // Function to handle image click and open modal
-    const toggleModal = (image, prompt) => {
+    const handleImageClick = (event, image, prompt, imageId) => {
+        event.preventDefault(); // Prevent default behavior of Link
+        toggleModal(image, prompt, imageId); // Open modal
+        console.log(imageId)
+    };
+
+    // Function to set image attributes in the modal
+    const toggleModal = (image, prompt, imageId) => {
         setSelectedImage(image);
-        setPrompt(prompt)
+        setPrompt(prompt);
+        setImageId(imageId);
     };
 
     // Function to close modal
     const closeModal = () => {
         setSelectedImage(null);
-        setPrompt(null)
+        setPrompt(null);
+        setImageId(null);
     };
 
     return (
         <section className="gallery__container">
             <div className="gallery">
                 {publicGalleryImages.map((image, index) => (
-                    <img key={index} src={image.image} className='gallery__image' alt={`Public Gallery Image ${index}`} onClick={() => toggleModal(image.image, image.prompt)} /> // Need to find the url for each image
+                    <Link
+                        className='gallery__link'
+                        key={index}
+                        to={`/${image.imageId}`}
+                        onClick={(event) => handleImageClick(event, image.image, image.prompt, image.imageId)}>
+                        <img
+                            src={image.image}
+                            className='gallery__image'
+                            alt={`Public Gallery Image ${index}`}
+                        />
+                    </Link>
                 ))}
                 {selectedImage &&
-                    <PublicGalleryModal
-                        toggleModal={closeModal}
-                        image={selectedImage}
-                        prompt={prompt}
-                    />}
+                    <PublicGalleryModal closeModal={closeModal} handleFetchImage={handleFetchImage} imageUrl={selectedImage.image} prompt={prompt} imageId={imageId} />}
             </div>
         </section>
     );

@@ -166,61 +166,63 @@ function UserInput() {
 
     return (
         <>
-            <article className='form__article'>
-                {!isLoading && !generatedImage && (
-                    <form className='form' onSubmit={handleSubmit}>
-                        <fieldset>
-                            <legend><img src={logo} className='logo' alt="ON THE Dai AI Art Generator Logo" /></legend>
-                            <textarea
-                                className='form__input'
-                                placeholder='What would you like to create?'
-                                value={inputText}
-                                onChange={(event) => setInputText(event.target.value)}>
-                            </textarea>
-                            <button type='submit' className='form__button'>GENERATE</button>
-                        </fieldset>
-                    </form>
-                )}
-                <figure className='generated__section'>
-                    {/* Show the otdLogo only when isLoading and generatedImage are both true */}
-                    {(isLoading || generatedImage) && (
-                        <img onClick={handleRefreshBrowser} className='generated__logo' src={otdLogo} alt='OTDNews' />
+            <main>
+                <article className='form__article'>
+                    {!isLoading && !generatedImage && (
+                        <form className='form' onSubmit={handleSubmit}>
+                            <fieldset>
+                                <legend><img src={logo} className='logo' alt="ON THE Dai AI Art Generator Logo" /></legend>
+                                <textarea
+                                    className='form__input'
+                                    placeholder='What would you like to create?'
+                                    value={inputText}
+                                    onChange={(event) => setInputText(event.target.value)}>
+                                </textarea>
+                                <button type='submit' className='form__button'>GENERATE</button>
+                            </fieldset>
+                        </form>
                     )}
-                    {error && <div>{error}</div>}
-                    {isLoading && <img className="generated__loading" src={loadingGif} alt="Loading..." />} {/* Loading indicator */}
-                    {generatedImage && imageLoaded && (
-                        <section className="generated__container">
-                            <img src={generatedImage} className='generated__image' alt="Generated Artwork" />
-                            <button onClick={handleCreateNew} className={`generated__create-new-button ${showButtonAnimation ? 'glowing' : ''}`}>CREATE NEW ART</button>
-                        </section>
-                    )}
-                </figure>
-            </article>
-            <section className='gallery__news'>
-                <div className="gallery__heading-container">
-                    <h2
-                        className={showPublicGallery ? "gallery__heading" : "gallery__heading--inactive"}
-                        onClick={() => toggleComponent('Public Gallery')}>
-                        Public Gallery
-                    </h2>
-                    <h2
-                        className={showPublicGallery ? "gallery__heading--inactive" : "gallery__heading"}
-                        onClick={() => toggleComponent('Breaking News')}>
-                        Breaking News
-                    </h2>
-                </div>
-                {showPublicGallery ?
-                <PublicGallery key={publicGalleryKey} inputText={inputText} /> :
-                    <BreakingNews
-                        setInputText={setInputText}
-                        userInputVisible={!isLoading && !generatedImage}
-                        promptGenerated={promptGenerated}
-                        handleGenerate={handleGenerate}
-                        inputText={inputText}
-                        setShowButtonAnimation={setShowButtonAnimation}
-                        setPromptGenerated={setPromptGenerated}
-                        handleButtonAnimation={handleButtonAnimation} />}
-            </section>
+                    <figure className='generated__section'>
+                        {/* Show the otdLogo only when isLoading and generatedImage are both true */}
+                        {(isLoading || generatedImage) && (
+                            <img onClick={handleRefreshBrowser} className='generated__logo' src={otdLogo} alt='OTDNews' />
+                        )}
+                        {error && <div>{error}</div>}
+                        {isLoading && <img className="generated__loading" src={loadingGif} alt="Loading..." />} {/* Loading indicator */}
+                        {generatedImage && imageLoaded && (
+                            <section className="generated__container">
+                                <img src={generatedImage} className='generated__image' alt="Generated Artwork" />
+                                <button onClick={handleCreateNew} className={`generated__create-new-button ${showButtonAnimation ? 'glowing' : ''}`}>CREATE NEW ART</button>
+                            </section>
+                        )}
+                    </figure>
+                </article>
+                <section className='gallery__news'>
+                    <div className="gallery__heading-container">
+                        <h2
+                            className={showPublicGallery ? "gallery__heading" : "gallery__heading--inactive"}
+                            onClick={() => toggleComponent('Public Gallery')}>
+                            Public Gallery
+                        </h2>
+                        <h2
+                            className={showPublicGallery ? "gallery__heading--inactive" : "gallery__heading"}
+                            onClick={() => toggleComponent('Breaking News')}>
+                            Breaking News
+                        </h2>
+                    </div>
+                    {showPublicGallery ?
+                        <PublicGallery key={publicGalleryKey} inputText={inputText} /> :
+                        <BreakingNews
+                            setInputText={setInputText}
+                            userInputVisible={!isLoading && !generatedImage}
+                            promptGenerated={promptGenerated}
+                            handleGenerate={handleGenerate}
+                            inputText={inputText}
+                            setShowButtonAnimation={setShowButtonAnimation}
+                            setPromptGenerated={setPromptGenerated}
+                            handleButtonAnimation={handleButtonAnimation} />}
+                </section>
+            </main>
         </>
     );
 

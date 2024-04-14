@@ -89,13 +89,13 @@ const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleG
                             <div className='news__pagination'>
                                 {Array.from({ length: totalPages }, (_, index) => (
                                     <NavLink
-                                        key={index + 1}
-                                        to={`/${index + 1}`}
-                                        activeClassName="active"
-                                        className={`news__pagination-button ${index + 1 === activePaginationButton ? "active" : ""} ${index === 0 ? "first-page" : ""}`}
-                                        onClick={() => handlePageChange(index + 1, index)}>
-                                        {index + 1}
-                                    </NavLink>
+                                    key={index + 1}
+                                    to={`/${index + 1}`}
+                                    activeclassName="active"
+                                    className={`news__pagination-button ${index + 1 === activePaginationButton ? "active" : ""} ${index === 0 ? "first-page" : ""}`}
+                                    onClick={() => handlePageChange(index + 1, index)}>
+                                    {index + 1}
+                                </NavLink>
                                 ))}
                             </div>
                         </section>

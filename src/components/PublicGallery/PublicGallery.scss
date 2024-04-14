@@ -43,6 +43,12 @@
     }
 
     &__image {
+        max-width: 100%; /* Ensure the image does not exceed its container's width */
+        max-height: 12rem; /* Set a maximum height for the images */
+        object-fit: contain; /* Ensure the image content is contained within its container */
+    }
+
+    &__link {
         width: calc((100% - 0.5rem) / 3);
         border-radius: 1px;
         cursor: pointer;
@@ -50,7 +56,6 @@
         @include tablet {
             width: calc((100% - 1rem) / 3);
         }
-
     }
 
     &__news {
