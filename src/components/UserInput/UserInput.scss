@@ -14,6 +14,7 @@
         width: 100%;
         max-width: 38rem;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
 
@@ -61,6 +62,11 @@
             border-radius: 3px;
             box-shadow: 0 0 5px $primary1;
         }
+
+        &--invalid {
+            border: 1px solid $primary1;
+            animation: glowing 1s infinite;
+        }
     }
 }
 
@@ -71,9 +77,8 @@
         flex-direction: column;
         justify-content: space-between;
         gap: 0.5rem;
-        min-height: 40vw;
         width: 100%;
-        height: 100%;
+        min-height: 12rem;
     }
 
     &__create-new-button {
@@ -97,12 +102,13 @@
     }
 
     &__image {
-        min-height: 100%;
+        height: 100%;
+        max-height: 24rem;
         animation: fadeIn 3s;
     }
 
     &__loading {
-        min-height: 40vw;
+        min-height: 12rem;
         max-height: 17rem;
         object-fit: contain;
     }
@@ -122,10 +128,10 @@
     &__section {
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
+        justify-content: space-between;
         align-items: start;
         width: 100%;
-        min-height: 40vw;
+        height: 100%;
     }
 }
 

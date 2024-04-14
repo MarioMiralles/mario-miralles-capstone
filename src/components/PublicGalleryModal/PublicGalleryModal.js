@@ -1,37 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import './PublicGalleryModal.scss';
 import logo from '../../assets/images/OTDLogo.png';
 
-function PublicGalleryModal({ handleFetchImage, imageUrl: propImageUrl, prompt, imageId }) {
+function PublicGalleryModal({ handleClose, imageUrl: propImageUrl, prompt, imageId }) {
     const [copied, setCopied] = useState(false); // State variable to track whether the headline has been copied
     const [promptState, setPrompt] = useState(null); // State to hold prompt
     const [isModalOpen, setIsModalOpen] = useState(true); // State to track whether the modal is open
-    const navigate = useNavigate();
-
-    // Fetch image and prompt based on imageId
-    useEffect(() => {
-        if (imageId) {
-            navigate(`/${imageId}`);
-            handleFetchImage(imageId)
-                .then(data => {
-                    if (data && data.imageUrl && data.prompt) {
-                        setImageUrl(data.imageUrl);
-                        setPrompt(data.prompt);
-                    } else {
-                        console.error('Invalid data format:', data);
-                        // Handle the case where the data is not as expected
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching image data:', error);
-                    // Handle fetch error
-                });
-        }
-    }, [imageId, navigate, handleFetchImage]);
-
-    // Set the imageUrl state with the prop value
-    const [imageUrl, setImageUrl] = useState(propImageUrl);
+    const [imageUrl, setImageUrl] = useState(propImageUrl); // Initialize imageUrl with propImageUrl
 
     //=====================//
     // COPY PROMPT FEATURE //

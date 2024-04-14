@@ -22,6 +22,8 @@ function UserInput() {
     const [promptGenerated, setPromptGenerated] = useState(false);
     const [showButtonAnimation, setShowButtonAnimation] = useState(false);
     const [showButtonAnimationTimeout, setShowButtonAnimationTimeout] = useState(null);
+    const [generateButtonClicked, setGenerateButtonClicked] = useState(false); // State to track whether the textarea has been touched
+
 
     useEffect(() => {
         return () => {
@@ -103,7 +105,12 @@ function UserInput() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        setImageLoaded(false); // Reset the imageLoaded state when submitting a new request
+        if (!inputText) {
+            handleButtonAnimation(); // Trigger the button animation
+            setGenerateButtonClicked(true); // Set the generateButtonClicked state
+            return;
+        }
+        setImageLoaded(false);
         handleGenerate(inputText);
     };
 
@@ -154,8 +161,14 @@ function UserInput() {
 
     const handleButtonAnimation = () => {
         setShowButtonAnimation(true);
+        if (showButtonAnimationTimeout) {
+            clearTimeout(showButtonAnimationTimeout); // Clear the previous timeout if it exists
+        }
         setShowButtonAnimationTimeout(
-            setTimeout(() => setShowButtonAnimation(false), 3000)
+            setTimeout(() => {
+                setShowButtonAnimation(false);
+                setGenerateButtonClicked(false); // Reset generateButtonClicked state
+            }, 3000)
         );
     }
 
@@ -173,11 +186,11 @@ function UserInput() {
                             <fieldset>
                                 <legend><img src={logo} className='logo' alt="ON THE Dai AI Art Generator Logo" /></legend>
                                 <textarea
-                                    className='form__input'
+                                    className={`form__input ${generateButtonClicked && !inputText ? 'form__input--invalid' : ''}`}
                                     placeholder='What would you like to create?'
                                     value={inputText}
-                                    onChange={(event) => setInputText(event.target.value)}>
-                                </textarea>
+                                    onChange={(event) => setInputText(event.target.value)}
+                                />
                                 <button type='submit' className='form__button'>GENERATE</button>
                             </fieldset>
                         </form>
@@ -211,7 +224,9 @@ function UserInput() {
                         </h2>
                     </div>
                     {showPublicGallery ?
-                        <PublicGallery key={publicGalleryKey} inputText={inputText} /> :
+                        <PublicGallery
+                            key={publicGalleryKey} inputText={inputText}
+                            handleFetchImage={handleFetchImage} /> :
                         <BreakingNews
                             setInputText={setInputText}
                             userInputVisible={!isLoading && !generatedImage}

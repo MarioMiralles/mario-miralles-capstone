@@ -13,7 +13,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<UserInput />} />
           <Route exact path="/gallery" element={<PublicGallery />} />
-          <Route path="/:imageId" element={<PublicGalleryModal />} />
+          <Route path="/gallery/:imageId" element={<PublicGalleryModal />} />
         </Routes>
       </BrowserRouter>
     </>

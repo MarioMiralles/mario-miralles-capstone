@@ -1,7 +1,7 @@
 import '../PublicGallery/PublicGallery.scss'
 import React, { useState, useEffect } from 'react';
 import PublicGalleryModal from '../PublicGalleryModal/PublicGalleryModal';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const PublicGallery = ({ handleFetchImage }) => {
     const [publicGalleryImages, setPublicGalleryImages] = useState([]); // State to hold gallery images
@@ -10,6 +10,8 @@ const PublicGallery = ({ handleFetchImage }) => {
     const [prompt, setPrompt] = useState(null);
     const [imageId, setImageId] = useState(null);
     const apiKey = process.env.REACT_APP_API_KEY;
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchPublicGalleryImages(); // Fetch gallery images when component mounts
@@ -50,17 +52,11 @@ const PublicGallery = ({ handleFetchImage }) => {
     };
 
     // Function to handle image click and open modal
-    const handleImageClick = (event, image, prompt, imageId) => {
+    const handleImageClick = (event, image) => {
         event.preventDefault(); // Prevent default behavior of Link
-        toggleModal(image, prompt, imageId); // Open modal
-        console.log(imageId)
-    };
-
-    // Function to set image attributes in the modal
-    const toggleModal = (image, prompt, imageId) => {
-        setSelectedImage(image);
-        setPrompt(prompt);
-        setImageId(imageId);
+        setSelectedImage(image.image);
+        setPrompt(image.prompt);
+        setImageId(image.imageId);
     };
 
     // Function to close modal
@@ -77,8 +73,8 @@ const PublicGallery = ({ handleFetchImage }) => {
                     <Link
                         className='gallery__link'
                         key={index}
-                        to={`/${image.imageId}`}
-                        onClick={(event) => handleImageClick(event, image.image, image.prompt, image.imageId)}>
+                        to={`/gallery/${image.imageId}`}
+                        onClick={(event) => handleImageClick(event, image)}>
                         <img
                             src={image.image}
                             className='gallery__image'
@@ -87,7 +83,12 @@ const PublicGallery = ({ handleFetchImage }) => {
                     </Link>
                 ))}
                 {selectedImage &&
-                    <PublicGalleryModal closeModal={closeModal} handleFetchImage={handleFetchImage} imageUrl={selectedImage.image} prompt={prompt} imageId={imageId} />}
+                    <PublicGalleryModal
+                        closeModal={closeModal}
+                        handleFetchImage={handleFetchImage}
+                        imageUrl={selectedImage}
+                        prompt={prompt} imageId={imageId} />
+                }
             </div>
         </section>
     );
