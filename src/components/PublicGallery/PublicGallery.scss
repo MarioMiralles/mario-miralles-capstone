@@ -15,6 +15,10 @@
         gap: 0.5rem;
     }
 
+    @include desktop {
+        max-width: 100%;
+    }
+
     &__heading {
         padding: 0.25rem;
         border-top: 1.5px solid $primary1;
@@ -22,6 +26,11 @@
         cursor: pointer;
         font-family: "Lovelo Black";
         font-weight: 400;
+
+        @include desktop {
+            cursor: default;
+            border-top: none;
+        }
 
         &-container {
             padding-bottom: 0.25rem;
@@ -61,5 +70,9 @@
     &__news {
         max-width: 38rem;
         width: 100%;
+
+        @include desktop {
+            max-width: 100%;
+        }
     }
 }

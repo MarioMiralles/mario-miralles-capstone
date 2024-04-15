@@ -52,7 +52,6 @@ const PublicGallery = ({ handleFetchImage }) => {
 
     // Function to handle image click and open modal
     const handleImageClick = (image) => {
-        console.log("Selected image:", image); // Log selected image
         setSelectedImage(image);
         setPrompt(image.prompt);
         setImageId(image.imageId);
@@ -85,13 +84,10 @@ const PublicGallery = ({ handleFetchImage }) => {
                 ))}
                 {selectedImage && isModalOpen && (
                     <PublicGalleryModal
-                        closeModal={closeModal}
-                        handleFetchImage={handleFetchImage}
-                        image={selectedImage}
-                        prompt={prompt}
-                        imageId={imageId}
-                        isOpen={isModalOpen}  // Pass isModalOpen state as isOpen prop
-                        onClose={closeModal} />
+                        isOpen={isModalOpen}
+                        onClose={closeModal}
+                        image={selectedImage} // Ensure the prop name matches what PublicGalleryModal expects
+                        prompt={prompt} />
                 )}
             </div>
         </section>

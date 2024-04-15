@@ -46,6 +46,11 @@ fieldset {
   max-width: 20rem;
   width: 100%;
   max-height: 16rem;
+
+  @include desktop {
+    max-width: 30rem;
+  }
+
 }
 
 ::-webkit-scrollbar {

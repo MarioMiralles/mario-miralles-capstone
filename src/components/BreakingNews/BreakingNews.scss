@@ -15,6 +15,26 @@
         gap: 0.5rem;
     }
 
+    &__container {
+        padding-top: 0.5rem;
+    }
+
+    &__heading {
+        padding: 0.25rem;
+        border-top: 1.5px solid $primary1;
+        border-radius: 3px 3px 0 0;
+        cursor: pointer;
+        font-family: "Lovelo Black";
+        font-weight: 400;
+        width: fit-content;
+        margin-left: auto;
+
+        @include desktop {
+            cursor: default;
+            border-top: none;
+        }
+    }
+
     &__image {
         width: calc((100% - 0.5rem) / 3);
 

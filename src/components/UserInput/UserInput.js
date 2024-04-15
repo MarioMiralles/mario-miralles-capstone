@@ -1,11 +1,23 @@
 import './UserInput.scss'
 import logo from '../../../src/assets/images/Logo2024.png';
 import otdLogo from '../../../src/assets/images/OTDLogo.png';
-import loadingGif from '../../assets/images/Loading_GIF.gif'
+import loadingGif from '../../../src/assets/images/Loading_GIF.gif'
+import qrCode from '../../../src/assets/icons/qr-code.png'
+import tryIt from '../../../src/assets/icons/try-it.png'
+import discord from '../../../src/assets/icons/discord.png';
+import tiktok from '../../../src/assets/icons/tiktok.png';
+import websiteGIF from '../../../src/assets/icons/Website_GIF.gif';
+import instagram from '../../../src/assets/icons/instagram.png';
+import twitter from '../../../src/assets/icons/twitter.png';
+import youtube from '../../../src/assets/icons/youtube.png';
+import facebook from '../../../src/assets/icons/facebook.png';
+import rumble from '../../../src/assets/icons/rumble.png';
 import React, { useState, useEffect } from "react";
 import PublicGallery from '../PublicGallery/PublicGallery';
 import BreakingNews from '../BreakingNews/BreakingNews';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+const icons = require.context('../../../src/assets/icons', true);
+const getIcon = (iconName) => icons(`./${iconName}`).default;
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -23,7 +35,19 @@ function UserInput() {
     const [showButtonAnimation, setShowButtonAnimation] = useState(false);
     const [showButtonAnimationTimeout, setShowButtonAnimationTimeout] = useState(null);
     const [generateButtonClicked, setGenerateButtonClicked] = useState(false); // State to track whether the textarea has been touched
+    const [isDesktopView, setIsDesktopView] = useState(window.innerWidth >= 1280);
 
+    useEffect(() => {
+        const handleResize = () => {
+            setIsDesktopView(window.innerWidth >= 1280);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     useEffect(() => {
         return () => {
@@ -35,7 +59,7 @@ function UserInput() {
 
     const toggleComponent = (section) => {
         if ((section === 'Public Gallery' && showPublicGallery) || (section === 'Breaking News' && !showPublicGallery)) {
-            return; // If the clicked section is already active, return early
+            return;
         }
         setShowPublicGallery((prev) => !prev);
     };
@@ -159,6 +183,7 @@ function UserInput() {
         setPromptGenerated(false); // Reset promptGenerated state
     };
 
+    // Validation glow animation
     const handleButtonAnimation = () => {
         setShowButtonAnimation(true);
         if (showButtonAnimationTimeout) {
@@ -179,65 +204,116 @@ function UserInput() {
 
     return (
         <>
-            <main>
-                <article className='form__article'>
-                    {!isLoading && !generatedImage && (
-                        <form className='form' onSubmit={handleSubmit}>
-                            <fieldset>
-                                <legend><img src={logo} className='logo' alt="ON THE Dai AI Art Generator Logo" /></legend>
-                                <textarea
-                                    className={`form__input ${generateButtonClicked && !inputText ? 'form__input--invalid' : ''}`}
-                                    placeholder='What would you like to create?'
-                                    value={inputText}
-                                    onChange={(event) => setInputText(event.target.value)}
-                                />
-                                <button type='submit' className='form__button'>GENERATE</button>
-                            </fieldset>
-                        </form>
-                    )}
-                    <figure className='generated__section'>
-                        {/* Show the otdLogo only when isLoading and generatedImage are both true */}
-                        {(isLoading || generatedImage) && (
-                            <img onClick={handleRefreshBrowser} className='generated__logo' src={otdLogo} alt='OTDNews' />
+            <main className='main'>
+                <article className='form__left'>
+                    <section className='form__article'>
+                        {!isLoading && !generatedImage && (
+                            <form className='form' onSubmit={handleSubmit}>
+                                <fieldset>
+                                    <legend><img src={logo} className='logo' alt="ON THE Dai AI Art Generator Logo" /></legend>
+                                    <textarea
+                                        className={`form__input ${generateButtonClicked && !inputText ? 'form__input--invalid' : ''}`}
+                                        placeholder='What would you like to create?'
+                                        value={inputText}
+                                        onChange={(event) => setInputText(event.target.value)}
+                                    />
+                                    <button type='submit' className='form__button'>GENERATE</button>
+                                </fieldset>
+                            </form>
                         )}
-                        {error && <div>{error}</div>}
-                        {isLoading && <img className="generated__loading" src={loadingGif} alt="Loading..." />} {/* Loading indicator */}
-                        {generatedImage && imageLoaded && (
-                            <section className="generated__container">
-                                <img src={generatedImage} className='generated__image' alt="Generated Artwork" />
-                                <button onClick={handleCreateNew} className={`generated__create-new-button ${showButtonAnimation ? 'glowing' : ''}`}>CREATE NEW ART</button>
-                            </section>
-                        )}
-                    </figure>
+                        <figure className='generated__section'>
+                            {/* Show the otdLogo only when isLoading and generatedImage are both true */}
+                            {(isLoading || generatedImage) && (
+                                <img onClick={handleRefreshBrowser} className='generated__logo' src={otdLogo} alt='OTDNews' />
+                            )}
+                            {error && <div>{error}</div>}
+                            {isLoading && <img className="generated__loading" src={loadingGif} alt="Loading..." />} {/* Loading indicator */}
+                            {generatedImage && imageLoaded && (
+                                <section className="generated__container">
+                                    <img src={generatedImage} className='generated__image' alt="Generated Artwork" />
+                                    <button onClick={handleCreateNew} className={`generated__create-new-button ${showButtonAnimation ? 'glowing' : ''}`}>CREATE NEW ART</button>
+                                </section>
+                            )}
+                        </figure>
+                    </section>
+                    <section className='gallery__news'>
+                        <div className="gallery__heading-container">
+                            {isDesktopView && (
+                                <h2 className="gallery__heading">PUBLIC GALLERY</h2>
+                            )}
+                            {!isDesktopView && (
+                                <>
+                                    <h2
+                                        className={showPublicGallery ? "gallery__heading" : "gallery__heading--inactive"}
+                                        onClick={() => toggleComponent('Public Gallery')}>
+                                        Public Gallery
+                                    </h2>
+                                    <h2
+                                        className={showPublicGallery ? "gallery__heading--inactive" : "gallery__heading"}
+                                        onClick={() => toggleComponent('Breaking News')}>
+                                        Breaking News
+                                    </h2>
+                                </>
+                            )}
+
+                        </div>
+                        {showPublicGallery ?
+                            <PublicGallery
+                                key={publicGalleryKey} inputText={inputText}
+                                handleFetchImage={handleFetchImage} /> :
+                            <BreakingNews
+                                setInputText={setInputText}
+                                userInputVisible={!isLoading && !generatedImage}
+                                promptGenerated={promptGenerated}
+                                handleGenerate={handleGenerate}
+                                inputText={inputText}
+                                setShowButtonAnimation={setShowButtonAnimation}
+                                setPromptGenerated={setPromptGenerated}
+                                handleButtonAnimation={handleButtonAnimation} />}
+                    </section>
                 </article>
-                <section className='gallery__news'>
-                    <div className="gallery__heading-container">
-                        <h2
-                            className={showPublicGallery ? "gallery__heading" : "gallery__heading--inactive"}
-                            onClick={() => toggleComponent('Public Gallery')}>
-                            Public Gallery
-                        </h2>
-                        <h2
-                            className={showPublicGallery ? "gallery__heading--inactive" : "gallery__heading"}
-                            onClick={() => toggleComponent('Breaking News')}>
-                            Breaking News
-                        </h2>
-                    </div>
-                    {showPublicGallery ?
-                        <PublicGallery
-                            key={publicGalleryKey} inputText={inputText}
-                            handleFetchImage={handleFetchImage} /> :
-                        <BreakingNews
-                            setInputText={setInputText}
-                            userInputVisible={!isLoading && !generatedImage}
-                            promptGenerated={promptGenerated}
-                            handleGenerate={handleGenerate}
-                            inputText={inputText}
-                            setShowButtonAnimation={setShowButtonAnimation}
-                            setPromptGenerated={setPromptGenerated}
-                            handleButtonAnimation={handleButtonAnimation} />}
+                <section className='form__right'>
+                    {isDesktopView && (
+                        <article className='news-desktop'>
+                            <section className='news-desktop__news'>
+                                <BreakingNews
+                                    setInputText={setInputText}
+                                    userInputVisible={!isLoading && !generatedImage}
+                                    promptGenerated={promptGenerated}
+                                    handleGenerate={handleGenerate}
+                                    inputText={inputText}
+                                    setShowButtonAnimation={setShowButtonAnimation}
+                                    setPromptGenerated={setPromptGenerated}
+                                    handleButtonAnimation={handleButtonAnimation}
+                                    isDesktopView={isDesktopView}
+                                />
+                            </section>
+                            <section className='news-desktop__social'>
+                                <div className='news-desktop__scan'>
+                                    <Link className='news-desktop__scan-qr' to=""><img className='news-desktop__scan-qr' src={qrCode} alt="QR code to try the Art Generator" /></Link>
+                                    <img className='news-desktop__scan-try' src={tryIt} alt="Try It Out!" />
+                                </div>
+                                <div className='news-desktop__social-row'>
+                                    <div className='news-desktop__social-column'>
+                                        <Link className='news-desktop__social-icon' to="https://discord.com/invite/J5RGSpeXHd" target='_blank'><img className='news-desktop__social-icon' src={discord} alt="Discord" /></Link>
+                                        <Link className='news-desktop__social-icon' to="https://www.tiktok.com/@onthedai" target='_blank'><img className='news-desktop__social-icon' src={tiktok} alt="TikTok" /></Link>
+                                    </div>
+                                    <Link className='news-desktop__social-website' to="https://onthedai.com" target='_blank'><img className='news-desktop__social-website--icon' src={websiteGIF} alt="Official Website" /></Link>
+                                    <div className='news-desktop__social-column'>
+                                        <Link className='news-desktop__social-icon' to="https://www.instagram.com/onthedai_news/" target='_blank'><img className='news-desktop__social-icon' src={instagram} alt="Instagram" /></Link>
+                                        <Link className='news-desktop__social-icon' to="https://twitter.com/onthedai" target='_blank'><img className='news-desktop__social-icon' src={twitter} alt="Twitter" /></Link>
+                                    </div>
+                                </div>
+                                <div className='news-desktop__social-row--bottom'>
+                                <Link className='news-desktop__social-icon--outer' to="https://youtube.com/@onthedai?sub_confirmation=1" target='_blank'><img className='news-desktop__social-icon' src={youtube} alt="YouTube" /></Link>
+                                <Link className='news-desktop__social-icon--inner' to="https://www.facebook.com/onthedai/" target='_blank'><img className='news-desktop__social-icon' src={facebook} alt="Facebook" /></Link>
+                                <Link className='news-desktop__social-icon--outer' to="https://rumble.com/c/c-3329336" target='_blank'><img className='news-desktop__social-icon' src={rumble} alt="Rumble" /></Link>
+                                </div>
+                            </section>
+                        </article>
+                    )}
                 </section>
-            </main>
+            </main >
         </>
     );
 
