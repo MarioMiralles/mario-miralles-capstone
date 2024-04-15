@@ -11,6 +11,7 @@ import facebook from '../../../src/assets/icons/facebook.png';
 import rumble from '../../../src/assets/icons/rumble.png';
 import otdPromoVideo from '../../../src/assets/videos/promo.mp4';
 import poster from '../../../src/assets/icons/poster.png';
+import SocialLinksModal from "../SocialLinksModal/SocialLinksModal";
 
 function SocialLinks() {
 
@@ -21,6 +22,7 @@ function SocialLinks() {
                     <Link className='news-desktop__scan-qr' to=""><img className='news-desktop__scan-qr' src={qrCode} alt="QR code to try the Art Generator" /></Link>
                     <video poster={poster} className="news-desktop__video-mp4" controls><source src={otdPromoVideo} type="video/mp4"></source></video>
                 </div>
+                <SocialLinksModal />
                 <div className='news-desktop__social-row--container'>
                     <div className='news-desktop__social-column'>
                         <div className="news-desktop__social-row">
