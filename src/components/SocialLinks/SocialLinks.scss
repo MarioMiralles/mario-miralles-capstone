@@ -19,6 +19,11 @@
             font-family: "Lovelo Black";
             text-decoration: none;
             padding: 0.65rem;
+            border: none;
+            cursor: pointer;
+            min-height: 3.5rem;
+            max-height: 5rem;
+            width: 100%;
         }
 
         &-qr {
@@ -53,7 +58,7 @@
         &-container {
             background-color: $background3;
             padding: 1.5rem;
-            border-radius: 1.5rem;
+            border-radius: 0.5rem;
         }
 
         &-icon {

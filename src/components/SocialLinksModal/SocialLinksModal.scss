@@ -4,12 +4,13 @@
 .social-share {
     background-color: $background1;
     padding: 1rem;
-    margin: 1rem 0;
+    margin: 1rem 0 0 0;
     border-radius: 1rem;
-    display: column;
+    border-top: 3px solid $primary1;
+    border-bottom: 3px solid $primary1;
 
     &__delete-close {
-        background-color: rgb(0, 0, 0);
+        background-color: $background2;
         font-size: 1.25rem;
         font-family: "Lovelo";
         cursor: pointer;
@@ -31,4 +32,41 @@
             background-color: $background2;
         }
     }
+
+    &__heading {
+        font-family: "Lovelo";
+    }
+
+    &__icons {
+        border-radius: 5rem;
+        max-height: 5.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__nav {
+        @include display (row, space-between, nowrap);
+        align-items: center;
+        padding: 0 0.5rem 0.25rem 1rem;
+    }
+
+    &__row {
+        
+            &--links {
+            @include display (row, space-around, nowrap);
+            width: 100%;
+            padding: 0.25rem;
+            background-color: $background2;
+            gap: 0.5rem;
+            }
+    }
+
+    &__text {
+        font-family: "Lovelo Black";
+    }
+}
+
+#copy__button {
+    width: auto;
 }
