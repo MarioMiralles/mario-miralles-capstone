@@ -5,7 +5,7 @@
     width: 100%;
     @include display (column, flex-start, nowrap);
     gap: 2rem;
-    
+
     &__scan {
         width: 100%;
         background-color: $background2;
@@ -37,11 +37,16 @@
     }
 
     &__social {
-        background-color: $background2;
-        min-height: 35rem;
-        display: flex;
-        align-items: center;
-        max-height: 20rem;
+        max-width: 38rem;
+
+        @include desktop {
+            background-color: $background2;
+            min-height: 35rem;
+            display: flex;
+            align-items: center;
+            max-height: 20rem;
+        }
+
 
         &-column {
             @include display (column, center, nowrap);
@@ -58,9 +63,13 @@
         }
 
         &-container {
-            background-color: $background3;
-            padding: 1.5rem;
-            border-radius: 0.5rem;
+            max-width: 38rem;
+
+            @include desktop {
+                background-color: $background3;
+                padding: 1.5rem;
+                border-radius: 0.5rem;
+            }
         }
 
         &-icon {
@@ -104,14 +113,25 @@
     }
 
     &__video {
-        width: 60%;
-        background-color: $background2;
-        padding: 1rem;
+        display: none;
 
-        &-mp4 {
+        @include desktop {
             width: 60%;
             background-color: $background2;
-            cursor: pointer;
+            padding: 1rem;
+        }
+
+
+        &-mp4 {
+            display: none;
+
+            @include desktop {
+                width: 60%;
+                background-color: $background2;
+                cursor: pointer;
+                display: flex;
+            }
+
         }
     }
 }

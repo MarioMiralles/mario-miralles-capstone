@@ -280,7 +280,7 @@ function UserInput() {
                             </section>
                         </article>
                     )}
-                    <SocialLinks />
+                    {!isDesktopView && <SocialLinks /> }
                 </section>
             </main >
         </>

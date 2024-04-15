@@ -93,8 +93,13 @@
     }
 
     &__right {
-        width: 40%;
         display: flex;
+        width: 100%;
+        max-width: 38rem;
+
+        @include desktop {
+            width: 40%;
+        }
     }
 }
 
@@ -189,7 +194,7 @@
 
 .main {
     padding: 2rem;
-    
+
     @include desktop {
         @include display (row, flex-start, nowrap);
         align-items: flex-start;
