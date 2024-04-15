@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
 import './BreakingNews.scss';
 import axios from 'axios';
 import he from 'he';

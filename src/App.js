@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './App.scss';
 import UserInput from './components/UserInput/UserInput';
 import PublicGalleryModal from './components/PublicGalleryModal/PublicGalleryModal';

@@ -145,7 +145,7 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInpu
                     </lord-icon>
                     <p className='news-info__p'>View Story</p>
                 </a>
-                <a className='news-info__button--randomize' onClick={() => {
+                <div className='news-info__button--randomize' onClick={() => {
                     handleRandomArt();
                     handleButtonAnimation(); // Call the handleButtonAnimation function here
                 }} disabled={!userInputVisible || promptGenerated}>
@@ -157,7 +157,7 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInpu
                         colors="primary:#121331,secondary:#08a88a,tertiary:#4bb3fd,quaternary:#ffc738,quinary:#d59f80,senary:#242424,septenary:#f4f19c">
                     </lord-icon>
                     <p className='news-info__p'>Create a Random Artwork</p>
-                </a>
+                </div>
                 <a className='news-info__button' onClick={() => {
                     promptWithAI();
                     handleButtonAnimation(); // Call the handleButtonAnimation function here
