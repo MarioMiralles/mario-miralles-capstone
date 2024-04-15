@@ -71,7 +71,7 @@ function SocialLinks() {
                                 <Link className='news-desktop__social-icon' to="https://rumble.com/c/c-3329336" target='_blank'><img className='news-desktop__social-icon' src={rumble} alt="Rumble" /></Link>
                             </div>
                         </div>
-                        <div className='news-desktop__social-column--website'>
+                        <div className='news-desktop__social-column-website'>
                             <Link className='news-desktop__social-website' to="https://onthedai.com" target='_blank'><img className='news-desktop__social-website--icon' src={website} alt="Official Website" /></Link>
                         </div>
                     </div>
