@@ -82,10 +82,13 @@
     }
 
     &__left {
-        @include display (column, flex-start, nowrap);
+        @include display (column, center, nowrap);
         gap: 1rem;
+        width: 100%;
+        align-items: center;
 
         @include desktop {
+            @include display (column, flex-start, nowrap);
             width: 60%;
             max-width: 100%;
             gap: 2rem;

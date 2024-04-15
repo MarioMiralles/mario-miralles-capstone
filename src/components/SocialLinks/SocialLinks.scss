@@ -21,10 +21,11 @@
             text-decoration: none;
             border: none;
             cursor: pointer;
-            min-height: 3.5rem;
             width: 100%;
-            min-width: 3.75rem;
-            max-width: 4.5rem;
+            min-height: 2rem;
+            min-width: 2rem;
+            font-size: 1rem;
+
         }
 
         &-qr {
@@ -38,6 +39,7 @@
 
     &__social {
         max-width: 38rem;
+        width: 100%;
 
         @include desktop {
             background-color: $background2;
@@ -51,24 +53,33 @@
         &-column {
             @include display (column, center, nowrap);
             background-color: $background3;
-            width: 100%;
+            width: 65%;
 
-            &--website {
-                width: 25%;
+            &-website {
                 background-color: $background2;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                width: 30%;
+
+                @include desktop {
+                    width: 25%;
+                }
+
+                &--icon {
+                    width: 100%;
+                }
             }
         }
 
         &-container {
             max-width: 38rem;
+            background-color: $background3;
+            padding: 0.25rem;
+            border-radius: 0.5rem;
 
             @include desktop {
-                background-color: $background3;
                 padding: 1.5rem;
-                border-radius: 0.5rem;
             }
         }
 
@@ -78,8 +89,6 @@
             object-fit: contain;
             width: 100%;
             height: 100%;
-            min-width: 3.75rem;
-            max-width: 4.5rem;
         }
 
         &-row {
@@ -89,13 +98,23 @@
             background-color: $background2;
             gap: 0.5rem;
 
+            @include desktop {
+                gap: 0.5rem;
+            }
+
             &--container {
-                @include display (row, center, nowrap);
-                background-color: $background2;
+                border-top: 3px groove grey;
                 margin: 1rem 1rem 0 1rem;
                 padding: 0.5rem 0;
-                border-top: 3px groove grey;
-                gap: 1.5rem;
+                @include display (row, space-between, nowrap);
+                background-color: $background2;
+
+                @include desktop {
+                    @include display (row, center, nowrap);
+                    gap: 1.5rem;
+                }
+
+
             }
         }
 
@@ -105,9 +124,10 @@
             justify-content: center;
 
             &--icon {
-                max-height: 12rem;
                 background-color: $background2;
-                padding-right: 0.5rem;
+                padding: 0.5rem 0.5rem 0.5rem 0;
+                width: 100%;
+
             }
         }
     }
@@ -137,14 +157,22 @@
 }
 
 .react-share__ShareButton {
-    min-width: 4.5rem;
-    max-width: 5rem;
+    max-width: 2rem;
+
+    @include desktop {
+        min-width: 4.5rem;
+        max-width: 5rem;
+    }
 }
 
 #share__button {
     width: 100%;
     height: 100%;
-    min-height: 2rem;
     background-color: $background2;
-    max-width: 4rem;
+    min-height: 1.25rem;
+
+    @include desktop {
+        min-height: 2rem;
+        max-width: 4rem;
+    }
 }

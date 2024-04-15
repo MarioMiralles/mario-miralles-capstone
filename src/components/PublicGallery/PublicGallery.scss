@@ -19,6 +19,10 @@
         max-width: 100%;
     }
 
+    &__container {
+        min-height: 30rem;
+    } 
+
     &__heading {
         padding: 0.25rem;
         border-top: 1.5px solid $primary1;
@@ -70,6 +74,8 @@
     &__news {
         max-width: 38rem;
         width: 100%;
+        border-bottom: 1px outset grey;
+        padding-bottom: 1.5rem;
 
         @include desktop {
             max-width: 100%;
