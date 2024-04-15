@@ -2,20 +2,11 @@ import './UserInput.scss'
 import logo from '../../../src/assets/images/Logo2024.png';
 import otdLogo from '../../../src/assets/images/OTDLogo.png';
 import loadingGif from '../../../src/assets/images/Loading_GIF.gif'
-import qrCode from '../../../src/assets/icons/qr-code.png'
-import tryIt from '../../../src/assets/icons/try-it.png'
-import discord from '../../../src/assets/icons/discord.png';
-import tiktok from '../../../src/assets/icons/tiktok.png';
-import websiteGIF from '../../../src/assets/icons/Website_GIF.gif';
-import instagram from '../../../src/assets/icons/instagram.png';
-import twitter from '../../../src/assets/icons/twitter.png';
-import youtube from '../../../src/assets/icons/youtube.png';
-import facebook from '../../../src/assets/icons/facebook.png';
-import rumble from '../../../src/assets/icons/rumble.png';
 import React, { useState, useEffect } from "react";
 import PublicGallery from '../PublicGallery/PublicGallery';
 import BreakingNews from '../BreakingNews/BreakingNews';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import SocialLinks from '../SocialLinks/SocialLinks';
 const icons = require.context('../../../src/assets/icons', true);
 const getIcon = (iconName) => icons(`./${iconName}`).default;
 
@@ -275,6 +266,7 @@ function UserInput() {
                 <section className='form__right'>
                     {isDesktopView && (
                         <article className='news-desktop'>
+                            <SocialLinks />
                             <section className='news-desktop__news'>
                                 <BreakingNews
                                     setInputText={setInputText}
@@ -287,35 +279,6 @@ function UserInput() {
                                     handleButtonAnimation={handleButtonAnimation}
                                     isDesktopView={isDesktopView}
                                 />
-                            </section>
-                            <section className='news-desktop__social'>
-                                <div className='news-desktop__scan'>
-                                    <img className='news-desktop__scan-try' src={tryIt} alt="Try It Out!" />
-                                    <Link className='news-desktop__scan-qr' to=""><img className='news-desktop__scan-qr' src={qrCode} alt="QR code to try the Art Generator" /></Link>
-                                    <Link className='news-desktop__scan-share'>
-                                        <lord-icon
-                                            id="share__button"
-                                            src="https://cdn.lordicon.com/qpvtavng.json"
-                                            trigger="hover"
-                                            colors="primary:#ef8e6d,secondary:#fff,tertiary:#000">
-                                        </lord-icon>SHARE</Link>
-                                </div>
-                                <div className='news-desktop__social-row'>
-                                    <div className='news-desktop__social-column'>
-                                        <Link className='news-desktop__social-icon' to="https://discord.com/invite/J5RGSpeXHd" target='_blank'><img className='news-desktop__social-icon' src={discord} alt="Discord" /></Link>
-                                        <Link className='news-desktop__social-icon' to="https://www.tiktok.com/@onthedai" target='_blank'><img className='news-desktop__social-icon' src={tiktok} alt="TikTok" /></Link>
-                                    </div>
-                                    <Link className='news-desktop__social-website' to="https://onthedai.com" target='_blank'><img className='news-desktop__social-website--icon' src={websiteGIF} alt="Official Website" /></Link>
-                                    <div className='news-desktop__social-column'>
-                                        <Link className='news-desktop__social-icon' to="https://www.instagram.com/onthedai_news/" target='_blank'><img className='news-desktop__social-icon' src={instagram} alt="Instagram" /></Link>
-                                        <Link className='news-desktop__social-icon' to="https://twitter.com/onthedai" target='_blank'><img className='news-desktop__social-icon' src={twitter} alt="Twitter" /></Link>
-                                    </div>
-                                </div>
-                                <div className='news-desktop__social-row--bottom'>
-                                    <Link className='news-desktop__social-icon--outer' to="https://youtube.com/@onthedai?sub_confirmation=1" target='_blank'><img className='news-desktop__social-icon' src={youtube} alt="YouTube" /></Link>
-                                    <Link className='news-desktop__social-icon--inner' to="https://www.facebook.com/onthedai/" target='_blank'><img className='news-desktop__social-icon' src={facebook} alt="Facebook" /></Link>
-                                    <Link className='news-desktop__social-icon--outer' to="https://rumble.com/c/c-3329336" target='_blank'><img className='news-desktop__social-icon' src={rumble} alt="Rumble" /></Link>
-                                </div>
                             </section>
                         </article>
                     )}

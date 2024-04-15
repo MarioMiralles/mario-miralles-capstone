@@ -77,29 +77,32 @@ const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleG
             ) : (
                 <>
                     {isDesktopView && (
-                        <h2 className="news__heading">Breaking News</h2>
+                        <h2 className="news__heading" id="news__heading--pad-bottom">Breaking News</h2>
                     )}
                     {!showNewsInfo && ( // Only render if no headline is selected
                         <section className='news__pagination-container'>
-                            <div className='news__pages'>
-                                {currentTitles.map((page, index) => (
+                        <div className='news__pages'>
+                            {currentTitles.map((page, index) => {
+                                const truncatedTitle = page.title.rendered.split(' ').slice(0, 21).join(' '); // Get the first 21 words
+                                const displayTitle = page.title.rendered.length > 21 ? truncatedTitle + '...' : truncatedTitle; // Add ellipsis if title exceeds 21 words
+                                return (
                                     <h3 key={index} className='news__page-title' onClick={() => handleHeadlineClick(page)}>
-                                        {page.title.rendered.split(' ').slice(0, 21).join(' ')} {/* Display only the first 21 words */}
-                                        {page.title.rendered.split(' ').length > 21 ? '...' : ''} {/* Add ellipsis if the title exceeds 21 words */}
+                                        {isDesktopView ? page.title.rendered : displayTitle}
                                     </h3>
-                                ))}
-                            </div>
-                            <div className='news__pagination'>
-                                {Array.from({ length: totalPages }, (_, index) => (
-                                    <button
-                                        key={index + 1}
-                                        className={`news__pagination-button ${index + 1 === activePaginationButton ? "active" : ""} ${index === 0 ? "first-page" : ""}`}
-                                        onClick={() => handlePageChange(index + 1)}>
-                                        {index + 1}
-                                    </button>
-                                ))}
-                            </div>
-                        </section>
+                                );
+                            })}
+                        </div>
+                        <div className='news__pagination'>
+                            {Array.from({ length: totalPages }, (_, index) => (
+                                <button
+                                    key={index + 1}
+                                    className={`news__pagination-button ${index + 1 === activePaginationButton ? "active" : ""} ${index === 0 ? "first-page" : ""}`}
+                                    onClick={() => handlePageChange(index + 1)}>
+                                    {index + 1}
+                                </button>
+                            ))}
+                        </div>
+                    </section>
                     )}
                 </>
 

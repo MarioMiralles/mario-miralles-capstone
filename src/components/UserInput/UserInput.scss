@@ -8,6 +8,9 @@
         min-height: 24rem;
     }
 
+    @include desktop {
+        min-height: 30rem;
+    }
 
     &__article {
         height: 100%;
@@ -25,6 +28,7 @@
 
         @include desktop {
             max-width: 100%;
+            max-height: 35rem;
         }
     }
 
@@ -60,6 +64,11 @@
             min-height: 17rem;
         }
 
+        @include desktop {
+            font-size: 1rem;
+            min-height: 24rem;
+        }
+
         &:focus {
             outline: 1px solid $primary1;
             border-radius: 3px;
@@ -77,14 +86,14 @@
         gap: 1rem;
 
         @include desktop {
-            width: 50%;
+            width: 60%;
             max-width: 100%;
             gap: 2rem;
         }
     }
 
     &__right {
-        width: 50%;
+        width: 40%;
         display: flex;
     }
 }
@@ -99,6 +108,10 @@
         width: 100%;
         min-height: 12rem;
         align-items: center;
+
+        @include desktop {
+            max-height: 35rem;
+        }
     }
 
     &__create-new-button {
@@ -120,6 +133,7 @@
         width: 100%;
         max-width: 38rem;
         align-items: center;
+        object-fit: contain;
 
         @include desktop {
             max-width: 100%;
@@ -130,12 +144,21 @@
         height: 100%;
         max-height: 24rem;
         animation: fadeIn 3s;
+
+        @include desktop {
+            max-height: 30rem;
+            object-fit: cover;
+        }
     }
 
     &__loading {
         min-height: 12rem;
         max-height: 17rem;
         object-fit: contain;
+
+        @include desktop {
+            max-height: 30rem;
+        }
     }
 
     &__logo {
@@ -148,6 +171,10 @@
         @include tablet {
             max-width: 10rem;
         }
+
+        @include desktop {
+            max-width: 13rem;
+        }
     }
 
     &__section {
@@ -157,92 +184,6 @@
         align-items: start;
         width: 100%;
         height: 100%;
-    }
-}
-
-.news-desktop {
-    
-    &__scan {
-        width: 100%;
-        padding: 1rem;
-        background-color: $background2;
-        display: flex;
-
-        &-share {
-            width: 100%;
-            @include display (column, center, nowrap);
-            align-items: center;
-            padding: 0.5rem;
-            background-color: $background2;
-            font-family: "Lovelo Black";
-            text-decoration: none;
-        }
-
-        &-try {
-            width: 33%;
-            background-color: $background2;
-        }
-
-        &-qr {
-            width: 100%;
-            background-color: $background2;
-            display: flex;
-            align-items: center;
-        }
-    }
-
-    &__social {
-        background-color: $background3;
-        border-radius: 1.5rem;
-        padding: 1.5rem;
-        margin: 2rem;
-
-        &-column {
-            @include display (column, space-around, nowrap);
-            width: 100%;
-            padding: 0 1rem;
-            background-color: $background3;
-        }
-
-        &-icon {
-            width: 100%;
-            background-color: $background2;
-
-            &--inner {
-                background-color: $background2;
-                padding-top: 1rem;
-            }
-            
-            &--outer {
-                background-color: $background2;
-                padding-bottom: 1rem;
-            }
-        }
-
-        &-row {
-            @include display (row, flex-start, nowrap);
-            width: 100%;
-            padding: 1rem 1rem 0 1rem;
-            background-color: $background2;
-            gap: 1rem;
-
-            &--bottom {
-                @include display (row, flex-start, nowrap);
-                padding: 0 2rem;
-                background-color: $background2;
-                gap: 1rem;
-
-            }
-        }
-
-        &-website {
-            width: 100%;
-            background-color: $background2;
-
-            &--icon {
-                width: 100%;
-            }
-        }
     }
 }
 
@@ -259,12 +200,6 @@
 
 #breaking-news__heading {
     text-align: right;
-}
-
-#share__button {
-    width: 100%;
-    min-height: 8rem;
-    background-color: $background2;
 }
 
 // Validation error for random artwork and prompt generation
