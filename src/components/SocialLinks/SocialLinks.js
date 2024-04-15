@@ -12,22 +12,41 @@ import rumble from '../../../src/assets/icons/rumble.png';
 import otdPromoVideo from '../../../src/assets/videos/promo.mp4';
 import poster from '../../../src/assets/icons/poster.png';
 import SocialLinksModal from "../SocialLinksModal/SocialLinksModal";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 function SocialLinks() {
     const [modalOpen, setModalOpen] = useState(false);
+    const videoRef = useRef(null);
 
     const toggleModal = () => {
         setModalOpen(!modalOpen);
     }
+
+    const handlePlay = () => {
+        // Show controls when the video starts playing
+        videoRef.current.controls = true;
+    };
+
+    const handlePause = () => {
+        // Hide controls when the video pauses
+        videoRef.current.controls = false;
+    };
 
     return (
         <>
             <section className='news-desktop__social'>
                 <div className="news-desktop__social-container">
                     <div className='news-desktop__scan'>
-                        <Link className='news-desktop__scan-qr' to=""><img className='news-desktop__scan-qr' src={qrCode} alt="QR code to try the Art Generator" /></Link>
-                        <video poster={poster} className="news-desktop__video-mp4" controls><source src={otdPromoVideo} type="video/mp4"></source></video>
+                        <img className='news-desktop__scan-qr' src={qrCode} alt="QR code to try the Art Generator" />
+                        <video
+                            ref={videoRef}
+                            poster={poster}
+                            className='news-desktop__video-mp4'
+                            onMouseEnter={handlePlay}
+                            onMouseLeave={handlePause}
+                            onClick={handlePlay}>
+                            <source src={otdPromoVideo} type='video/mp4'></source>
+                        </video>
                     </div>
                     {modalOpen && <SocialLinksModal closeModal={toggleModal} />}
                     <div className='news-desktop__social-row--container' style={{ display: modalOpen ? 'none' : 'flex' }}>

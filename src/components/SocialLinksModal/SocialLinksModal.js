@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import '../SocialLinksModal/SocialLinksModal.scss'
 import { Link } from 'react-router-dom'
 import {
@@ -20,6 +21,16 @@ import {
 } from "react-share";
 
 function SocialLinksModal({ closeModal }) {
+    const [copyText, setCopyText] = useState('Copy');
+
+    const copyUrlToClipboard = () => {
+        navigator.clipboard.writeText('https://onthedai.com/create-art')
+            .then(() => {
+                setCopyText('Copied!');
+                setTimeout(() => setCopyText('Copy'), 2000);
+            })
+            .catch((error) => console.error(error));
+    };
 
     return (
         <>
@@ -30,18 +41,17 @@ function SocialLinksModal({ closeModal }) {
                         <p className='social-share__delete-close' alt='close button'>X</p>
                     </Link>
                 </div>
-
                 <div className="social-share__row--links">
-                    <Link className='news-desktop__scan-share' id="copy__button">
+                    <Link className='news-desktop__scan-share' id="copy__button" onClick={copyUrlToClipboard}>
                         <lord-icon
                             id="share__button"
                             src="https://cdn.lordicon.com/cbigqefp.json"
                             trigger="morph"
                             state="morph-link"
                             colors="primary:#fff,secondary:#b4b4b4">
-                        </lord-icon>Copy
+                        </lord-icon>{copyText}
                     </Link>
-                    <EmailShareButton className='social-share__icons'><EmailIcon className='social-share__icons' /><h3 className='social-share__text'>Email</h3></EmailShareButton>
+                    <EmailShareButton url={"https://onthedai.com/create-art"} className='social-share__icons'><EmailIcon className='social-share__icons' /><h3 className='social-share__text'>Email</h3></EmailShareButton>
                     <FacebookShareButton className='social-share__icons'><FacebookIcon className='social-share__icons' /><h3 className='social-share__text'>Facebook</h3></FacebookShareButton>
                     <LinkedinShareButton className='social-share__icons'><LinkedinIcon className='social-share__icons' /><h3 className='social-share__text'>LinkedIn</h3></LinkedinShareButton>
                 </div>

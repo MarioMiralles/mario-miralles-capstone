@@ -11,6 +11,7 @@
         background-color: $background2;
         display: flex;
         gap: 1rem;
+        padding: 0.5rem 0;
 
         &-share {
             @include display (column, center, nowrap);
@@ -27,7 +28,8 @@
         }
 
         &-qr {
-            width: 100%;
+            width: 35%;
+            object-fit: contain;
             background-color: $background2;
             display: flex;
             align-items: center;
@@ -79,7 +81,9 @@
             &--container {
                 @include display (row, center, nowrap);
                 background-color: $background2;
-                padding: 1rem 0;
+                margin: 1rem 1rem 0 1rem;
+                padding: 0.5rem 0;
+                border-top: 3px groove grey;
             }
         }
 
@@ -96,13 +100,14 @@
     }
 
     &__video {
-        width: 50%;
+        width: 60%;
         background-color: $background2;
         padding: 1rem;
 
         &-mp4 {
             width: 60%;
             background-color: $background2;
+            cursor: pointer;
         }
     }
 }
