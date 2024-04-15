@@ -290,8 +290,15 @@ function UserInput() {
                             </section>
                             <section className='news-desktop__social'>
                                 <div className='news-desktop__scan'>
-                                    <Link className='news-desktop__scan-qr' to=""><img className='news-desktop__scan-qr' src={qrCode} alt="QR code to try the Art Generator" /></Link>
                                     <img className='news-desktop__scan-try' src={tryIt} alt="Try It Out!" />
+                                    <Link className='news-desktop__scan-qr' to=""><img className='news-desktop__scan-qr' src={qrCode} alt="QR code to try the Art Generator" /></Link>
+                                    <Link className='news-desktop__scan-share'>
+                                        <lord-icon
+                                            id="share__button"
+                                            src="https://cdn.lordicon.com/qpvtavng.json"
+                                            trigger="hover"
+                                            colors="primary:#ef8e6d,secondary:#fff,tertiary:#000">
+                                        </lord-icon>SHARE</Link>
                                 </div>
                                 <div className='news-desktop__social-row'>
                                     <div className='news-desktop__social-column'>
@@ -305,9 +312,9 @@ function UserInput() {
                                     </div>
                                 </div>
                                 <div className='news-desktop__social-row--bottom'>
-                                <Link className='news-desktop__social-icon--outer' to="https://youtube.com/@onthedai?sub_confirmation=1" target='_blank'><img className='news-desktop__social-icon' src={youtube} alt="YouTube" /></Link>
-                                <Link className='news-desktop__social-icon--inner' to="https://www.facebook.com/onthedai/" target='_blank'><img className='news-desktop__social-icon' src={facebook} alt="Facebook" /></Link>
-                                <Link className='news-desktop__social-icon--outer' to="https://rumble.com/c/c-3329336" target='_blank'><img className='news-desktop__social-icon' src={rumble} alt="Rumble" /></Link>
+                                    <Link className='news-desktop__social-icon--outer' to="https://youtube.com/@onthedai?sub_confirmation=1" target='_blank'><img className='news-desktop__social-icon' src={youtube} alt="YouTube" /></Link>
+                                    <Link className='news-desktop__social-icon--inner' to="https://www.facebook.com/onthedai/" target='_blank'><img className='news-desktop__social-icon' src={facebook} alt="Facebook" /></Link>
+                                    <Link className='news-desktop__social-icon--outer' to="https://rumble.com/c/c-3329336" target='_blank'><img className='news-desktop__social-icon' src={rumble} alt="Rumble" /></Link>
                                 </div>
                             </section>
                         </article>
