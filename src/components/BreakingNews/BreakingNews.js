@@ -54,9 +54,9 @@ const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleG
         setActivePaginationButton(pageNumber); // Update active button state
     }
 
-    //============================//
-    // NEWSINFO NAV - BACK & COPY //
-    //============================//
+    //======================================//
+    // NEWSINFO NAV - BACK & NEWSINFO CLICK //
+    //======================================//
     const handleBackClick = () => {
         setSelectedHeadline(null); // Clear selected headline
         setShowNewsInfo(false); // Hide NewsInfo component
