@@ -2,13 +2,11 @@ import './UserInput.scss'
 import logo from '../../../src/assets/images/Logo2024.png';
 import otdLogo from '../../../src/assets/images/OTDLogo.png';
 import loadingGif from '../../../src/assets/images/Loading_GIF.gif'
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import PublicGallery from '../PublicGallery/PublicGallery';
 import BreakingNews from '../BreakingNews/BreakingNews';
 import { useNavigate } from 'react-router-dom';
 import SocialLinks from '../SocialLinks/SocialLinks';
-const icons = require.context('../../../src/assets/icons', true);
-const getIcon = (iconName) => icons(`./${iconName}`).default;
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -54,12 +52,6 @@ function UserInput() {
         }
         setShowPublicGallery((prev) => !prev);
     };
-
-    useEffect(() => {
-        if (generationId) {
-            handleFetchImage();
-        }
-    }, [generationId]);
 
     //=========================//
     // LEONARDO AI API REQUEST //
@@ -129,7 +121,7 @@ function UserInput() {
         handleGenerate(inputText);
     };
 
-    const handleFetchImage = async () => {
+    const handleFetchImage = useCallback(async () => {
         setIsLoading(true); // Set loading to true when fetching image
         try {
             // Use a flag to prevent recursive calls
@@ -164,7 +156,13 @@ function UserInput() {
         } finally {
             setIsLoading(false); // Set loading to false after fetching image URL
         }
-    };
+    }, [generationId, setIsLoading, setError]);
+
+    useEffect(() => {
+        if (generationId) {
+            handleFetchImage();
+        }
+    }, [generationId, handleFetchImage]);
 
     // Create New Art Button
     const handleCreateNew = () => {
