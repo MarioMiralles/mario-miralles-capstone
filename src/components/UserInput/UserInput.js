@@ -282,6 +282,7 @@ function UserInput() {
                             </section>
                         </article>
                     )}
+                    <SocialLinks />
                 </section>
             </main >
         </>
