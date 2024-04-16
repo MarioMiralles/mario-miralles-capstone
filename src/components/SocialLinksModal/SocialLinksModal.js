@@ -24,7 +24,7 @@ function SocialLinksModal({ closeModal }) {
     const [copyText, setCopyText] = useState('Copy');
 
     const copyUrlToClipboard = () => {
-        navigator.clipboard.writeText('https://onthedai.com/create-art')
+        navigator.clipboard.writeText('https://otdnews.netlify.app')
             .then(() => {
                 setCopyText('Copied!');
                 setTimeout(() => setCopyText('Copy'), 2000);
@@ -51,7 +51,7 @@ function SocialLinksModal({ closeModal }) {
                             colors="primary:#fff,secondary:#b4b4b4">
                         </lord-icon>{copyText}
                     </Link>
-                    <EmailShareButton url={"https://onthedai.com/create-art"} className='social-share__icons'><EmailIcon className='social-share__icons' /><h3 className='social-share__text'>Email</h3></EmailShareButton>
+                    <EmailShareButton className='social-share__icons'><EmailIcon className='social-share__icons' /><h3 className='social-share__text'>Email</h3></EmailShareButton>
                     <FacebookShareButton className='social-share__icons'><FacebookIcon className='social-share__icons' /><h3 className='social-share__text'>Facebook</h3></FacebookShareButton>
                     <LinkedinShareButton className='social-share__icons'><LinkedinIcon className='social-share__icons' /><h3 className='social-share__text'>LinkedIn</h3></LinkedinShareButton>
                 </div>

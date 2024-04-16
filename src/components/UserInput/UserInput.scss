@@ -196,10 +196,14 @@
 }
 
 .main {
-    padding: 2rem;
+    @include display (column, center, nowrap);
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    max-width: 112.5rem;
 
     @include desktop {
-        @include display (row, flex-start, nowrap);
+        @include display (row, center, nowrap);
         align-items: flex-start;
         padding: 4rem;
         gap: 2rem;

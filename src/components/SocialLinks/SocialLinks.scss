@@ -67,6 +67,10 @@
                 padding-left: 0.75rem;
             }
 
+            @include desktop {
+                width: 100%;
+            }
+
             &-website {
                 background-color: $background2;
                 display: flex;
@@ -75,7 +79,7 @@
                 width: 30%;
 
                 @include desktop {
-                    width: 25%;
+                    width: 50%;
                 }
 
                 &--icon {
@@ -124,7 +128,6 @@
 
                 @include desktop {
                     @include display (row, center, nowrap);
-                    gap: 1.5rem;
                 }
 
 

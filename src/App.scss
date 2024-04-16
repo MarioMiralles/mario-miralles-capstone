@@ -13,21 +13,9 @@
     @include typography-mobile
   }
 
-  ;
-
   @include tablet {
     @include typography-tab-desktop
   }
-
-  ;
-}
-
-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem;
 }
 
 fieldset {
