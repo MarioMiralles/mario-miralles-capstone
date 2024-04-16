@@ -74,8 +74,6 @@
     &__news {
         max-width: 38rem;
         width: 100%;
-        border-bottom: 1px outset grey;
-        padding-bottom: 1.5rem;
 
         @include desktop {
             max-width: 100%;
