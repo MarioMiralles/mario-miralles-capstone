@@ -20,6 +20,9 @@ function App() {
   )
 }
 
+//========================//
+// OPEN/CLOSE IMAGE MODAL //
+//========================//
 function RenderPublicGalleryModal() {
   // Extract imageId from URL params
   const { imageId } = useParams();

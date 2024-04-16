@@ -16,13 +16,16 @@ import {
     LinkedinIcon,
     PinterestIcon,
     RedditIcon,
-    TwitterIcon,
+    XIcon,
     WhatsappIcon
 } from "react-share";
 
 function SocialLinksModal({ closeModal }) {
     const [copyText, setCopyText] = useState('Copy');
 
+    //=================//
+    // COPY URL BUTTON //
+    //=================//
     const copyUrlToClipboard = () => {
         navigator.clipboard.writeText('https://otdnews.netlify.app')
             .then(() => {
@@ -51,15 +54,15 @@ function SocialLinksModal({ closeModal }) {
                             colors="primary:#fff,secondary:#b4b4b4">
                         </lord-icon>{copyText}
                     </Link>
-                    <EmailShareButton className='social-share__icons'><EmailIcon className='social-share__icons' /><h3 className='social-share__text'>Email</h3></EmailShareButton>
-                    <FacebookShareButton className='social-share__icons'><FacebookIcon className='social-share__icons' /><h3 className='social-share__text'>Facebook</h3></FacebookShareButton>
-                    <LinkedinShareButton className='social-share__icons'><LinkedinIcon className='social-share__icons' /><h3 className='social-share__text'>LinkedIn</h3></LinkedinShareButton>
+                    <WhatsappShareButton title={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} className='social-share__icons'><WhatsappIcon className='social-share__icons' /><h3 className='social-share__text'>WhatsApp</h3></WhatsappShareButton>
+                    <TwitterShareButton title={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} className='social-share__icons'><XIcon className='social-share__icons' /><h3 className='social-share__text'>Twitter</h3></TwitterShareButton>
+                    <FacebookShareButton title="Check out this AI Art Generator!" url={'https://otdnews.netlify.app'} className='social-share__icons'><FacebookIcon className='social-share__icons' /><h3 className='social-share__text'>Facebook</h3></FacebookShareButton>
                 </div>
                 <div className="social-share__row--links">
-                    <PinterestShareButton className='social-share__icons'><PinterestIcon className='social-share__icons' /><h3 className='social-share__text'>Pinterest</h3></PinterestShareButton>
-                    <RedditShareButton className='social-share__icons'><RedditIcon className='social-share__icons' /><h3 className='social-share__text'>Reddit</h3></RedditShareButton>
-                    <TwitterShareButton className='social-share__icons'><TwitterIcon className='social-share__icons' /><h3 className='social-share__text'>Twitter</h3></TwitterShareButton>
-                    <WhatsappShareButton className='social-share__icons'><WhatsappIcon className='social-share__icons' /><h3 className='social-share__text'>WhatsApp</h3></WhatsappShareButton>
+                    <LinkedinShareButton title={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} summary={"Created by ON THE Dai News - a social platform that merges breaking world news with community-generated AI art."} source={"https://www.onthedai.com"} className='social-share__icons'><LinkedinIcon className='social-share__icons' /><h3 className='social-share__text'>LinkedIn</h3></LinkedinShareButton>
+                    <RedditShareButton title={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} className='social-share__icons'><RedditIcon className='social-share__icons' /><h3 className='social-share__text'>Reddit</h3></RedditShareButton>
+                    <PinterestShareButton description={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} className='social-share__icons'><PinterestIcon className='social-share__icons' /><h3 className='social-share__text'>Pinterest</h3></PinterestShareButton>
+                    <EmailShareButton title={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} className='social-share__icons'><EmailIcon className='social-share__icons' /><h3 className='social-share__text'>Email</h3></EmailShareButton>
                 </div>
             </section>
         </>

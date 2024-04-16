@@ -16,8 +16,8 @@ function UserInput() {
     const [generatedImage, setGeneratedImage] = useState(null);
     const [generationId, setGenerationId] = useState(null);
     const [error, setError] = useState(null);
-    const [isLoading, setIsLoading] = useState(false); // Track fetching image state
-    const [imageLoaded, setImageLoaded] = useState(false); // Track whether the image has been successfully loaded
+    const [isLoading, setIsLoading] = useState(false);
+    const [imageLoaded, setImageLoaded] = useState(false);
     const [publicGalleryKey, setPublicGalleryKey] = useState(0); // Key to force re-render PublicGallery component
     const [showPublicGallery, setShowPublicGallery] = useState(true);
     const [promptGenerated, setPromptGenerated] = useState(false);
@@ -26,6 +26,9 @@ function UserInput() {
     const [generateButtonClicked, setGenerateButtonClicked] = useState(false); // State to track whether the textarea has been touched
     const [isDesktopView, setIsDesktopView] = useState(window.innerWidth >= 1280);
 
+    //===================================//
+    // RESIZE FOR DESKTOP RESPONSIVENESS //
+    //===================================//
     useEffect(() => {
         const handleResize = () => {
             setIsDesktopView(window.innerWidth >= 1280);
@@ -38,6 +41,9 @@ function UserInput() {
         };
     }, []);
 
+    //======================//
+    // VALIDATION ANIMATION //
+    //======================//
     useEffect(() => {
         return () => {
             if (showButtonAnimationTimeout) {
@@ -46,6 +52,22 @@ function UserInput() {
         };
     }, [showButtonAnimationTimeout]);
 
+    const handleButtonAnimation = () => {
+        setShowButtonAnimation(true);
+        if (showButtonAnimationTimeout) {
+            clearTimeout(showButtonAnimationTimeout); // Clear the previous timeout if it exists
+        }
+        setShowButtonAnimationTimeout(
+            setTimeout(() => {
+                setShowButtonAnimation(false);
+                setGenerateButtonClicked(false); // Reset generateButtonClicked state
+            }, 3000)
+        );
+    }
+
+    //===============================//
+    // TOGGLE BETWEEN GALLERY & NEWS //
+    //===============================//
     const toggleComponent = (section) => {
         if ((section === 'Public Gallery' && showPublicGallery) || (section === 'Breaking News' && !showPublicGallery)) {
             return;
@@ -53,9 +75,9 @@ function UserInput() {
         setShowPublicGallery((prev) => !prev);
     };
 
-    //=========================//
-    // LEONARDO AI API REQUEST //
-    //=========================//
+    //==================================//
+    // LEONARDO AI API GENERATE REQUEST //
+    //==================================//
     const handleGenerate = async (inputText) => {
         try {
             setIsLoading(true); // Set loading to true when generating image
@@ -63,8 +85,7 @@ function UserInput() {
             // Check if a generation is already in progress
             if (generationId) {
                 console.log('Generation already in progress. Waiting for previous generation to complete.');
-                // Reset the generationId state variable
-                setGenerationId(null);
+                setGenerationId(null); // Reset the generationId state variable
             }
 
             // Initiate a new generation
@@ -121,10 +142,13 @@ function UserInput() {
         handleGenerate(inputText);
     };
 
+    //===============================//
+    // LEONARDO AI API FETCH REQUEST //
+    //===============================//
     const handleFetchImage = useCallback(async () => {
         setIsLoading(true); // Set loading to true when fetching image
         try {
-            // Use a flag to prevent recursive calls
+            // Using a flag to prevent recursive calls
             let fetching = true;
             while (fetching) {
                 const options = {
@@ -164,6 +188,9 @@ function UserInput() {
         }
     }, [generationId, handleFetchImage]);
 
+    //=======================//
+    // OTHER BUTTON HANDLERS //
+    //=======================//
     // Create New Art Button
     const handleCreateNew = () => {
         setInputText(''); // Reset input text
@@ -171,20 +198,6 @@ function UserInput() {
         setPublicGalleryKey(prevKey => prevKey + 1);
         setPromptGenerated(false); // Reset promptGenerated state
     };
-
-    // Validation glow animation
-    const handleButtonAnimation = () => {
-        setShowButtonAnimation(true);
-        if (showButtonAnimationTimeout) {
-            clearTimeout(showButtonAnimationTimeout); // Clear the previous timeout if it exists
-        }
-        setShowButtonAnimationTimeout(
-            setTimeout(() => {
-                setShowButtonAnimation(false);
-                setGenerateButtonClicked(false); // Reset generateButtonClicked state
-            }, 3000)
-        );
-    }
 
     // Logo Link Refreshes App to Homepage
     const handleRefreshBrowser = () => {
@@ -280,7 +293,7 @@ function UserInput() {
                             </section>
                         </article>
                     )}
-                    {!isDesktopView && <SocialLinks /> }
+                    {!isDesktopView && <SocialLinks />}
                 </section>
             </main >
         </>
