@@ -47,9 +47,9 @@ Dynamic Section
   - Share Button
     - Share Modal Options: Copy (url) Button, Social Media + WhatsApp + Email Buttons/Icons for sharing
   - Social Media Accounts to follow + Official Website Links
--Nice to have features
+- Nice to have features
   - My Art Gallery
-    -Member's art creations
+    - Member's art creations
 
 ### Tech Stack
 
