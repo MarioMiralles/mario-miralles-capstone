@@ -48,6 +48,7 @@
             @include display (column, space-around, nowrap);
             align-items: center;
             cursor: pointer;
+            border: none;
         }
     }
 

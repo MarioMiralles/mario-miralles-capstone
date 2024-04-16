@@ -3,18 +3,22 @@ import React, { useState, useEffect } from 'react';
 import PublicGalleryModal from '../PublicGalleryModal/PublicGalleryModal';
 import { Link } from 'react-router-dom';
 
-const PublicGallery = ({ handleFetchImage }) => {
-    const [publicGalleryImages, setPublicGalleryImages] = useState([]); // State to hold gallery images
+const PublicGallery = () => {
+    const [publicGalleryImages, setPublicGalleryImages] = useState([]);
     const [error, setError] = useState(null);
-    const [selectedImage, setSelectedImage] = useState(null); // State to track selected image
+    const [selectedImage, setSelectedImage] = useState(null);
     const [prompt, setPrompt] = useState(null);
     const [imageId, setImageId] = useState(null);
-    const apiKey = process.env.REACT_APP_API_KEY;
-    const [isModalOpen, setIsModalOpen] = useState(false); // State to track whether the modal is open
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
+    const apiKey = process.env.REACT_APP_API_KEY; // Leonardo AI
+
+    //==============//
+    // FETCH IMAGES //
+    //==============//
     useEffect(() => {
         fetchPublicGalleryImages(); // Fetch gallery images when component mounts
-    }, []);
+    });
 
     const fetchPublicGalleryImages = async () => {
         try {
@@ -50,6 +54,9 @@ const PublicGallery = ({ handleFetchImage }) => {
         }
     };
 
+    //========================//
+    // OPEN/CLOSE IMAGE MODAL //
+    //========================//
     // Function to handle image click and open modal
     const handleImageClick = (image) => {
         setSelectedImage(image);
@@ -78,7 +85,7 @@ const PublicGallery = ({ handleFetchImage }) => {
                         <img
                             src={image.image}
                             className='gallery__image'
-                            alt={`Public Gallery Image ${index}`}
+                            alt={`From Public Gallery number ${index}`}
                         />
                     </Link>
                 ))}

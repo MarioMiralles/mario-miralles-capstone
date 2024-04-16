@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './PublicGalleryModal.scss';
 import logo from '../../assets/images/OTDLogo.png';
 
@@ -7,13 +7,14 @@ function PublicGalleryModal({ image, prompt, isOpen, onClose }) {
     const [copied, setCopied] = useState(false); // State variable to track whether the headline has been copied
     const [imageUrl, setImageUrl] = useState(null);
 
+    // For future use to add imageId as route url
     useEffect(() => {
         if (image && image.image) {
             setImageUrl(image.image);
         }
     }, [image]);
 
-    // Effect to handle body overflow
+    // Effect to handle body overflow scrolling
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
@@ -63,7 +64,7 @@ function PublicGalleryModal({ image, prompt, isOpen, onClose }) {
                                 </Link>
                             </div>
                             <figure className='pg-modal__image-container'>
-                                <img src={imageUrl} className='pg-modal__image' alt="Public Gallery Image" />
+                                <img src={imageUrl} className='pg-modal__image' alt="From the Public Gallery" />
                                 <section className='pg-modal__prompt'>
                                     <div className='pg-modal__prompt-nav'>
                                         <h3 className='pg-modal__prompt-heading'>Prompt:</h3>

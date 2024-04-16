@@ -22,6 +22,9 @@ function SocialLinks() {
         setModalOpen(!modalOpen);
     }
 
+    //=============//
+    // PROMO VIDEO //
+    //=============//
     const handlePlay = () => {
         // Show controls when the video starts playing
         videoRef.current.controls = true;

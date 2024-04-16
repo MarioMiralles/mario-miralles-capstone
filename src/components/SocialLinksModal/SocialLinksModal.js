@@ -23,6 +23,9 @@ import {
 function SocialLinksModal({ closeModal }) {
     const [copyText, setCopyText] = useState('Copy');
 
+    //=================//
+    // COPY URL BUTTON //
+    //=================//
     const copyUrlToClipboard = () => {
         navigator.clipboard.writeText('https://onthedai.com/create-art')
             .then(() => {

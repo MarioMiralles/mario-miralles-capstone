@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import './NewsInfo.scss';
 import OpenAI from "openai";
 
-const assistantId = "asst_ACwD1N2Pv05I9mM9Ag497vQk";
+const assistantId = "asst_ACwD1N2Pv05I9mM9Ag497vQk"; // Not a safety issue
 const openai = new OpenAI({ apiKey: process.env.REACT_APP_OPENAI_API_KEY, dangerouslyAllowBrowser: true });
 
 function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInputVisible, promptGenerated, handleGenerate, setPromptGenerated, handleButtonAnimation }) {
     const [copied, setCopied] = useState(false); // State variable to track whether the headline has been copied
-    const [isLoading, setIsLoading] = useState(false); // State variable to track Loading of Prompt with AI
+    const [isLoading, setIsLoading] = useState(false);
 
     //=======================//
     // COPY HEADLINE FEATURE //
@@ -121,7 +121,7 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInpu
     return (
         <article className='news-info'>
             <div className='news-info__nav'>
-                <Link className='news-info__nav-back' onClick={onBackClick}>⯇ Back to Headlines</Link>
+                <Link className='news-info__nav-back' onClick={onBackClick}>🢠 Back to Headlines</Link>
                 <button className='news-info__nav-copy' onClick={copyHeadline}>{copied ? 'Copied!' : 'Copy Headline'} {/* Change text based on copied state */}
                     <lord-icon
                         id="news-info__img"
@@ -145,7 +145,7 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInpu
                     </lord-icon>
                     <p className='news-info__p'>View Story</p>
                 </a>
-                <div className='news-info__button--randomize' onClick={() => {
+                <button className='news-info__button--randomize' onClick={() => {
                     handleRandomArt();
                     handleButtonAnimation(); // Call the handleButtonAnimation function here
                 }} disabled={!userInputVisible || promptGenerated}>
@@ -157,8 +157,8 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInpu
                         colors="primary:#121331,secondary:#08a88a,tertiary:#4bb3fd,quaternary:#ffc738,quinary:#d59f80,senary:#242424,septenary:#f4f19c">
                     </lord-icon>
                     <p className='news-info__p'>Create a Random Artwork</p>
-                </div>
-                <a className='news-info__button' onClick={() => {
+                </button>
+                <button className='news-info__button' onClick={() => {
                     promptWithAI();
                     handleButtonAnimation(); // Call the handleButtonAnimation function here
                 }} disabled={!userInputVisible || promptGenerated}>
@@ -170,7 +170,7 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInpu
                         state="default">
                     </lord-icon>
                     <p className='news-info__p'>AI Prompt</p>
-                </a>
+                </button>
             </section>
             {isLoading && (
                 <div className="overlay">
