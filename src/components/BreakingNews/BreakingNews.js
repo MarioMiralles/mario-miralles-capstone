@@ -6,32 +6,45 @@ import loadingNews from '../../assets/images/Loading_News2.gif';
 import NewsInfo from '../NewsInfo/NewsInfo';
 
 const wordpressPagesURL = "https://onthedai.com/wp-json/wp/v2/pages"
-const excludePageIds = [873, 2663, 3676, 3700, 25455, 25458];
-const titlesPerPage = 5;
+const excludePageIds = [873, 2663, 3676, 3700, 25455, 25458]; // Excludes certain pages from the OTD website
 
 const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleGenerate, inputText, setShowButtonAnimation, setPromptGenerated, handleButtonAnimation, isDesktopView }) => {
     const [pages, setPages] = useState([]);
-    const [loading, setLoading] = useState(true); // Track loading state
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [activePaginationButton, setActivePaginationButton] = useState(0);
-    const [selectedHeadline, setSelectedHeadline] = useState(null); // Track selected headline
+    const [selectedHeadline, setSelectedHeadline] = useState(null);
     const [showNewsInfo, setShowNewsInfo] = useState(false); // Track visibility of NewsInfo component
 
     //============//
     // PAGINATION //
     //============//
+    const titlesPerPage = 5; // Max number of headlines to display per page
+    const totalPages = Math.ceil(pages.length / titlesPerPage);
+    const indexOfLastTitle = currentPage * titlesPerPage;
+    const indexOfFirstTitle = indexOfLastTitle - titlesPerPage;
+    const currentTitles = pages.slice(indexOfFirstTitle, indexOfLastTitle);
+
     useEffect(() => {
         breakingNewsPages();
     }, []);
 
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        setActivePaginationButton(pageNumber); // Update active button state
+    }
+
+    //===========//
+    // HEADLINES //
+    //===========//
     const breakingNewsPages = async () => {
         try {
             const excludePages = excludePageIds.join(',');
             const response = await axios.get(`${wordpressPagesURL}?per_page=33&exclude=${excludePages}`);
             const decodedPages = response.data.map(page => ({
                 ...page,
-                title: { rendered: he.decode(page.title.rendered) }
+                title: { rendered: he.decode(page.title.rendered) } // Decodes apostrophes and other symbols
             }));
             setPages(decodedPages);
             setError(null);
@@ -41,16 +54,6 @@ const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleG
             setError('Error, please try again');
             setLoading(false);
         }
-    }
-
-    const totalPages = Math.ceil(pages.length / titlesPerPage);
-    const indexOfLastTitle = currentPage * titlesPerPage;
-    const indexOfFirstTitle = indexOfLastTitle - titlesPerPage;
-    const currentTitles = pages.slice(indexOfFirstTitle, indexOfLastTitle);
-
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
-        setActivePaginationButton(pageNumber); // Update active button state
     }
 
     //======================================//

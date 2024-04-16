@@ -10,7 +10,7 @@ The OTDNews AI Art Generator addresses the need for innovative and engaging ways
 
 ### User Profile
 
-The app caters to both guests and members who sign-up. In this version(2.0), anyone can utilize the app to create AI-generated art based on breaking news stories, providing them with a creative outlet to express their interpretations visually. Logged-in members (will potentially) have access to a personal photo gallery for their own creations, enhancing their user experience and fostering a sense of ownership over their art. Special considerations include ensuring a seamless and intuitive user interface for both guests and members, maintaining privacy and security measures for member accounts and galleries, and integrating APIs from Leonardo AI and OpenAI's ChatGPT to provide users with high-quality art style prompts and assistive features. The app must be responsive and accessible across various devices and screen sizes as the users that visit my site are divided between mobile and desktop.
+The app caters to both guests and members who sign-up. In this version(2.0), anyone can utilize the app to create AI-generated art based on breaking news stories. Special considerations include ensuring a seamless and intuitive user interface for both guests and members, maintaining privacy and security measures for member accounts and galleries, and integrating APIs from Leonardo AI and OpenAI's ChatGPT to provide users with high-quality art style prompts and assistive features. The app must be responsive and accessible across various devices and screen sizes as the users that visit my site are divided between mobile and desktop. Logged-in members (will potentially) have access to a personal photo gallery for their own creations, enhancing their user experience and fostering a sense of ownership over their art.
 
 ### Features
 - Generator
@@ -19,6 +19,7 @@ The app caters to both guests and members who sign-up. In this version(2.0), any
     - Public Gallery
     - Breaking News Stories
     - My Art Gallery (nice to have feature for members)
+- Social Links
 
 Generator
 - User Input
@@ -27,27 +28,32 @@ Generator
   - Loading Screen
   - Generated Image
   - Create New Button
+- Nice to have features
   - Share Image Button
   - Submit Art Button (leads to Breaking News Stories)
   - Submission Form + Button
 
 Dynamic Section
 - Public Art Gallery
+  - Image Modal
+    - Options: Copy Prompt Button 
 - Breaking News Stories
-    - Clickable headline
-    - Expands to show full news story and  options: back button, generate art, prompt randomizer
-- My Art Gallery (Nice to have feature for members)
+    - Clickable headlines
+    - Headline Modal: Expands to show full news story
+      - Options: Back button, Copy Headline Button, View Story Button, Generate Random Artwork Button, AI Prompt button
+-Social Links
+  - QR Code (https://otdnews.netlify.app)
+  - MP4 Promo Video
+  - Share Button
+    - Share Modal Options: Copy (url) Button, Social Media + WhatsApp + Email Buttons/Icons for sharing
+  - Social Media Accounts to follow + Official Website Links
+-Nice to have features
+  - My Art Gallery
     -Member's art creations
-
-## Implementation
 
 ### Tech Stack
 
-Frontend:
-HTML, Sass, JavaScript (React.js), React Router (maybe), Axios
-
-Backend:
-Nodemon (maybe), Express.js(maybe)
+HTML, Sass, React.js (JavaScript), React Router, Axios, he.Decode, and React-Share.
 
 ### APIs
 
@@ -58,15 +64,15 @@ OpenAI ChatGPT API (for AI-assisted prompts)
 ### Sitemap
 
 Home/Generator Page:
-This is one page where users can input prompts to generate AI art, plus components that will allow them to view a public photo gallery, active breaking news stories, log-in/register, and submit/share their art.
+This is one page where users can input prompts to generate AI art, plus components that will allow them to view a public photo gallery, and active breaking news storie. Log-in/register, and submit/share their art features will be coming soon.
 
 ### Mockups
 
-<img src="./src/assets/mockup/App.png" width="250" height="250" />
-<img src="./src/assets/mockup/Loading.png" width="250" height="250" />
-<img src="./src/assets/mockup/GeneratedImage.png" width="250" height="250" />
-<img src="./src/assets/mockup/BreakingNews.png" width="250" height="250" />
-<img src="./src/assets/mockup/Headlines.png" width="250" height="250" />
+<img src="./src/assets/mockup/App.png" width="200" height="200" />
+<img src="./src/assets/mockup/Loading.png" width="200" height="200" />
+<img src="./src/assets/mockup/GeneratedImage.png" width="200" height="200" />
+<img src="./src/assets/mockup/BreakingNews.png" width="200" height="200" />
+<img src="./src/assets/mockup/Headlines.png" width="200" height="200" />
 
 ### Data
 
@@ -116,7 +122,7 @@ Return - {
 
 ### Auth
 
-There will be OAuth for Google and Discord, (and potentially for Twitter, TikTok, Facebook, and other platforms). Users will have the option to log in using their Google or Discord accounts, which will authenticate them securely. There will be a registration page where users can create an account within WordPress. Users will be provided with access to their profiles and personalized features within the website and app.
+OAuth features will be coming soon. There will be OAuth for Google and Discord, (and potentially for Twitter, TikTok, Facebook, and other platforms). Users will have the option to log in using their Google or Discord accounts, which will authenticate them securely. There will be a registration page where users can create an account (potentially within WordPress). Users will be provided with access to their profiles and personalized features within the website and app.
 
 ## Roadmap
 
@@ -126,27 +132,22 @@ Sprint 1: Week 1
 - Implement Generator page with user input and generate functionality
 - Integrate Leonardo AI API
 - Develop Public Photo Gallery page for showcasing user-generated artwork
-
-
+- Integrate Wordpress API
 - Set up Breaking News Stories page with dynamic display of news stories
 - Develop functionality for viewing full news stories and options
 
 Sprint 2: Week 2
-- Implement submission form page for users to submit generated art
 - Integrate OpenAI ChatGPT API for AI-assisted prompts
-- Conduct testing and debugging for frontend and backend functionality
-- Perform comprehensive testing and debugging of the entire application
-- Implement user registration functionality within WordPress
-- Integrate OAuth for Google and Discord authentication
 - Implement any necessary security enhancements and validation checks
+- Create Modals for each Public Gallery image and for Social Links
+- Perform comprehensive testing and debugging of the entire application
+- Clean up uneccessary code and organize the code structure of the App
 - Finalize documentation and prepare for project submission
 
-## Nice-to-haves
+## Future Integrations
 
-- Set up database schema for storing user art generations
-- Implement additional OAuth integrations for Twitter, TikTok, Facebook, etc.
-- Enhance user profile functionality with options to customize profiles and view activity history
+- Implement OAuth integrations
 - Implement features for liking, commenting, and sharing artworks within the Public Photo Gallery
-- Develop advanced filtering and sorting options for artworks in the Public Photo Gallery
 - Enhance submission form with validation checks and additional submission options
-- Explore options for implementing real-time collaboration features for generating AI art with friends or other users
+- Set up database schema for storing user art generations
+- Enhance user profile functionality with options to customize profiles and view activity history
