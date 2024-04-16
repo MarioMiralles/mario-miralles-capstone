@@ -9,9 +9,13 @@
     &__scan {
         width: 100%;
         background-color: $background2;
-        display: flex;
-        gap: 1rem;
-        padding: 0.5rem 0;
+        @include display (row, space-around, nowrap);
+
+        @include tablet {
+            gap: 1rem;
+            padding: 0.5rem 0;
+        }
+
 
         &-share {
             @include display (column, center, nowrap);
@@ -24,8 +28,11 @@
             width: 100%;
             min-height: 2rem;
             min-width: 2rem;
-            font-size: 1rem;
+            font-size: 0.625rem;
 
+            @include tablet {
+                font-size: 1rem;
+            }
         }
 
         &-qr {
@@ -53,7 +60,12 @@
         &-column {
             @include display (column, center, nowrap);
             background-color: $background3;
-            width: 65%;
+            width: 75%;
+            padding-left: 0.40rem;
+
+            @include tablet {
+                padding-left: 0.75rem;
+            }
 
             &-website {
                 background-color: $background2;
@@ -94,17 +106,18 @@
         &-row {
             @include display (row, space-between, nowrap);
             width: 100%;
-            padding: 1rem 0;
             background-color: $background2;
             gap: 0.5rem;
+            padding: 0.5rem 0;
 
             @include desktop {
+                padding: 1rem 0;
                 gap: 0.5rem;
             }
 
             &--container {
                 border-top: 3px groove grey;
-                margin: 1rem 1rem 0 1rem;
+                margin: 0.5rem;
                 padding: 0.5rem 0;
                 @include display (row, space-between, nowrap);
                 background-color: $background2;
@@ -125,43 +138,28 @@
 
             &--icon {
                 background-color: $background2;
-                padding: 0.5rem 0.5rem 0.5rem 0;
-                width: 100%;
+                width: 60%;
 
+                @include tablet {
+                    width: 65%;
+                    padding: 0.5rem;
+                }
             }
         }
     }
 
     &__video {
-        display: none;
-
-        @include desktop {
-            width: 60%;
-            background-color: $background2;
-            padding: 1rem;
-        }
-
+        width: 60%;
+        background-color: $background2;
+        padding: 1rem;
 
         &-mp4 {
-            display: none;
-
-            @include desktop {
-                width: 60%;
-                background-color: $background2;
-                cursor: pointer;
-                display: flex;
-            }
-
+            width: 60%;
+            background-color: $background2;
+            cursor: pointer;
+            display: flex;
+            padding-right: 1rem;
         }
-    }
-}
-
-.react-share__ShareButton {
-    max-width: 2rem;
-
-    @include desktop {
-        min-width: 4.5rem;
-        max-width: 5rem;
     }
 }
 
