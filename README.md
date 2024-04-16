@@ -41,7 +41,7 @@ Dynamic Section
     - Clickable headlines
     - Headline Modal: Expands to show full news story
       - Options: Back button, Copy Headline Button, View Story Button, Generate Random Artwork Button, AI Prompt button
--Social Links
+- Social Links
   - QR Code (https://otdnews.netlify.app)
   - MP4 Promo Video
   - Share Button
