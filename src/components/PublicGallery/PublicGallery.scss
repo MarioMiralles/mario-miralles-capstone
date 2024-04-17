@@ -4,7 +4,7 @@
 
 .gallery {
     width: 100%;
-    max-width: 600px;
+    max-width: 37.5rem;
     @include display (row, center, nowrap);
     display: flex;
     flex-wrap: wrap;
@@ -20,7 +20,12 @@
     }
 
     &__container {
+        padding: 0 0.25rem;
         min-height: 30rem;
+
+        @include tablet {
+            padding: 0 1rem;
+        }
     } 
 
     &__heading {
@@ -37,8 +42,12 @@
         }
 
         &-container {
-            padding-bottom: 0.25rem;
+            padding: 0 0.25rem;
             @include display (row, space-between, nowrap);
+
+            @include tablet {
+                padding: 0 1rem;
+            }
         }
 
         &--inactive {
@@ -56,15 +65,16 @@
     }
 
     &__image {
-        max-width: 100%; /* Ensure the image does not exceed its container's width */
-        max-height: 12rem; /* Set a maximum height for the images */
-        object-fit: contain; /* Ensure the image content is contained within its container */
+        max-width: 100%;
+        object-fit: contain;
     }
 
     &__link {
         width: calc((100% - 0.5rem) / 3);
         border-radius: 1px;
         cursor: pointer;
+        display: flex;
+        align-items: center;
 
         @include tablet {
             width: calc((100% - 1rem) / 3);
