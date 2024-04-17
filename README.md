@@ -1,12 +1,12 @@
 ![](./src/assets/images/Logo_GIF.gif)
 
-Deployed at https://otdnews.netlify.app
+<div style="display: flex; flex-wrap: nowrap; justify-content: flex-end;"><p style="padding-right: 4px;">Deployed at </p><a href="https://otdnews.netlify.app">https://otdnews.netlify.app</a></div>
 
 ## Overview
 
 The OTDNews AI Art Generator is a feature of the ON THE Dai News website that combines breaking world news with community-generated AI art. Users, both guests and members, can create art either manually with their own prompts or with the assistance of AI. Members have the option to submit their generated art pieces as representations of currently active breaking news stories, with the chance for their artwork to become the official piece for that story.
 
-Official Website: https://onthedai.com
+<div style="display: flex; flex-wrap: nowrap; justify-content: flex-end;"><p style="padding-right: 4px;">Official Website </p><a href="https://onthedai.com">https://onthedai.com</a></div>
 
 ### Problem
 
