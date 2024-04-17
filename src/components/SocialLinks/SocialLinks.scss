@@ -27,12 +27,12 @@
             border: none;
             cursor: pointer;
             width: 100%;
-            min-height: 2rem;
-            min-width: 2rem;
-            font-size: 0.625rem;
+            min-height: 1.5rem;
+            min-width: 1.5rem;
+            font-size: 0.5rem;
 
             @include tablet {
-                font-size: 1rem;
+                font-size: 0.75rem;
             }
         }
 
@@ -182,7 +182,7 @@
     min-height: 1.25rem;
 
     @include desktop {
-        min-height: 2rem;
-        max-width: 4rem;
+        
+        max-width: 3rem;
     }
 }
