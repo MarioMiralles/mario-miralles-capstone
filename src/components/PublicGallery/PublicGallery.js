@@ -2,6 +2,7 @@ import '../PublicGallery/PublicGallery.scss'
 import React, { useState, useEffect } from 'react';
 import PublicGalleryModal from '../PublicGalleryModal/PublicGalleryModal';
 import { Link } from 'react-router-dom';
+import loadingNews from '../../../src/assets/images/Loading_News2.gif';
 
 const PublicGallery = () => {
     const [publicGalleryImages, setPublicGalleryImages] = useState([]);
@@ -10,6 +11,8 @@ const PublicGallery = () => {
     const [prompt, setPrompt] = useState(null);
     const [imageId, setImageId] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+
 
     const apiKey = process.env.REACT_APP_API_KEY; // Leonardo AI
 
@@ -51,6 +54,8 @@ const PublicGallery = () => {
         } catch (error) {
             console.error('Error fetching gallery images:', error);
             setError('Error fetching gallery images. Please try again.');
+        } finally {
+            setIsLoading(false); // Set loading to false after fetching images
         }
     };
 
@@ -72,31 +77,37 @@ const PublicGallery = () => {
 
     return (
         <section className="gallery__container">
-            <div className="gallery">
-                {publicGalleryImages.map((image, index) => (
-                    <Link
-                        className='gallery__link'
-                        key={index}
-                        to={`/gallery/${image.imageId}`}
-                        onClick={(event) => {
-                            event.preventDefault(); // Prevent default link behavior
-                            handleImageClick(image); // Open modal instead
-                        }}>
-                        <img
-                            src={image.image}
-                            className='gallery__image'
-                            alt={`From Public Gallery number ${index}`}
-                        />
-                    </Link>
-                ))}
-                {selectedImage && isModalOpen && (
-                    <PublicGalleryModal
-                        isOpen={isModalOpen}
-                        onClose={closeModal}
-                        image={selectedImage} // Ensure the prop name matches what PublicGalleryModal expects
-                        prompt={prompt} />
-                )}
-            </div>
+            {isLoading ? ( // Show loading GIF while fetching images
+                <div className='news__loading-container'>
+                    <img src={loadingNews} className="news__loading" alt="Loading news..." />
+                </div>
+            ) : (
+                <div className="gallery">
+                    {publicGalleryImages.map((image, index) => (
+                        <Link
+                            className='gallery__link'
+                            key={index}
+                            to={`/gallery/${image.imageId}`}
+                            onClick={(event) => {
+                                event.preventDefault(); // Prevent default link behavior
+                                handleImageClick(image); // Open modal instead
+                            }}>
+                            <img
+                                src={image.image}
+                                className='gallery__image'
+                                alt={`From Public Gallery number ${index}`}
+                            />
+                        </Link>
+                    ))}
+                    {selectedImage && isModalOpen && (
+                        <PublicGalleryModal
+                            isOpen={isModalOpen}
+                            onClose={closeModal}
+                            image={selectedImage} // Ensure the prop name matches what PublicGalleryModal expects
+                            prompt={prompt} />
+                    )}
+                </div>
+            )}
         </section>
     );
 };
