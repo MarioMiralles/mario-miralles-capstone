@@ -8,7 +8,9 @@ import NewsInfo from '../NewsInfo/NewsInfo';
 const wordpressPagesURL = "https://onthedai.com/wp-json/wp/v2/pages"
 const excludePageIds = [873, 2663, 3676, 3700, 25455, 25458]; // Excludes certain pages from the OTD website
 
-const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleGenerate, inputText, setShowButtonAnimation, setPromptGenerated, handleButtonAnimation, isDesktopView }) => {
+const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, 
+    handleGenerate, inputText, setShowButtonAnimation, setPromptGenerated, 
+    handleButtonAnimation, isDesktopView }) => {
     const [pages, setPages] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);

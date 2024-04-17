@@ -6,7 +6,7 @@ import {
     EmailShareButton,
     FacebookShareButton,
     LinkedinShareButton,
-    PinterestShareButton,
+    TelegramShareButton,
     RedditShareButton,
     TwitterShareButton,
     WhatsappShareButton,
@@ -14,7 +14,7 @@ import {
     EmailIcon,
     FacebookIcon,
     LinkedinIcon,
-    PinterestIcon,
+    TelegramIcon,
     RedditIcon,
     XIcon,
     WhatsappIcon
@@ -61,7 +61,7 @@ function SocialLinksModal({ closeModal }) {
                 <div className="social-share__row--links">
                     <LinkedinShareButton title={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} summary={"Created by ON THE Dai News - a social platform that merges breaking world news with community-generated AI art."} source={"https://www.onthedai.com"} className='social-share__icons'><LinkedinIcon className='social-share__icons' /><h3 className='social-share__text'>LinkedIn</h3></LinkedinShareButton>
                     <RedditShareButton title={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} className='social-share__icons'><RedditIcon className='social-share__icons' /><h3 className='social-share__text'>Reddit</h3></RedditShareButton>
-                    <PinterestShareButton description={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} className='social-share__icons'><PinterestIcon className='social-share__icons' /><h3 className='social-share__text'>Pinterest</h3></PinterestShareButton>
+                    <TelegramShareButton description={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} className='social-share__icons'><TelegramIcon className='social-share__icons' /><h3 className='social-share__text'>Telegram</h3></TelegramShareButton>
                     <EmailShareButton title={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} className='social-share__icons'><EmailIcon className='social-share__icons' /><h3 className='social-share__text'>Email</h3></EmailShareButton>
                 </div>
             </section>
