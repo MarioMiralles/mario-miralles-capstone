@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './NewsInfo.scss';
 import OpenAI from "openai";
+import leftArrow from '../../assets/icons/left-arrow.png'
 
 const assistantId = "asst_ACwD1N2Pv05I9mM9Ag497vQk"; // Not a safety issue
 const openai = new OpenAI({ apiKey: process.env.REACT_APP_OPENAI_API_KEY, dangerouslyAllowBrowser: true });
@@ -123,7 +124,7 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText,
     return (
         <article className='news-info'>
             <div className='news-info__nav'>
-                <Link className='news-info__nav-back' onClick={onBackClick}>🢠 Back to Headlines</Link>
+                <Link className='news-info__nav-back' onClick={onBackClick}><img className='news-info__nav-back--arrow' src={leftArrow} />Back to Headlines</Link>
                 <button className='news-info__nav-copy' onClick={copyHeadline}>{copied ? 'Copied!' : 'Copy Headline'} {/* Change text based on copied state */}
                     <lord-icon
                         id="news-info__img"
