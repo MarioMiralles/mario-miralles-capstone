@@ -54,20 +54,20 @@
     }
 
     &__row {
-        
-            &--links {
-            @include display (row, space-around, nowrap);
+
+        &--links {
+            @include display (row, space-between, nowrap);
             width: 100%;
-            padding: 0.25rem;
+            padding: 0 3rem 0 1rem;
             background-color: $background2;
             gap: 0.5rem;
-            }
+        }
     }
 
     &__text {
         font-family: "Lovelo Black";
         width: 100%;
-        font-size: 0.75rem;
+        font-size: 0.625rem;
     }
 }
 
