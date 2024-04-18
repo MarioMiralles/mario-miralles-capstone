@@ -108,8 +108,12 @@
             height: fit-content;
             background-color: $background2;
             object-fit: contain;
-            width: 4rem;
+            width: 3rem;
             height: 100%;
+
+            @include tablet {
+                width: 4rem;
+            }
         }
 
         &-row {
@@ -138,12 +142,22 @@
             background-color: $background2;
             display: flex;
             justify-content: center;
-            max-height: 10rem;
+            max-height: 8rem;
+
+            @include tablet {
+                max-height: 10rem;
+            }
+
 
             &--icon {
                 background-color: $background2;
                 width: 100%;
-                max-width: 5.5rem;
+                max-width: 4rem;
+
+                @include tablet {
+                    max-width: 5.5rem;
+                }
+
 
                 @include tablet {
                     padding: 0.5rem;

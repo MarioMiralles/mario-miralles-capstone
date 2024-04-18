@@ -58,7 +58,7 @@
         &--links {
             @include display (row, space-between, nowrap);
             width: 100%;
-            padding: 0 3rem 0 1rem;
+            padding: 0 3rem 0.5rem 1rem;
             background-color: $background2;
             gap: 0.5rem;
         }

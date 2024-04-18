@@ -42,7 +42,7 @@
         }
 
         &-container {
-            padding: 0 0.25rem;
+            padding: 0 0.5rem;
             @include display (row, space-between, nowrap);
 
             @include tablet {
