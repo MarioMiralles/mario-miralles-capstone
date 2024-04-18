@@ -26,14 +26,14 @@
             text-decoration: none;
             border: none;
             cursor: pointer;
-            width: 100%;
+            width: 3rem;
             min-height: 1.5rem;
             min-width: 1.5rem;
             font-size: 0.5rem;
-            max-width: 4rem;
 
             @include tablet {
                 font-size: 0.625rem;
+                width: 4rem;
             }
         }
 
