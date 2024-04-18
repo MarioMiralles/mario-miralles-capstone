@@ -77,13 +77,22 @@
 
         &-back {
             background-color: $background2;
-            color: rgb(60, 60, 60);
+            color: #3c3c3c;
             text-decoration: none;
             font-family: "Lovelo Black";
             font-size: 0.7rem;
+            display: flex;
+            align-items: center;
 
             &:hover {
                 color: black;
+            }
+
+            &--arrow {
+                max-width: 0.7rem;
+                color: rgb(60, 60, 60);
+                background: $background2;
+                margin-right: 0.125rem;
             }
         }
 
@@ -135,6 +144,7 @@
         @include tablet {
             height: 3rem;
         }
+
         &--randomize {
             background-color: $background2;
             height: 5rem;
