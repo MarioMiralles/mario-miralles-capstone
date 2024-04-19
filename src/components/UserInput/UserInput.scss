@@ -87,12 +87,18 @@
         gap: 1rem;
         width: 100%;
         align-items: center;
+        padding-top: 1.5rem;
+
+        @include tablet {
+            padding-top: 3rem;
+        }
 
         @include desktop {
             @include display (column, flex-start, nowrap);
             width: 60%;
             max-width: 100%;
             gap: 2rem;
+            padding-top: 0;
         }
     }
 
