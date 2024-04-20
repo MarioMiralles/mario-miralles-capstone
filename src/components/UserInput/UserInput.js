@@ -84,7 +84,6 @@ function UserInput() {
 
             // Check if a generation is already in progress
             if (generationId) {
-                console.log('Generation already in progress. Waiting for previous generation to complete.');
                 setGenerationId(null); // Reset the generationId state variable
             }
 
@@ -124,7 +123,6 @@ function UserInput() {
             setGenerationId(responseData.sdGenerationJob.generationId);
             setError(null);
         } catch (error) {
-            console.error('Error generating image:', error);
             setError('Error generating image. Please try again.');
         } finally {
             setIsLoading(false); // Set loading to false after the generation process
@@ -175,7 +173,6 @@ function UserInput() {
                 }
             }
         } catch (error) {
-            console.error('Error fetching image:', error);
             setError('Error fetching image. Please try again.');
         } finally {
             setIsLoading(false); // Set loading to false after fetching image URL

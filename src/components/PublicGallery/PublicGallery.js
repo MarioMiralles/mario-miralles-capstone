@@ -52,7 +52,6 @@ const PublicGallery = () => {
                 throw new Error('Invalid response data format');
             }
         } catch (error) {
-            console.error('Error fetching gallery images:', error);
             setError('Error fetching gallery images. Please try again.');
         } finally {
             setIsLoading(false); // Set loading to false after fetching images

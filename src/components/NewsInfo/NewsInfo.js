@@ -32,7 +32,6 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText,
     // CREATE RANDOM ART FEATURE //
     //===========================//
     const handleRandomArt = async (event) => {
-        console.log('handleRandomArt called');
         window.scrollTo(0, 0);
         if (userInputVisible) {
             if (event) {
@@ -52,39 +51,30 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText,
     // PROMPT WITH AI FEATURE //
     //========================//
     async function promptWithAI() {
-        console.log('promptWithAI called');
         window.scrollTo(0, 0);
         // Check if the UserInput section is active and that the prompt is not generated
         if (userInputVisible) {
             try {
                 setIsLoading(true); // Run Prompt with AI animation
                 // Create a Thread
-                console.log('Creating thread...');
                 const thread = await openai.beta.threads.create();
-                console.log('Thread created:', thread);
 
                 // Create a Message
-                console.log('Adding message to thread...');
                 const messageResponse = await openai.beta.threads.messages.create(thread.id, {
                     role: "user",
                     content: `Here is the news headline: "${headlineTitle}"`
                 });
-                console.log('Message added to thread:', messageResponse);
 
                 // Run the Assistant on the created thread
-                console.log('Running the Assistant...');
                 const runResponse = await openai.beta.threads.runs.create(thread.id, {
                     assistant_id: assistantId
                 });
-                console.log('Assistant run response:', runResponse);
 
                 // Extract the assistant's instructions
                 const instructions = runResponse.instructions;
-                console.log('Assistant instructions:', instructions);
 
                 // Combine the assistant's instructions with the news headline
                 const combinedMessage = `${instructions}\n\n${headlineTitle}`;
-                console.log('Combined message:', combinedMessage);
 
                 // Call the OpenAI API (Assistant + headline) to generate the art style prompt
                 const completionRequest = {
@@ -97,11 +87,9 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText,
                 };
 
                 const completionResponse = await openai.chat.completions.create(completionRequest);
-                console.log('Completion response:', completionResponse);
 
                 // Extract the response prompt from the completionResponse
                 const generatedPrompt = completionResponse.choices[0].message.content;
-                console.log('Generated art style prompt:', generatedPrompt);
 
                 // Set the response prompt in the UserInput textarea
                 setInputText(generatedPrompt);
