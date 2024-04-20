@@ -50,7 +50,6 @@ const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleG
             setError(null);
             setLoading(false); // Set loading to false after fetching data
         } catch (error) {
-            console.error(error);
             setError('Error, please try again');
             setLoading(false);
         }
