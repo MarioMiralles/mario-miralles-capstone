@@ -2,7 +2,6 @@
 // CREATE DEFAULT IMAGE //
 //======================//
 // /mario-miralles-capstone/netlify/functions/createDefaultImage.js
-
 import { handleRandomArt } from '../../src/components/NewsInfo/NewsInfo.js';
 
 export async function handler(event, context) {
@@ -14,7 +13,7 @@ export async function handler(event, context) {
     }
 
     try {
-        const result = await handleRandomArt();
+        const result = await handleRandomArt({ userInputVisible: true, handleGenerate: () => {}, handleButtonAnimation: () => {}, promptWithAI: () => {} });
         return {
             statusCode: 200,
             body: JSON.stringify(result),
