@@ -1,6 +1,7 @@
 //======================//
 // CREATE DEFAULT IMAGE //
 //======================//
+// /mario-miralles-capstone/netlify/functions/createDefaultImage.js
 
 import { handleRandomArt } from '../../src/components/NewsInfo/NewsInfo.js';
 

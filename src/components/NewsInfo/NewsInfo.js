@@ -1,3 +1,8 @@
+//===========//
+// NEWS INFO //
+//===========//
+// /mario-miralles-capstone/src/components/NewsInfo/NewsInfo.js
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './NewsInfo.scss';
@@ -35,14 +40,16 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText,
         window.scrollTo(0, 0);
         if (userInputVisible) {
             if (event) {
-                event.preventDefault(); // Check if event is defined before calling preventDefault
+                event.preventDefault();
             }
             try {
                 const generatedPrompt = await promptWithAI();
                 await handleGenerate(generatedPrompt);
                 handleButtonAnimation();
+                return { success: true, prompt: generatedPrompt };
             } catch (error) {
                 console.error('Error generating random art:', error);
+                return { success: false, error: error };
             }
         }
     };
