@@ -6,15 +6,31 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './NewsInfo.scss';
-import OpenAI from "openai";
-import leftArrow from '../../assets/icons/left-arrow.png'
+import OpenAI from 'openai';
+import leftArrow from '../../assets/icons/left-arrow.png';
 
-const assistantId = "asst_ACwD1N2Pv05I9mM9Ag497vQk"; // Not a safety issue
+const assistantId = 'asst_ACwD1N2Pv05I9mM9Ag497vQk'; // Not a safety issue
 const openai = new OpenAI({ apiKey: process.env.REACT_APP_OPENAI_API_KEY, dangerouslyAllowBrowser: true });
 
-function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, 
-    userInputVisible, handleGenerate, setPromptGenerated, 
-    handleButtonAnimation }) {
+//===========================//
+// CREATE RANDOM ART FEATURE //
+//===========================//
+export async function handleRandomArt({ userInputVisible, handleGenerate, handleButtonAnimation, promptWithAI }) {
+    window.scrollTo(0, 0);
+    if (userInputVisible) {
+        try {
+            const generatedPrompt = await promptWithAI();
+            await handleGenerate(generatedPrompt);
+            handleButtonAnimation();
+            return { success: true, prompt: generatedPrompt };
+        } catch (error) {
+            console.error('Error generating random art:', error);
+            return { success: false, error: error };
+        }
+    }
+}
+
+function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, userInputVisible, handleGenerate, setPromptGenerated, handleButtonAnimation }) {
     const [copied, setCopied] = useState(false); // State variable to track whether the headline has been copied
     const [isLoading, setIsLoading] = useState(false);
 
@@ -30,27 +46,6 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText,
                     setTimeout(() => setCopied(false), 2000); // Reset Copy Headline after 2 seconds
                 })
                 .catch((error) => console.error(error));
-        }
-    }
-
-    //===========================//
-    // CREATE RANDOM ART FEATURE //
-    //===========================//
-    const handleRandomArt = async (event) => {
-        window.scrollTo(0, 0);
-        if (userInputVisible) {
-            if (event) {
-                event.preventDefault();
-            }
-            try {
-                const generatedPrompt = await promptWithAI();
-                await handleGenerate(generatedPrompt);
-                handleButtonAnimation();
-                return { success: true, prompt: generatedPrompt };
-            } catch (error) {
-                console.error('Error generating random art:', error);
-                return { success: false, error: error };
-            }
         }
     };
 
@@ -68,7 +63,7 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText,
 
                 // Create a Message
                 const messageResponse = await openai.beta.threads.messages.create(thread.id, {
-                    role: "user",
+                    role: 'user',
                     content: `Here is the news headline: "${headlineTitle}"`
                 });
 
@@ -85,10 +80,10 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText,
 
                 // Call the OpenAI API (Assistant + headline) to generate the art style prompt
                 const completionRequest = {
-                    model: "gpt-3.5-turbo",
+                    model: 'gpt-3.5-turbo',
                     messages: [
-                        { role: "user", content: combinedMessage },
-                        { role: "assistant", content: "prompt" }
+                        { role: 'user', content: combinedMessage },
+                        { role: 'assistant', content: 'prompt' }
                     ],
                     max_tokens: 300
                 };
@@ -144,7 +139,7 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText,
                     <p className='news-info__p'>View Story</p>
                 </a>
                 <button className='news-info__button--randomize' onClick={() => {
-                    handleRandomArt();
+                    handleRandomArt({ userInputVisible, handleGenerate, handleButtonAnimation, promptWithAI });
                     handleButtonAnimation(); // Call the handleButtonAnimation function here
                 }}>
                     <lord-icon
@@ -186,4 +181,4 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText,
     )
 }
 
-export default NewsInfo
+export default NewsInfo;
