@@ -8,7 +8,7 @@ const assistantId = "asst_ACwD1N2Pv05I9mM9Ag497vQk"; // Not a safety issue
 const openai = new OpenAI({ apiKey: process.env.REACT_APP_OPENAI_API_KEY, dangerouslyAllowBrowser: true });
 
 function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, 
-    userInputVisible, promptGenerated, handleGenerate, setPromptGenerated, 
+    userInputVisible, handleGenerate, setPromptGenerated, 
     handleButtonAnimation }) {
     const [copied, setCopied] = useState(false); // State variable to track whether the headline has been copied
     const [isLoading, setIsLoading] = useState(false);
