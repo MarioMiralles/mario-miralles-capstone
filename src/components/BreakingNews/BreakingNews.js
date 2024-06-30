@@ -11,7 +11,7 @@ import loadingNews from '../../assets/images/Loading_News2.gif';
 import NewsInfo from '../NewsInfo/NewsInfo';
 
 const wordpressPagesURL = "https://onthedai.com/wp-json/wp/v2/pages"
-const excludePageIds = [873, 2663, 3676, 3700, 25455, 25458]; // Excludes certain pages from the OTD website
+const excludePageIds = [873, 2663, 3676, 3700, 25455, 25458, 28770]; // Excludes certain pages from the OTD website
 
 const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleGenerate, inputText, setShowButtonAnimation, setPromptGenerated, handleButtonAnimation, isDesktopView, handleRandomArt, isTextareaVisible }) => {
     const [pages, setPages] = useState([]);
