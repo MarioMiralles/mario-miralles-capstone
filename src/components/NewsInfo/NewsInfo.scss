@@ -141,6 +141,11 @@
         height: 2rem;
         cursor: pointer;
 
+        &.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         @include tablet {
             height: 3rem;
         }
@@ -149,6 +154,11 @@
             background-color: $background2;
             height: 5rem;
             width: 100%;
+
+            &.disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
         }
     }
 }

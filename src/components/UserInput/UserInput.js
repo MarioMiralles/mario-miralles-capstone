@@ -31,6 +31,7 @@ function UserInput() {
     const [showButtonAnimationTimeout, setShowButtonAnimationTimeout] = useState(null);
     const [generateButtonClicked, setGenerateButtonClicked] = useState(false);
     const [isDesktopView, setIsDesktopView] = useState(window.innerWidth >= 1280);
+    const [isTextareaVisible, setIsTextareaVisible] = useState(true);
 
     useEffect(() => {
         const handleResize = () => {
@@ -56,6 +57,10 @@ function UserInput() {
     // HANDLE RANDOM ART FUNCTION //
     //===========================//
     const handleRandomArt = async (headlineTitle) => {
+        if (!isTextareaVisible) {
+            handleButtonAnimation();
+            return;
+        }
         try {
             setIsLoading(true);
             setGeneratedImage(null); // Clear any existing generated image
@@ -168,6 +173,10 @@ function UserInput() {
         }
     }, [generationId]);
 
+    useEffect(() => {
+        setIsTextareaVisible(!isLoading && !generatedImage);
+    }, [isLoading, generatedImage]);
+
     const handleCreateNew = () => {
         setInputText('');
         setGeneratedImage(null);
@@ -246,6 +255,7 @@ function UserInput() {
                                 setPromptGenerated={setPromptGenerated}
                                 handleButtonAnimation={handleButtonAnimation}
                                 handleRandomArt={handleRandomArt}
+                                isTextareaVisible={isTextareaVisible}
                             />}
                     </section>
                 </article>
@@ -265,6 +275,7 @@ function UserInput() {
                                     handleButtonAnimation={handleButtonAnimation}
                                     isDesktopView={isDesktopView}
                                     handleRandomArt={handleRandomArt}
+                                    isTextareaVisible={isTextareaVisible}
                                 />
                             </section>
                         </article>

@@ -9,7 +9,7 @@ import './NewsInfo.scss';
 import axios from 'axios'; // Import axios for API calls
 import leftArrow from '../../assets/icons/left-arrow.png';
 
-function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, setPromptGenerated, handleButtonAnimation, handleRandomArt }) {
+function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, setPromptGenerated, handleButtonAnimation, handleRandomArt, isTextareaVisible }) {
     const [copied, setCopied] = useState(false); // State variable to track whether the headline has been copied
     const [isLoading, setIsLoading] = useState(false);
 
@@ -32,6 +32,10 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, setPromp
     // HANDLE AI PROMPT FUNCTION //
     //=============================//
     const handleAIPrompt = async () => {
+        if (!isTextareaVisible) {
+            handleButtonAnimation();
+            return;
+        }
         try {
             setIsLoading(true);
             const response = await axios.post('http://localhost:5000/api/art/prompt', { headlineTitle });
@@ -78,7 +82,11 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, setPromp
                     <p className='news-info__p'>View Story</p>
                 </a>
                 <button className='news-info__button--randomize' onClick={() => {
-                    handleRandomArt(headlineTitle);
+                    if (isTextareaVisible) {
+                        handleRandomArt(headlineTitle);
+                    } else {
+                        handleButtonAnimation();
+                    }
                 }}>
                     <lord-icon
                         id="news-info__img-button--randomize"
@@ -90,7 +98,11 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, setPromp
                     <p className='news-info__p'>Create a Random Artwork</p>
                 </button>
                 <button className='news-info__button' onClick={() => {
-                    handleAIPrompt();
+                    if (isTextareaVisible) {
+                        handleAIPrompt();
+                    } else {
+                        handleButtonAnimation();
+                    }
                 }}>
                     <lord-icon
                         id="news-info__img-button"
