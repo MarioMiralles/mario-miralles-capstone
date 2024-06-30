@@ -1,3 +1,8 @@
+//===============//
+// BREAKING NEWS //
+//===============//
+// mario-miralles-capstone/src/components/BreakingNews/BreakingNews.js
+
 import React, { useState, useEffect } from 'react';
 import './BreakingNews.scss';
 import axios from 'axios';
@@ -8,7 +13,7 @@ import NewsInfo from '../NewsInfo/NewsInfo';
 const wordpressPagesURL = "https://onthedai.com/wp-json/wp/v2/pages"
 const excludePageIds = [873, 2663, 3676, 3700, 25455, 25458]; // Excludes certain pages from the OTD website
 
-const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleGenerate, inputText, setShowButtonAnimation, setPromptGenerated, handleButtonAnimation, isDesktopView }) => {
+const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleGenerate, inputText, setShowButtonAnimation, setPromptGenerated, handleButtonAnimation, isDesktopView, handleRandomArt }) => {
     const [pages, setPages] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -82,28 +87,28 @@ const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleG
                     )}
                     {!showNewsInfo && ( // Only render if no headline is selected
                         <section className='news__pagination-container'>
-                        <div className='news__pages'>
-                            {currentTitles.map((page, index) => {
-                                const truncatedTitle = page.title.rendered.split(' ').slice(0, 21).join(' '); // Get the first 21 words
-                                const displayTitle = page.title.rendered.length > 21 ? truncatedTitle + '...' : truncatedTitle; // Add ellipsis if title exceeds 21 words
-                                return (
-                                    <h3 key={index} className='news__page-title' onClick={() => handleHeadlineClick(page)}>
-                                        {isDesktopView ? page.title.rendered : displayTitle}
-                                    </h3>
-                                );
-                            })}
-                        </div>
-                        <div className='news__pagination'>
-                            {Array.from({ length: totalPages }, (_, index) => (
-                                <button
-                                    key={index + 1}
-                                    className={`news__pagination-button ${index + 1 === activePaginationButton ? "active" : ""} ${index === 0 ? "first-page" : ""}`}
-                                    onClick={() => handlePageChange(index + 1)}>
-                                    {index + 1}
-                                </button>
-                            ))}
-                        </div>
-                    </section>
+                            <div className='news__pages'>
+                                {currentTitles.map((page, index) => {
+                                    const truncatedTitle = page.title.rendered.split(' ').slice(0, 21).join(' '); // Get the first 21 words
+                                    const displayTitle = page.title.rendered.length > 21 ? truncatedTitle + '...' : truncatedTitle; // Add ellipsis if title exceeds 21 words
+                                    return (
+                                        <h3 key={index} className='news__page-title' onClick={() => handleHeadlineClick(page)}>
+                                            {isDesktopView ? page.title.rendered : displayTitle}
+                                        </h3>
+                                    );
+                                })}
+                            </div>
+                            <div className='news__pagination'>
+                                {Array.from({ length: totalPages }, (_, index) => (
+                                    <button
+                                        key={index + 1}
+                                        className={`news__pagination-button ${index + 1 === activePaginationButton ? "active" : ""} ${index === 0 ? "first-page" : ""}`}
+                                        onClick={() => handlePageChange(index + 1)}>
+                                        {index + 1}
+                                    </button>
+                                ))}
+                            </div>
+                        </section>
                     )}
                 </>
 
@@ -121,7 +126,9 @@ const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleG
                     inputText={inputText}
                     setShowButtonAnimation={setShowButtonAnimation}
                     setPromptGenerated={setPromptGenerated}
-                    handleButtonAnimation={handleButtonAnimation} />}
+                    handleButtonAnimation={handleButtonAnimation}
+                    handleRandomArt={handleRandomArt}
+                />}
         </article>
     );
 };

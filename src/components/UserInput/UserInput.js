@@ -1,8 +1,14 @@
-import './UserInput.scss'
+//=======================//
+// USER INPUT (HOMEPAGE) //
+//=======================//
+// /mario-miralles-capstone/src/components/UserInput/UserInput.js
+
+import React, { useState, useEffect, useCallback } from "react";
+import axios from "axios";
+import './UserInput.scss';
 import logo from '../../../src/assets/images/Logo2024.png';
 import otdLogo from '../../../src/assets/images/OTDLogo.png';
-import loadingGif from '../../../src/assets/images/Loading_GIF.gif'
-import React, { useState, useEffect, useCallback } from "react";
+import loadingGif from '../../../src/assets/images/Loading_GIF.gif';
 import PublicGallery from '../PublicGallery/PublicGallery';
 import BreakingNews from '../BreakingNews/BreakingNews';
 import { useNavigate } from 'react-router-dom';
@@ -11,24 +17,21 @@ import SocialLinks from '../SocialLinks/SocialLinks';
 const apiKey = process.env.REACT_APP_API_KEY;
 
 function UserInput() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [inputText, setInputText] = useState('');
     const [generatedImage, setGeneratedImage] = useState(null);
     const [generationId, setGenerationId] = useState(null);
     const [error, setError] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false); // State to track loading
     const [imageLoaded, setImageLoaded] = useState(false);
-    const [publicGalleryKey, setPublicGalleryKey] = useState(0); // Key to force re-render PublicGallery component
+    const [publicGalleryKey, setPublicGalleryKey] = useState(0);
     const [showPublicGallery, setShowPublicGallery] = useState(true);
     const [promptGenerated, setPromptGenerated] = useState(false);
     const [showButtonAnimation, setShowButtonAnimation] = useState(false);
     const [showButtonAnimationTimeout, setShowButtonAnimationTimeout] = useState(null);
-    const [generateButtonClicked, setGenerateButtonClicked] = useState(false); // State to track whether the textarea has been touched
+    const [generateButtonClicked, setGenerateButtonClicked] = useState(false);
     const [isDesktopView, setIsDesktopView] = useState(window.innerWidth >= 1280);
 
-    //===================================//
-    // RESIZE FOR DESKTOP RESPONSIVENESS //
-    //===================================//
     useEffect(() => {
         const handleResize = () => {
             setIsDesktopView(window.innerWidth >= 1280);
@@ -41,9 +44,6 @@ function UserInput() {
         };
     }, []);
 
-    //======================//
-    // VALIDATION ANIMATION //
-    //======================//
     useEffect(() => {
         return () => {
             if (showButtonAnimationTimeout) {
@@ -52,22 +52,42 @@ function UserInput() {
         };
     }, [showButtonAnimationTimeout]);
 
+    //===========================//
+    // HANDLE RANDOM ART FUNCTION //
+    //===========================//
+    const handleRandomArt = async (headlineTitle) => {
+        try {
+            setIsLoading(true);
+            setGeneratedImage(null); // Clear any existing generated image
+            console.log('isLoading set to true');
+            const response = await axios.post('http://localhost:5000/api/art/random-art', { headlineTitle });
+            if (response.data.success) {
+                setGenerationId(response.data.generationId);
+                setInputText(response.data.prompt);
+            } else {
+                throw new Error(response.data.error);
+            }
+        } catch (error) {
+            console.error('Error generating random art:', error);
+            setError('Failed to generate random art. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     const handleButtonAnimation = () => {
         setShowButtonAnimation(true);
         if (showButtonAnimationTimeout) {
-            clearTimeout(showButtonAnimationTimeout); // Clear the previous timeout if it exists
+            clearTimeout(showButtonAnimationTimeout);
         }
         setShowButtonAnimationTimeout(
             setTimeout(() => {
                 setShowButtonAnimation(false);
-                setGenerateButtonClicked(false); // Reset generateButtonClicked state
+                setGenerateButtonClicked(false);
             }, 3000)
         );
-    }
+    };
 
-    //===============================//
-    // TOGGLE BETWEEN GALLERY & NEWS //
-    //===============================//
     const toggleComponent = (section) => {
         if ((section === 'Public Gallery' && showPublicGallery) || (section === 'Breaking News' && !showPublicGallery)) {
             return;
@@ -75,78 +95,42 @@ function UserInput() {
         setShowPublicGallery((prev) => !prev);
     };
 
-    //==================================//
-    // LEONARDO AI API GENERATE REQUEST //
-    //==================================//
-    const handleGenerate = async (inputText) => {
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        if (!inputText) {
+            handleButtonAnimation();
+            setGenerateButtonClicked(true);
+            return;
+        }
+        setImageLoaded(false);
+        setIsLoading(true);
+
         try {
-            setIsLoading(true); // Set loading to true when generating image
-
-            // Check if a generation is already in progress
-            if (generationId) {
-                setGenerationId(null); // Reset the generationId state variable
-            }
-
-            // Initiate a new generation
-            const requestData = {
-                height: 576,
-                modelId: '1e60896f-3c26-4296-8ecc-53e2afecc132',
-                prompt: inputText,
-                width: 1024,
-                alchemy: false,
-                guidance_scale: 7,
-                nsfw: true,
-                highResolution: true,
-                num_images: 1,
-                photoReal: false,
-                presetStyle: 'NONE',
-                promptMagic: false,
-                public: false,
-                sd_version: 'v2'
-            };
-
-            const options = {
+            const response = await fetch('http://localhost:5000/api/art/generate', {
                 method: 'POST',
                 headers: {
-                    accept: 'application/json',
-                    'content-type': 'application/json',
-                    authorization: `Bearer ${apiKey}`
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(requestData)
-            };
+                body: JSON.stringify({ inputText }),
+            });
 
-            const response = await fetch('https://cloud.leonardo.ai/api/rest/v1/generations', options);
             if (!response.ok) {
                 throw new Error('Failed to generate image');
             }
+
             const responseData = await response.json();
-            setGenerationId(responseData.sdGenerationJob.generationId);
+            setGenerationId(responseData.generationId);
             setError(null);
         } catch (error) {
             setError('Error generating image. Please try again.');
         } finally {
-            setIsLoading(false); // Set loading to false after the generation process
+            setIsLoading(false);
         }
     };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        if (!inputText) {
-            handleButtonAnimation(); // Trigger the button animation
-            setGenerateButtonClicked(true); // Set the generateButtonClicked state
-            return;
-        }
-        setImageLoaded(false);
-        handleGenerate(inputText);
-    };
-
-    //===============================//
-    // LEONARDO AI API FETCH REQUEST //
-    //===============================//
     const handleFetchImage = useCallback(async () => {
-        setIsLoading(true); // Set loading to true when fetching image
+        setIsLoading(true);
         try {
-            // Using a flag to prevent recursive calls
             let fetching = true;
             while (fetching) {
                 const options = {
@@ -165,17 +149,16 @@ function UserInput() {
                 if (responseData && responseData.generations_by_pk && responseData.generations_by_pk.generated_images && responseData.generations_by_pk.generated_images.length > 0) {
                     setGeneratedImage(responseData.generations_by_pk.generated_images[0].url);
                     setError(null);
-                    setImageLoaded(true); // Set imageLoaded to true when image is successfully loaded
-                    fetching = false; // Stop fetching loop
+                    setImageLoaded(true);
+                    fetching = false;
                 } else {
-                    // If image is not generated yet, wait for 3 seconds and try again
                     await new Promise(resolve => setTimeout(resolve, 3000));
                 }
             }
         } catch (error) {
             setError('Error fetching image. Please try again.');
         } finally {
-            setIsLoading(false); // Set loading to false after fetching image URL
+            setIsLoading(false);
         }
     }, [generationId, setIsLoading, setError]);
 
@@ -183,20 +166,15 @@ function UserInput() {
         if (generationId) {
             handleFetchImage();
         }
-    }, [generationId, handleFetchImage]);
+    }, [generationId]);
 
-    //=======================//
-    // OTHER BUTTON HANDLERS //
-    //=======================//
-    // Create New Art Button
     const handleCreateNew = () => {
-        setInputText(''); // Reset input text
-        setGeneratedImage(null); // Reset generated image
+        setInputText('');
+        setGeneratedImage(null);
         setPublicGalleryKey(prevKey => prevKey + 1);
-        setPromptGenerated(false); // Reset promptGenerated state
+        setPromptGenerated(false);
     };
 
-    // Logo Link Refreshes App to Homepage
     const handleRefreshBrowser = () => {
         navigate(0);
     }
@@ -221,13 +199,12 @@ function UserInput() {
                             </form>
                         )}
                         <figure className='generated__section'>
-                            {/* Show the otdLogo only when isLoading and generatedImage are both true */}
                             {(isLoading || generatedImage) && (
                                 <img onClick={handleRefreshBrowser} className='generated__logo' src={otdLogo} alt='OTDNews' />
                             )}
                             {error && <div>{error}</div>}
-                            {isLoading && <img className="generated__loading" src={loadingGif} alt="Loading..." />} {/* Loading indicator */}
-                            {generatedImage && imageLoaded && (
+                            {isLoading && <img className="generated__loading" src={loadingGif} alt="Loading..." />}
+                            {generatedImage && !isLoading && (
                                 <section className="generated__container">
                                     <img src={generatedImage} className='generated__image' alt="Generated Artwork" />
                                     <button onClick={handleCreateNew} className={`generated__create-new-button ${showButtonAnimation ? 'glowing' : ''}`}>CREATE NEW ART</button>
@@ -254,7 +231,6 @@ function UserInput() {
                                     </h2>
                                 </>
                             )}
-
                         </div>
                         {showPublicGallery ?
                             <PublicGallery
@@ -264,11 +240,13 @@ function UserInput() {
                                 setInputText={setInputText}
                                 userInputVisible={!isLoading && !generatedImage}
                                 promptGenerated={promptGenerated}
-                                handleGenerate={handleGenerate}
                                 inputText={inputText}
+                                setIsLoading={setIsLoading}
                                 setShowButtonAnimation={setShowButtonAnimation}
                                 setPromptGenerated={setPromptGenerated}
-                                handleButtonAnimation={handleButtonAnimation} />}
+                                handleButtonAnimation={handleButtonAnimation}
+                                handleRandomArt={handleRandomArt}
+                            />}
                     </section>
                 </article>
                 <section className='form__right'>
@@ -280,12 +258,13 @@ function UserInput() {
                                     setInputText={setInputText}
                                     userInputVisible={!isLoading && !generatedImage}
                                     promptGenerated={promptGenerated}
-                                    handleGenerate={handleGenerate}
                                     inputText={inputText}
+                                    setIsLoading={setIsLoading}
                                     setShowButtonAnimation={setShowButtonAnimation}
                                     setPromptGenerated={setPromptGenerated}
                                     handleButtonAnimation={handleButtonAnimation}
                                     isDesktopView={isDesktopView}
+                                    handleRandomArt={handleRandomArt}
                                 />
                             </section>
                         </article>
@@ -295,7 +274,6 @@ function UserInput() {
             </main >
         </>
     );
-
 }
 
 export default UserInput;

@@ -1,8 +1,13 @@
-import '../PublicGallery/PublicGallery.scss'
+//================//
+// PUBLIC GALLERY //
+//================//
+// mario-miralles-capstone/src/components/PublicGallery/PublicGallery.js
+
 import React, { useState, useEffect } from 'react';
-import PublicGalleryModal from '../PublicGalleryModal/PublicGalleryModal';
 import { Link } from 'react-router-dom';
 import loadingNews from '../../../src/assets/images/Loading_News2.gif';
+import PublicGalleryModal from '../PublicGalleryModal/PublicGalleryModal';
+import './PublicGallery.scss';
 
 const PublicGallery = () => {
     const [publicGalleryImages, setPublicGalleryImages] = useState([]);
@@ -13,15 +18,12 @@ const PublicGallery = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
+    const apiKey = process.env.REACT_APP_API_KEY;
 
-    const apiKey = process.env.REACT_APP_API_KEY; // Leonardo AI
-
-    //==============//
-    // FETCH IMAGES //
-    //==============//
+    // Fetch images when component mounts
     useEffect(() => {
         fetchPublicGalleryImages(); // Fetch gallery images when component mounts
-    });
+    }, []); 
 
     const fetchPublicGalleryImages = async () => {
         try {
@@ -58,9 +60,6 @@ const PublicGallery = () => {
         }
     };
 
-    //========================//
-    // OPEN/CLOSE IMAGE MODAL //
-    //========================//
     // Function to handle image click and open modal
     const handleImageClick = (image) => {
         setSelectedImage(image);
