@@ -40,9 +40,24 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, setPromp
             setIsLoading(true);
             const response = await axios.post('http://localhost:5000/api/art/prompt', { headlineTitle });
             setIsLoading(false);
-            setInputText(response.data.prompt);
-            setPromptGenerated(true);
-            handleButtonAnimation();
+    
+            if (response.data && response.data.success) {
+                let promptData;
+                try {
+                    promptData = JSON.parse(response.data.prompt);
+                } catch (error) {
+                    console.error('Error parsing prompt data:', error);
+                    return;
+                }
+                
+                const { style, prompt } = promptData;
+                console.log(style);
+                setInputText(prompt);
+                setPromptGenerated(true);
+                handleButtonAnimation();
+            } else {
+                console.error('Error from server:', response.data.message);
+            }
         } catch (error) {
             console.error('Error prompting with AI:', error);
             setIsLoading(false);
