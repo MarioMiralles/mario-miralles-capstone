@@ -43,13 +43,17 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, setPromp
     
             if (response.data && response.data.success) {
                 let promptData;
-                try {
-                    promptData = JSON.parse(response.data.prompt);
-                } catch (error) {
-                    console.error('Error parsing prompt data:', error);
-                    return;
+                if (typeof response.data.prompt === 'string') {
+                    try {
+                        promptData = JSON.parse(response.data.prompt);
+                    } catch (error) {
+                        console.error('Error parsing prompt data:', error);
+                        return;
+                    }
+                } else {
+                    promptData = response.data.prompt;
                 }
-                
+    
                 const { style, prompt } = promptData;
                 console.log(style);
                 setInputText(prompt);
@@ -62,7 +66,7 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, setPromp
             console.error('Error prompting with AI:', error);
             setIsLoading(false);
         }
-    };
+    };    
 
     // Render the component only if headlineTitle is provided
     if (!headlineTitle) {
