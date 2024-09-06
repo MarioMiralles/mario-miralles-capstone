@@ -8,13 +8,17 @@ import axios from "axios";
 import './UserInput.scss';
 import logo from '../../../src/assets/images/Logo2024.png';
 import otdLogo from '../../../src/assets/images/OTDLogo.png';
+import desktopLogo from '../../../src/assets/images/artGeneratorLabel.png';
 import loadingGif from '../../../src/assets/images/Loading_GIF.gif';
 import PublicGallery from '../PublicGallery/PublicGallery';
 import BreakingNews from '../BreakingNews/BreakingNews';
 import { useNavigate } from 'react-router-dom';
 import SocialLinks from '../SocialLinks/SocialLinks';
+import FeaturedHeadline from '../FeaturedHeadline/FeaturedHeadline';
 
 const apiKey = process.env.REACT_APP_API_KEY;
+const wordpressPagesURL = "https://onthedai.com/wp-json/wp/v2/pages";
+const excludePageIds = [873, 2663, 3676, 3700, 25455, 25458, 28770];
 
 function UserInput() {
     const navigate = useNavigate();
@@ -32,6 +36,23 @@ function UserInput() {
     const [generateButtonClicked, setGenerateButtonClicked] = useState(false);
     const [isDesktopView, setIsDesktopView] = useState(window.innerWidth >= 1280);
     const [isTextareaVisible, setIsTextareaVisible] = useState(true);
+    const [featuredHeadline, setFeaturedHeadline] = useState(null);
+
+    useEffect(() => {
+        fetchFeaturedHeadline();
+    }, []);
+
+    const fetchFeaturedHeadline = async () => {
+        try {
+            const excludePages = excludePageIds.join(',');
+            const response = await axios.get(`${wordpressPagesURL}?per_page=1&exclude=${excludePages}`);
+            if (response.data && response.data.length > 0) {
+                setFeaturedHeadline(response.data[0]);
+            }
+        } catch (error) {
+            console.error('Error fetching featured headline:', error);
+        }
+    };
 
     useEffect(() => {
         const handleResize = () => {
@@ -102,6 +123,7 @@ function UserInput() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setError(null);
         if (!inputText) {
             handleButtonAnimation();
             setGenerateButtonClicked(true);
@@ -191,12 +213,25 @@ function UserInput() {
     return (
         <>
             <main className='main'>
-                <article className='form__left'>
+                <article className="featured-headline">
+                    {isDesktopView && (
+                        <FeaturedHeadline
+                            headline={featuredHeadline}
+                        // onHeadlineClick={handleFeaturedHeadlineClick}
+                        />
+                    )}
+                </article>
+                <div className="form__container">
                     <section className='form__article'>
                         {!isLoading && !generatedImage && (
                             <form className='form' onSubmit={handleSubmit}>
                                 <fieldset>
-                                    <legend><img src={logo} className='logo' alt="ON THE Dai AI Art Generator Logo" /></legend>
+                                    <legend>
+                                        <img
+                                            src={isDesktopView ? desktopLogo : logo}
+                                            className='logo'
+                                            alt={isDesktopView ? "Art Generator" : "ON THE Dai News AI Art Generator"}
+                                        /></legend>
                                     <textarea
                                         className={`form__input ${generateButtonClicked && !inputText ? 'form__input--invalid' : ''}`}
                                         placeholder='What would you like to create?'
@@ -208,7 +243,7 @@ function UserInput() {
                             </form>
                         )}
                         <figure className='generated__section'>
-                            {(isLoading || generatedImage) && (
+                            {(!isDesktopView && isLoading || !isDesktopView &&generatedImage) && (
                                 <img onClick={handleRefreshBrowser} className='generated__logo' src={otdLogo} alt='OTDNews' />
                             )}
                             {error && <div>{error}</div>}
@@ -221,48 +256,9 @@ function UserInput() {
                             )}
                         </figure>
                     </section>
-                    <section className='gallery__news'>
-                        <div className="gallery__heading-container">
-                            {isDesktopView && (
-                                <h2 className="gallery__heading">PUBLIC GALLERY</h2>
-                            )}
-                            {!isDesktopView && (
-                                <>
-                                    <h2
-                                        className={showPublicGallery ? "gallery__heading" : "gallery__heading--inactive"}
-                                        onClick={() => toggleComponent('Public Gallery')}>
-                                        Public Gallery
-                                    </h2>
-                                    <h2
-                                        className={showPublicGallery ? "gallery__heading--inactive" : "gallery__heading"}
-                                        onClick={() => toggleComponent('Breaking News')}>
-                                        Breaking News
-                                    </h2>
-                                </>
-                            )}
-                        </div>
-                        {showPublicGallery ?
-                            <PublicGallery
-                                key={publicGalleryKey} inputText={inputText}
-                                handleFetchImage={handleFetchImage} /> :
-                            <BreakingNews
-                                setInputText={setInputText}
-                                userInputVisible={!isLoading && !generatedImage}
-                                promptGenerated={promptGenerated}
-                                inputText={inputText}
-                                setIsLoading={setIsLoading}
-                                setShowButtonAnimation={setShowButtonAnimation}
-                                setPromptGenerated={setPromptGenerated}
-                                handleButtonAnimation={handleButtonAnimation}
-                                handleRandomArt={handleRandomArt}
-                                isTextareaVisible={isTextareaVisible}
-                            />}
-                    </section>
-                </article>
-                <section className='form__right'>
                     {isDesktopView && (
                         <article className='news-desktop'>
-                            <SocialLinks />
+                            {/* <SocialLinks /> */}
                             <section className='news-desktop__news'>
                                 <BreakingNews
                                     setInputText={setInputText}
@@ -276,13 +272,54 @@ function UserInput() {
                                     isDesktopView={isDesktopView}
                                     handleRandomArt={handleRandomArt}
                                     isTextareaVisible={isTextareaVisible}
+                                    excludeFeaturedHeadline={true}
                                 />
                             </section>
                         </article>
                     )}
-                    {!isDesktopView && <SocialLinks />}
+                </div>
+                <section className='gallery__news'>
+                    <div className="gallery__heading-container">
+                        {isDesktopView && (
+                            <h2 className="gallery__heading">COMMUNITY CREATIONS</h2>
+                        )}
+                        {!isDesktopView && (
+                            <>
+                                <h2
+                                    className={showPublicGallery ? "gallery__heading" : "gallery__heading--inactive"}
+                                    onClick={() => toggleComponent('Public Gallery')}>
+                                    Public Gallery
+                                </h2>
+                                <h2
+                                    className={showPublicGallery ? "gallery__heading--inactive" : "gallery__heading"}
+                                    onClick={() => toggleComponent('Breaking News')}>
+                                    Breaking News
+                                </h2>
+                            </>
+                        )}
+                    </div>
+                    {showPublicGallery ?
+                        <PublicGallery
+                            key={publicGalleryKey} inputText={inputText}
+                            handleFetchImage={handleFetchImage} /> :
+                        <BreakingNews
+                            setInputText={setInputText}
+                            userInputVisible={!isLoading && !generatedImage}
+                            promptGenerated={promptGenerated}
+                            inputText={inputText}
+                            setIsLoading={setIsLoading}
+                            setShowButtonAnimation={setShowButtonAnimation}
+                            setPromptGenerated={setPromptGenerated}
+                            handleButtonAnimation={handleButtonAnimation}
+                            handleRandomArt={handleRandomArt}
+                            isTextareaVisible={isTextareaVisible}
+                        />}
                 </section>
+                {!isDesktopView && <SocialLinks />}
             </main >
+            <footer className="footer">
+                {isDesktopView && <SocialLinks />}
+            </footer>
         </>
     );
 }

@@ -87,6 +87,11 @@
         padding: 0.25rem;
         margin-bottom: 1rem;
 
+        @include desktop {
+            padding: 0;
+            margin: 0.5rem 0 0 0;
+        }
+
         &-button {
             padding: 0.5rem 0.825rem;
             border-radius: 0.5rem;

@@ -93,7 +93,7 @@ const PublicGallery = () => {
                             <img
                                 src={image.image}
                                 className='gallery__image'
-                                alt={`From Public Gallery number ${index}`}
+                                alt={`From Community Creations number ${index}`}
                             />
                         </Link>
                     ))}

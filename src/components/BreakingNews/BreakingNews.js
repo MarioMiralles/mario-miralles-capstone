@@ -25,11 +25,11 @@ const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleG
     //============//
     // PAGINATION //
     //============//
-    const titlesPerPage = 5; // Max number of headlines to display per page
-    const totalPages = Math.ceil(pages.length / titlesPerPage);
+    const titlesPerPage = isDesktopView ? 3 : 5; // Set titlesPerPage to 4 for desktop view, 5 for others
+    const totalPages = Math.ceil((pages.length - 1) / titlesPerPage); // Adjust totalPages calculation by excluding the first headline
     const indexOfLastTitle = currentPage * titlesPerPage;
     const indexOfFirstTitle = indexOfLastTitle - titlesPerPage;
-    const currentTitles = pages.slice(indexOfFirstTitle, indexOfLastTitle);
+    const currentTitles = pages.slice(1).slice(indexOfFirstTitle, indexOfLastTitle); // Slice after excluding the first headline
 
     useEffect(() => {
         breakingNewsPages();
@@ -74,6 +74,9 @@ const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleG
         setShowNewsInfo(true); // Show NewsInfo component
     }
 
+    // Get the first headline
+    const featuredHeadline = pages[0];
+
     return (
         <article className="news__container">
             {loading ? ( // Show the loadingNews gif while loading is true
@@ -82,18 +85,13 @@ const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleG
                 </div>
             ) : (
                 <>
-                    {isDesktopView && (
-                        <h2 className="news__heading" id="news__heading--pad-bottom">Breaking News</h2>
-                    )}
                     {!showNewsInfo && ( // Only render if no headline is selected
                         <section className='news__pagination-container'>
                             <div className='news__pages'>
                                 {currentTitles.map((page, index) => {
-                                    const truncatedTitle = page.title.rendered.split(' ').slice(0, 21).join(' '); // Get the first 21 words
-                                    const displayTitle = page.title.rendered.length > 21 ? truncatedTitle + '...' : truncatedTitle; // Add ellipsis if title exceeds 21 words
                                     return (
                                         <h3 key={index} className='news__page-title' onClick={() => handleHeadlineClick(page)}>
-                                            {isDesktopView ? page.title.rendered : displayTitle}
+                                            {page.title.rendered}
                                         </h3>
                                     );
                                 })}

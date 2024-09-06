@@ -1,0 +1,42 @@
+@use '../../styles/partials/mixins' as *;
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/typography' as *;
+
+.featured-headline {
+
+    &__container {
+        @include display (row, flex-start, nowrap);
+        align-items: center;
+        padding: 0 3rem;
+        width: 100vw;
+    }
+
+    &__label {
+        width: auto;
+        font-family: "Lovelo Black";
+        font-size: 1.5rem;
+        padding: 1rem;
+        align-self: stretch;
+        align-content: center;
+        background-color: $secondary1;
+    }
+
+    &__title {
+        padding: 1rem 1rem 1rem 2rem;
+        background-color: #FFFFFFB5;
+        color: black;
+        border-radius: 0 5px 5px 0;
+        border: 2px solid $secondary1;
+        box-shadow: inset 0 0 10px 5px $background1;
+        cursor: pointer;
+        font-family: "Inter";
+        letter-spacing: -0.005rem;
+        flex-grow: 1;
+        font-size: 1.25rem;
+
+        &:hover {
+            background-color: $background1;
+            color: white;
+        }
+    }
+}
