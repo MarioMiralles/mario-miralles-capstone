@@ -9,6 +9,7 @@
         align-items: center;
         padding: 0 3rem;
         width: 100vw;
+        margin-right: 0.5rem;
     }
 
     &__label {
@@ -25,8 +26,8 @@
         padding: 1rem 1rem 1rem 2rem;
         background-color: #FFFFFFB5;
         color: black;
-        border-radius: 0 5px 5px 0;
-        border: 2px solid $secondary1;
+        border-radius: 0 5px 0px 0;
+        border: 3px solid $secondary1;
         box-shadow: inset 0 0 10px 5px $background1;
         cursor: pointer;
         font-family: "Inter";

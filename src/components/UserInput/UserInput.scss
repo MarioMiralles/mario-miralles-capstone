@@ -35,7 +35,7 @@ fieldset {
             min-height: 16rem;
             max-width: 100%;
             max-height: 16rem;
-            padding: 0.5rem 0;
+            padding: 1rem 0 0 0;
             justify-content: flex-start;
         }
     }
@@ -64,9 +64,9 @@ fieldset {
             @include display (row, space-between, nowrap);
             align-items: flex-start;
             gap: 2rem;
-            margin-top: 1.25rem;
             padding: 0 3rem;
             max-width: 100%;
+            min-height: 18.875rem;
         }
     }
 
