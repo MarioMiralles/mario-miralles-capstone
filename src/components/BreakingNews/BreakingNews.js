@@ -7,7 +7,7 @@ import React, { useState, useEffect } from 'react';
 import './BreakingNews.scss';
 import axios from 'axios';
 import he from 'he';
-import loadingNews from '../../assets/images/Loading_News2.gif';
+import loadingNews from '../../assets/images/Loading_News.gif';
 import NewsInfo from '../NewsInfo/NewsInfo';
 
 const wordpressPagesURL = "https://onthedai.com/wp-json/wp/v2/pages"
@@ -73,9 +73,6 @@ const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleG
         setSelectedHeadline({ title: title.rendered, storyUrl: link }); // Pass both title and URL
         setShowNewsInfo(true); // Show NewsInfo component
     }
-
-    // Get the first headline
-    const featuredHeadline = pages[0];
 
     return (
         <article className="news__container">

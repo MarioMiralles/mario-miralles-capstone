@@ -10,14 +10,12 @@ const FeaturedHeadline = ({ headline, onHeadlineClick }) => {
     if (!headline) return null;
 
     return (
-        <article className="featured-headline">
             <div className='featured-headline__container'>
-                <h3 className="featured-headline__label">Breaking News</h3>
-                <h2 className='featured-headline__title' onClick={() => onHeadlineClick(headline)}>
+                <h2 className="featured-headline__label">Breaking News</h2>
+                <h3 className='featured-headline__title' onClick={() => onHeadlineClick(headline)}>
                     {headline.title.rendered}
-                </h2>
+                </h3>
             </div>
-        </article>
     );
 };
 
