@@ -7,13 +7,13 @@ import React, { useState, useEffect } from 'react';
 import './BreakingNews.scss';
 import axios from 'axios';
 import he from 'he';
-import loadingNews from '../../assets/images/Loading_News2.gif';
+import loadingNews from '../../assets/images/Loading_News.gif';
 import NewsInfo from '../NewsInfo/NewsInfo';
 
 const wordpressPagesURL = "https://onthedai.com/wp-json/wp/v2/pages"
-const excludePageIds = [873, 2663, 3676, 3700, 25455, 25458]; // Excludes certain pages from the OTD website
+const excludePageIds = [873, 2663, 3676, 3700, 25455, 25458, 28770]; // Excludes certain pages from the OTD website
 
-const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleGenerate, inputText, setShowButtonAnimation, setPromptGenerated, handleButtonAnimation, isDesktopView, handleRandomArt }) => {
+const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleGenerate, inputText, setShowButtonAnimation, setPromptGenerated, handleButtonAnimation, isDesktopView, handleRandomArt, isTextareaVisible }) => {
     const [pages, setPages] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -25,11 +25,11 @@ const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleG
     //============//
     // PAGINATION //
     //============//
-    const titlesPerPage = 5; // Max number of headlines to display per page
-    const totalPages = Math.ceil(pages.length / titlesPerPage);
+    const titlesPerPage = isDesktopView ? 3 : 5; // Set titlesPerPage to 4 for desktop view, 5 for others
+    const totalPages = Math.ceil((pages.length - 1) / titlesPerPage); // Adjust totalPages calculation by excluding the first headline
     const indexOfLastTitle = currentPage * titlesPerPage;
     const indexOfFirstTitle = indexOfLastTitle - titlesPerPage;
-    const currentTitles = pages.slice(indexOfFirstTitle, indexOfLastTitle);
+    const currentTitles = pages.slice(1).slice(indexOfFirstTitle, indexOfLastTitle); // Slice after excluding the first headline
 
     useEffect(() => {
         breakingNewsPages();
@@ -82,18 +82,13 @@ const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleG
                 </div>
             ) : (
                 <>
-                    {isDesktopView && (
-                        <h2 className="news__heading" id="news__heading--pad-bottom">Breaking News</h2>
-                    )}
                     {!showNewsInfo && ( // Only render if no headline is selected
                         <section className='news__pagination-container'>
                             <div className='news__pages'>
                                 {currentTitles.map((page, index) => {
-                                    const truncatedTitle = page.title.rendered.split(' ').slice(0, 21).join(' '); // Get the first 21 words
-                                    const displayTitle = page.title.rendered.length > 21 ? truncatedTitle + '...' : truncatedTitle; // Add ellipsis if title exceeds 21 words
                                     return (
                                         <h3 key={index} className='news__page-title' onClick={() => handleHeadlineClick(page)}>
-                                            {isDesktopView ? page.title.rendered : displayTitle}
+                                            {page.title.rendered}
                                         </h3>
                                     );
                                 })}
@@ -128,6 +123,7 @@ const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleG
                     setPromptGenerated={setPromptGenerated}
                     handleButtonAnimation={handleButtonAnimation}
                     handleRandomArt={handleRandomArt}
+                    isTextareaVisible={isTextareaVisible}
                 />}
         </article>
     );
