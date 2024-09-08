@@ -2,12 +2,16 @@
 @use '../../styles/partials/mixins' as *;
 
 .social-share {
+    @include display(column, space-between, nowrap);
     background-color: $background1;
     padding: 0.5rem;
-    margin: 1rem 0 0 0;
     border-radius: 1rem;
     border-top: 3px solid $primary1;
     border-bottom: 3px solid $primary1;
+    z-index: 2;
+    height: 20rem;
+    position: fixed;
+    bottom: 0;
 
     &__delete-close {
         background-color: $background2;
@@ -35,16 +39,17 @@
 
     &__heading {
         font-family: "Lovelo";
+        font-size: 1rem;
     }
 
     &__icons {
-        border-radius: 5rem;
+        // border-radius: 15rem;
         display: flex;
         flex-direction: column;
         align-items: center;
         width: 100%;
-        height: 100%;
-        width: 2.5rem;
+        height: 4rem;
+        width: 4rem;
     }
 
     &__nav {
@@ -54,13 +59,26 @@
     }
 
     &__row {
+        @include display (row, space-between, nowrap);
+        padding: 0.5rem 0.25rem;
+        gap: 0.5rem;
 
         &--links {
-            @include display (row, space-between, nowrap);
+            @include display (row, space-evenly, nowrap);
             width: 100%;
-            padding: 0 3rem 0.5rem 1rem;
             background-color: $background2;
             gap: 0.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid grey;
+        }
+
+        &-social {
+            @include display (row, space-evenly, wrap);
+            align-content: center;
+            width: 100%;
+            background-color: $background2;
+            gap: 0.5rem;
+            // border-left: 2px double grey;
         }
     }
 
@@ -71,12 +89,14 @@
     }
 }
 
-.react-share__ShareButton {
-    width: 4rem;
-    height: 100%;
-}
+// .react-share__ShareButton {
+//     width: 4rem;
+//     height: 100%;
+// }
 
 #copy__button {
     width: 4rem;
+    height: 4rem;
     padding: 0rem;
+    font-size: 0.625rem;
 }

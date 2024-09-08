@@ -276,7 +276,7 @@ function UserInput() {
                     {(isTabletView || isDesktopView) && (
                         <aside className='news-desktop'>
                             {isTabletView && (
-                                <FeaturedHeadline 
+                                <FeaturedHeadline
                                     headline={featuredHeadline}
                                     onLabelClick={handleLabelClick}
                                 />
@@ -315,11 +315,11 @@ function UserInput() {
                                     Community Creations
                                 </h2>
                                 {!isTabletView && (
-                                <h2
-                                    className={showPublicGallery ? "gallery__heading--inactive" : "gallery__heading"}
-                                    onClick={() => toggleComponent('Breaking News')}>
-                                    Breaking News
-                                </h2>
+                                    <h2
+                                        className={showPublicGallery ? "gallery__heading--inactive" : "gallery__heading gallery__heading--breaking-news"}
+                                        onClick={() => toggleComponent('Breaking News')}>
+                                        Breaking News
+                                    </h2>
                                 )}
                             </>
                         )}
@@ -332,6 +332,7 @@ function UserInput() {
                     )}
                     {!isTabletView && !showPublicGallery && (
                         <BreakingNews
+                            ref={breakingNewsRef}
                             setInputText={setInputText}
                             userInputVisible={!isLoading && !generatedImage}
                             promptGenerated={promptGenerated}
@@ -345,10 +346,10 @@ function UserInput() {
                         />
                     )}
                 </section>
-                {!isDesktopView && <SocialLinks />}
+                {/* {!isDesktopView && <SocialLinks />} */}
             </main >
             <footer className="footer">
-                {isDesktopView && <SocialLinks />}
+                <SocialLinks />
             </footer>
         </>
     );

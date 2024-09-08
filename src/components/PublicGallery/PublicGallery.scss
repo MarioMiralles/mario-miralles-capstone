@@ -21,7 +21,6 @@
     }
 
     &__container {
-        padding: 0 0.25rem;
         min-height: 30rem;
 
         @include tablet {
@@ -30,9 +29,9 @@
     } 
 
     &__heading {
-        padding: 0.25rem;
-        border-top: 1.5px solid $primary1;
-        border-radius: 3px 3px 0 0;
+        padding: 0.25rem 1rem;
+        border: 3px solid transparent;
+        border-bottom: 3px solid $primary1;
         cursor: pointer;
         font-family: "Lovelo Black";
         font-weight: 400;
@@ -44,7 +43,6 @@
         }
 
         &-container {
-            padding: 0 0.5rem;
             @include display (row, space-between, nowrap);
 
             @include tablet {
@@ -56,13 +54,19 @@
             }
         }
 
+        &--breaking-news{
+            border: 3px double transparent;
+            border-bottom: 3px double black !important;
+            background-color: $secondary1 !important;
+        }
+
         &--inactive {
             color: rgba(255, 255, 255, 0.34);
-            border-top: 1.5px solid transparent;
-            padding: 0.25rem;
+            padding: 0.25rem 1rem;
             cursor: pointer;
             font-family: "Lovelo Black";
             font-weight: 800;
+            border: 3px double transparent;
 
             &:hover {
                 color: rgb(200, 200, 200);
