@@ -12,12 +12,12 @@
 
     // M H2 - Subheader
     h2 {
-        @include typography-style (1rem, 1.75rem, 600);
+        @include typography-style (0.8125rem, 1.75rem, 600);
     }
     
     // M H3 - Labels, Links & Buttons
     h3 {
-        @include typography-style (0.8125rem, 1.25rem, 600);
+        @include typography-style (0.75rem, 1.25rem, 600);
     }
 
     // M H4 - Table Header
@@ -54,7 +54,7 @@
 
     // H2 - Subheader
     h2 {
-        @include typography-style (1.5rem, 2rem, 600);
+        @include typography-style (1rem, 2rem, 600);
     }
     
     // H3 - Labels, Links & Buttons

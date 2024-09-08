@@ -4,48 +4,72 @@
 
 .featured-headline {
     min-height: 3rem;
-    padding: 0 4.25rem 0 4rem;
     width: 100vw;
+    max-width: 75rem;
+    z-index: 2;
 
     &__container {
         @include display (row, flex-start, nowrap);
         align-items: center;
         min-height: 3rem;
         height: 100%;
-        background-color: $secondary1;
+        background-color: transparent;
+        border-bottom: 4px solid transparent;
+
+        @include desktop {
+            background-color: $secondary1;
+            border-bottom: none;
+        }
     }
 
     &__label {
         width: auto;
         font-family: "Lovelo Black";
-        font-size: 1rem;
-        padding: 1rem;
         align-self: stretch;
         align-content: center;
-        background-color: $secondary1;
-        min-height: 3rem;
+        background-color: transparent;
+        cursor: pointer;
+        padding: 0.5rem;
+
+        @include desktop {
+            font-size: 1rem;
+            padding: 1rem;
+            min-height: 3rem;
+            background-color: $secondary1;
+            border: 3px double transparent;
+            border-right-color: black;
+        }
     }
 
     &__title {
-        padding: 1rem 1rem 1rem 1.5rem;
-        background-image: linear-gradient(90deg, $secondary1 0%, $background1 100%);
         color: white;
-        border-radius: 0 5px 0px 0;
-        border: 3px solid $secondary1;
-        border-right-width: 1rem;
         // box-shadow: inset 0 0 10px 5px $background1;
         cursor: pointer;
         font-family: "Inter";
-        letter-spacing: -0.005rem;
-        flex-grow: 1;
-        font-size: 1.25rem;
-        min-height: 3rem;
-        border-left: 5px double $background3;
+        background-color: transparent;
+        border: 3px double transparent;
+        border-left-color: $background3;
+        align-self: stretch;
+        align-content: center;
+        padding: 0.5rem;
+        width: auto;
 
         &:hover {
             background-image: none;
             background-color: $background3;
             // box-shadow: none;
+        }
+
+        @include desktop {
+            background-image: linear-gradient(90deg, $secondary1 0%, $background1 100%);
+            padding: 1rem 1rem 1rem 1.5rem;
+            border: 3px solid $secondary1;
+            border-right-width: 0.5rem;
+            min-height: 3rem;
+            letter-spacing: -0.005rem;
+            flex-grow: 1;
+            border-radius: 0 1rem 1rem 0;
+            border-left: 1px solid black;
         }
     }
 }

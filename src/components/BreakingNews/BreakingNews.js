@@ -3,7 +3,7 @@
 //===============//
 // mario-miralles-capstone/src/components/BreakingNews/BreakingNews.js
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import './BreakingNews.scss';
 import axios from 'axios';
 import he from 'he';
@@ -13,19 +13,19 @@ import NewsInfo from '../NewsInfo/NewsInfo';
 const wordpressPagesURL = "https://onthedai.com/wp-json/wp/v2/pages"
 const excludePageIds = [873, 2663, 3676, 3700, 25455, 25458, 28770]; // Excludes certain pages from the OTD website
 
-const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleGenerate, inputText, setShowButtonAnimation, setPromptGenerated, handleButtonAnimation, isDesktopView, handleRandomArt, isTextareaVisible }) => {
+const BreakingNews = forwardRef(({ setInputText, userInputVisible, promptGenerated, handleGenerate, inputText, setShowButtonAnimation, setPromptGenerated, handleButtonAnimation, isTabletView, isDesktopView, handleRandomArt, isTextareaVisible }, ref) => {
     const [pages, setPages] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [activePaginationButton, setActivePaginationButton] = useState(0);
     const [selectedHeadline, setSelectedHeadline] = useState(null);
-    const [showNewsInfo, setShowNewsInfo] = useState(false); // Track visibility of NewsInfo component
+    const [showNewsInfo, setShowNewsInfo] = useState(false);
 
     //============//
     // PAGINATION //
     //============//
-    const titlesPerPage = isDesktopView ? 3 : 5; // Set titlesPerPage to 4 for desktop view, 5 for others
+    const titlesPerPage = isTabletView || isDesktopView ? 3 : 5; // Set titlesPerPage to 4 for desktop view, 5 for others
     const totalPages = Math.ceil((pages.length - 1) / titlesPerPage); // Adjust totalPages calculation by excluding the first headline
     const indexOfLastTitle = currentPage * titlesPerPage;
     const indexOfFirstTitle = indexOfLastTitle - titlesPerPage;
@@ -39,6 +39,13 @@ const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleG
         setCurrentPage(pageNumber);
         setActivePaginationButton(pageNumber); // Update active button state
     }
+    
+    useImperativeHandle(ref, () => ({
+        resetPagination: () => {
+            setCurrentPage(1);
+            setActivePaginationButton(0);
+        }
+    }));
 
     //===========//
     // HEADLINES //
@@ -49,7 +56,8 @@ const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleG
             const response = await axios.get(`${wordpressPagesURL}?per_page=33&exclude=${excludePages}`);
             const decodedPages = response.data.map(page => ({
                 ...page,
-                title: { rendered: he.decode(page.title.rendered) } // Decodes apostrophes and other symbols
+                title: { rendered: he.decode(page.title.rendered) }, // Decodes apostrophes and other symbols
+                excerpt: { rendered: he.decode(page.excerpt.rendered) }
             }));
             setPages(decodedPages);
             setError(null);
@@ -69,8 +77,9 @@ const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleG
     }
 
     const handleHeadlineClick = (page) => {
-        const { link, title } = page; // Extract link and title from the page object
-        setSelectedHeadline({ title: title.rendered, storyUrl: link }); // Pass both title and URL
+        const { link, title, excerpt } = page; // Extract link and title from the page object
+        const strippedExcerpt = excerpt.rendered.replace(/<\/?[^>]+(>|$)/g, ""); // Remove HTML tags
+        setSelectedHeadline({ title: title.rendered, storyUrl: link, excerpt: strippedExcerpt }); // Pass both title and URL
         setShowNewsInfo(true); // Show NewsInfo component
     }
 
@@ -111,7 +120,8 @@ const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleG
             {error && <div className="error-message">{error}</div>} {/* Display error message if there's an error */}
             {showNewsInfo &&
                 <NewsInfo
-                    headlineTitle={selectedHeadline.title}
+                    newsTitle={selectedHeadline.title}
+                    newsExcerpt={selectedHeadline.excerpt}
                     storyUrl={selectedHeadline.storyUrl}
                     onBackClick={handleBackClick}
                     setInputText={setInputText}
@@ -127,6 +137,6 @@ const BreakingNews = ({ setInputText, userInputVisible, promptGenerated, handleG
                 />}
         </article>
     );
-};
+});
 
 export default BreakingNews;

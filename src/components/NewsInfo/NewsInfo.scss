@@ -15,15 +15,20 @@
 }
 
 .news-info {
-    padding: 1.25rem;
+    padding: 1rem;
     margin-bottom: 0.25rem;
     background-color: #FFFFFFB5;
     color: black;
     border-radius: 8px;
-    border-top: 2px solid $primary1;
-    border-bottom: 2px solid $primary1;
-    box-shadow: inset 0 0 10px 5px #000000;
+    border-top: 2px solid $background3;
+    border-bottom: 2px solid $background3;
+    box-shadow: inset 0 0 10px 5px $background3;
     min-height: 12rem;
+
+    @include desktop {
+        min-height: 18.35rem;
+        @include display (column, space-between, nowrap);
+    }
 
     &__button {
         background-color: $background2;
@@ -61,10 +66,13 @@
     &__headline {
         background-color: $background2;
         color: black;
-        padding: 1.25rem 0;
-        font-size: 1rem;
+        padding: 0.5rem;
         line-height: 1.5rem;
         font-family: "Inter bold";
+
+        @include desktop {
+            padding: 1rem;
+        }
     }
 
     &__nav {
