@@ -9,7 +9,7 @@ import './NewsInfo.scss';
 import axios from 'axios'; // Import axios for API calls
 import leftArrow from '../../assets/icons/left-arrow.png';
 
-function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, setPromptGenerated, handleButtonAnimation, handleRandomArt, isTextareaVisible }) {
+function NewsInfo({ newsTitle, newsExcerpt, onBackClick, storyUrl, setInputText, setPromptGenerated, handleButtonAnimation, handleRandomArt, isTextareaVisible }) {
     const [copied, setCopied] = useState(false); // State variable to track whether the headline has been copied
     const [isLoading, setIsLoading] = useState(false);
 
@@ -38,7 +38,7 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, setPromp
         }
         try {
             setIsLoading(true);
-            const response = await axios.post('http://localhost:5000/api/art/prompt', { headlineTitle });
+            const response = await axios.post('http://localhost:5000/api/art/prompt', { newsExcerpt });
             setIsLoading(false);
     
             if (response.data && response.data.success) {
@@ -68,8 +68,8 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, setPromp
         }
     };    
 
-    // Render the component only if headlineTitle is provided
-    if (!headlineTitle) {
+    // Render the component only if newsTitle is provided
+    if (!newsTitle) {
         return null;
     }
 
@@ -87,7 +87,7 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, setPromp
                     </lord-icon>
                 </button>
             </div>
-            <h2 className='news-info__headline'>{headlineTitle}</h2>
+            <p className='news-info__headline'>{newsExcerpt}</p>
             <section className='news-info__buttons'>
                 <a href={storyUrl} className='news-info__button' target="_blank" rel="noopener noreferrer">
                     <lord-icon
@@ -102,7 +102,7 @@ function NewsInfo({ headlineTitle, onBackClick, storyUrl, setInputText, setPromp
                 </a>
                 <button className='news-info__button--randomize' onClick={() => {
                     if (isTextareaVisible) {
-                        handleRandomArt(headlineTitle);
+                        handleRandomArt(newsExcerpt);
                     } else {
                         handleButtonAnimation();
                     }

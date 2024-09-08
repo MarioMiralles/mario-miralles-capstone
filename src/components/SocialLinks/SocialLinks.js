@@ -1,6 +1,5 @@
 import "../SocialLinks/SocialLinks.scss";
 import { Link } from "react-router-dom";
-import qrCode from '../../../src/assets/icons/qr-code.png'
 import discord from '../../../src/assets/icons/discord.png';
 import tiktok from '../../../src/assets/icons/tiktok.png';
 import website from '../../../src/assets/icons/website.png';
@@ -39,18 +38,6 @@ function SocialLinks() {
         <>
             <section className='news-desktop__social'>
                 <div className="news-desktop__social-container">
-                    <div className='news-desktop__scan'>
-                        <img className='news-desktop__scan-qr' src={qrCode} alt="QR code to try the Art Generator" />
-                        <video
-                            ref={videoRef}
-                            poster={poster}
-                            className='news-desktop__video-mp4'
-                            onMouseEnter={handlePlay}
-                            onMouseLeave={handlePause}
-                            onClick={handlePlay}>
-                            <source src={otdPromoVideo} type='video/mp4'></source>
-                        </video>
-                    </div>
                     {modalOpen && <SocialLinksModal closeModal={toggleModal} />}
                     <div className='news-desktop__social-row--container' style={{ display: modalOpen ? 'none' : 'flex' }}>
                         <div className='news-desktop__social-column'>
@@ -77,6 +64,17 @@ function SocialLinks() {
                         <div className='news-desktop__social-column-website'>
                             <Link className='news-desktop__social-website' to="https://onthedai.com" target='_blank'><img className='news-desktop__social-website--icon' src={website} alt="Official Website" /></Link>
                         </div>
+                    </div>
+                    <div className='news-desktop__scan'>
+                        <video
+                            ref={videoRef}
+                            poster={poster}
+                            className='news-desktop__video-mp4'
+                            onMouseEnter={handlePlay}
+                            onMouseLeave={handlePause}
+                            onClick={handlePlay}>
+                            <source src={otdPromoVideo} type='video/mp4'></source>
+                        </video>
                     </div>
                 </div>
             </section>

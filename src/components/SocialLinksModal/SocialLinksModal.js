@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import '../SocialLinksModal/SocialLinksModal.scss'
 import { Link } from 'react-router-dom'
+import qrCode from '../../../src/assets/icons/qr-code.png'
 import {
     // Buttons
     EmailShareButton,
@@ -44,6 +45,17 @@ function SocialLinksModal({ closeModal }) {
                         <p className='social-share__delete-close' alt='close button'>X</p>
                     </Link>
                 </div>
+                <article className="social-share__row">
+                    <img className='news-desktop__scan-qr' src={qrCode} alt="QR code to try the Art Generator" />
+                    <div className="social-share__row-social">
+                        <TwitterShareButton title={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} className='social-share__icons'><XIcon className='social-share__icons' /><h3 className='social-share__text'>Twitter</h3></TwitterShareButton>
+                        <FacebookShareButton title="Check out this AI Art Generator!" url={'https://otdnews.netlify.app'} className='social-share__icons'><FacebookIcon className='social-share__icons' /><h3 className='social-share__text'>Facebook</h3></FacebookShareButton>
+                    </div>
+                    <div className="social-share__row-social">
+                        <LinkedinShareButton title={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} summary={"Created by ON THE Dai News - a social platform that merges breaking world news with community-generated AI art."} source={"https://www.onthedai.com"} className='social-share__icons'><LinkedinIcon className='social-share__icons' /><h3 className='social-share__text'>LinkedIn</h3></LinkedinShareButton>
+                        <RedditShareButton title={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} className='social-share__icons'><RedditIcon className='social-share__icons' /><h3 className='social-share__text'>Reddit</h3></RedditShareButton>
+                    </div>
+                </article>
                 <div className="social-share__row--links">
                     <Link className='news-desktop__scan-share' id="copy__button" onClick={copyUrlToClipboard}>
                         <lord-icon
@@ -55,14 +67,8 @@ function SocialLinksModal({ closeModal }) {
                         </lord-icon>{copyText}
                     </Link>
                     <WhatsappShareButton title={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} className='social-share__icons'><WhatsappIcon className='social-share__icons' /><h3 className='social-share__text'>WhatsApp</h3></WhatsappShareButton>
-                    <TwitterShareButton title={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} className='social-share__icons'><XIcon className='social-share__icons' /><h3 className='social-share__text'>Twitter</h3></TwitterShareButton>
-                    <FacebookShareButton title="Check out this AI Art Generator!" url={'https://otdnews.netlify.app'} className='social-share__icons'><FacebookIcon className='social-share__icons' /><h3 className='social-share__text'>Facebook</h3></FacebookShareButton>
-                </div>
-                <div className="social-share__row--links">
-                    <LinkedinShareButton title={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} summary={"Created by ON THE Dai News - a social platform that merges breaking world news with community-generated AI art."} source={"https://www.onthedai.com"} className='social-share__icons'><LinkedinIcon className='social-share__icons' /><h3 className='social-share__text'>LinkedIn</h3></LinkedinShareButton>
-                    <RedditShareButton title={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} className='social-share__icons'><RedditIcon className='social-share__icons' /><h3 className='social-share__text'>Reddit</h3></RedditShareButton>
-                    <TelegramShareButton description={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} className='social-share__icons'><TelegramIcon className='social-share__icons' /><h3 className='social-share__text'>Telegram</h3></TelegramShareButton>
                     <EmailShareButton title={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} className='social-share__icons'><EmailIcon className='social-share__icons' /><h3 className='social-share__text'>Email</h3></EmailShareButton>
+                    <TelegramShareButton description={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} className='social-share__icons'><TelegramIcon className='social-share__icons' /><h3 className='social-share__text'>Telegram</h3></TelegramShareButton>
                 </div>
             </section>
         </>

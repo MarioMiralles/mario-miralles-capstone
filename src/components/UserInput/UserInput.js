@@ -3,7 +3,7 @@
 //=======================//
 // /mario-miralles-capstone/src/components/UserInput/UserInput.js
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
 import './UserInput.scss';
 import logo from '../../../src/assets/images/Logo2024.png';
@@ -34,9 +34,12 @@ function UserInput() {
     const [showButtonAnimation, setShowButtonAnimation] = useState(false);
     const [showButtonAnimationTimeout, setShowButtonAnimationTimeout] = useState(null);
     const [generateButtonClicked, setGenerateButtonClicked] = useState(false);
+    const [isTabletView, setIsTabletView] = useState(window.innerWidth >= 768 && window.innerWidth < 1280);
     const [isDesktopView, setIsDesktopView] = useState(window.innerWidth >= 1280);
     const [isTextareaVisible, setIsTextareaVisible] = useState(true);
     const [featuredHeadline, setFeaturedHeadline] = useState(null);
+
+    const breakingNewsRef = useRef();
 
     useEffect(() => {
         fetchFeaturedHeadline();
@@ -56,10 +59,12 @@ function UserInput() {
 
     useEffect(() => {
         const handleResize = () => {
+            setIsTabletView(window.innerWidth >= 768 && window.innerWidth < 1280);
             setIsDesktopView(window.innerWidth >= 1280);
         };
 
         window.addEventListener('resize', handleResize);
+        handleResize();
 
         return () => {
             window.removeEventListener('resize', handleResize);
@@ -210,6 +215,18 @@ function UserInput() {
         navigate(0);
     }
 
+    const handleLabelClick = () => {
+        if (breakingNewsRef.current && breakingNewsRef.current.resetPagination) {
+            breakingNewsRef.current.resetPagination();
+        }
+    };
+
+    // const handleHeadlineClick = (headline) => {
+    //     // Implement the logic for handling headline click
+    //     // When headline is clicked it will show the NewsInfo in BreakingNews section
+    //     console.log("Headline clicked:", headline.title.rendered);
+    // };
+
     return (
         <>
             <main className='main'>
@@ -217,8 +234,8 @@ function UserInput() {
                     {isDesktopView && (
                         <FeaturedHeadline
                             headline={featuredHeadline}
-                        // onHeadlineClick={handleFeaturedHeadlineClick}
-                        />
+                            // onHeadlineClick={handleHeadlineClick}
+                            onLabelClick={handleLabelClick} />
                     )}
                 </article>
                 <div className="form__container">
@@ -243,7 +260,7 @@ function UserInput() {
                             </form>
                         )}
                         <figure className='generated__section'>
-                            {(!isDesktopView && isLoading || !isDesktopView &&generatedImage) && (
+                            {(!isDesktopView && isLoading || !isDesktopView && generatedImage) && (
                                 <img onClick={handleRefreshBrowser} className='generated__logo' src={otdLogo} alt='OTDNews' />
                             )}
                             {error && <div>{error}</div>}
@@ -256,11 +273,17 @@ function UserInput() {
                             )}
                         </figure>
                     </section>
-                    {isDesktopView && (
-                        <article className='news-desktop'>
-                            {/* <SocialLinks /> */}
+                    {(isTabletView || isDesktopView) && (
+                        <aside className='news-desktop'>
+                            {isTabletView && (
+                                <FeaturedHeadline
+                                    headline={featuredHeadline}
+                                    onLabelClick={handleLabelClick}
+                                />
+                            )}
                             <section className='news-desktop__news'>
                                 <BreakingNews
+                                    ref={breakingNewsRef}
                                     setInputText={setInputText}
                                     userInputVisible={!isLoading && !generatedImage}
                                     promptGenerated={promptGenerated}
@@ -269,13 +292,14 @@ function UserInput() {
                                     setShowButtonAnimation={setShowButtonAnimation}
                                     setPromptGenerated={setPromptGenerated}
                                     handleButtonAnimation={handleButtonAnimation}
+                                    isTabletView={isTabletView}
                                     isDesktopView={isDesktopView}
                                     handleRandomArt={handleRandomArt}
                                     isTextareaVisible={isTextareaVisible}
                                     excludeFeaturedHeadline={true}
                                 />
                             </section>
-                        </article>
+                        </aside>
                     )}
                 </div>
                 <section className='gallery__news'>
@@ -288,21 +312,27 @@ function UserInput() {
                                 <h2
                                     className={showPublicGallery ? "gallery__heading" : "gallery__heading--inactive"}
                                     onClick={() => toggleComponent('Public Gallery')}>
-                                    Public Gallery
+                                    Community Creations
                                 </h2>
-                                <h2
-                                    className={showPublicGallery ? "gallery__heading--inactive" : "gallery__heading"}
-                                    onClick={() => toggleComponent('Breaking News')}>
-                                    Breaking News
-                                </h2>
+                                {!isTabletView && (
+                                    <h2
+                                        className={showPublicGallery ? "gallery__heading--inactive" : "gallery__heading gallery__heading--breaking-news"}
+                                        onClick={() => toggleComponent('Breaking News')}>
+                                        Breaking News
+                                    </h2>
+                                )}
                             </>
                         )}
                     </div>
-                    {showPublicGallery ?
+                    {(showPublicGallery || isTabletView) && (
                         <PublicGallery
-                            key={publicGalleryKey} inputText={inputText}
-                            handleFetchImage={handleFetchImage} /> :
+                            key={publicGalleryKey}
+                            inputText={inputText}
+                            handleFetchImage={handleFetchImage} />
+                    )}
+                    {!isTabletView && !showPublicGallery && (
                         <BreakingNews
+                            ref={breakingNewsRef}
                             setInputText={setInputText}
                             userInputVisible={!isLoading && !generatedImage}
                             promptGenerated={promptGenerated}
@@ -313,12 +343,13 @@ function UserInput() {
                             handleButtonAnimation={handleButtonAnimation}
                             handleRandomArt={handleRandomArt}
                             isTextareaVisible={isTextareaVisible}
-                        />}
+                        />
+                    )}
                 </section>
-                {!isDesktopView && <SocialLinks />}
+                {/* {!isDesktopView && <SocialLinks />} */}
             </main >
             <footer className="footer">
-                {isDesktopView && <SocialLinks />}
+                <SocialLinks />
             </footer>
         </>
     );

@@ -42,12 +42,11 @@ fieldset {
 }
 
 ::-webkit-scrollbar {
-  width: 0.5rem;
+  width: 0.45rem;
   background: $background1;
 }
 
 ::-webkit-scrollbar-thumb {
   background: -webkit-linear-gradient($background1);
-  background: linear-gradient(#EF8E6D, transparent, transparent, transparent, #EF8E6D);
-  border-radius: 0.1rem;
+  background: linear-gradient(transparent 10%, #EF8E6D 50%, transparent 100%);
 }
