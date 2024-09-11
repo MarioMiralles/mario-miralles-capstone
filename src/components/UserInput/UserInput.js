@@ -348,9 +348,11 @@ function UserInput() {
                 </section>
                 {/* {!isDesktopView && <SocialLinks />} */}
             </main >
-            <footer className="footer">
-                <SocialLinks />
-            </footer>
+            {!isDesktopView && (
+                <footer className="footer">
+                    <SocialLinks />
+                </footer>
+            )}
         </>
     );
 }
