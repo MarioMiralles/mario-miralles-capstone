@@ -1,14 +1,29 @@
-import '../PublicGallery/PublicGallery.scss'
+//================//
+// PUBLIC GALLERY //
+//================//
+// mario-miralles-capstone/src/components/PublicGallery/PublicGallery.js
+
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import loadingNews from '../../../src/assets/images/Loading_News2.gif';
+import PublicGalleryModal from '../PublicGalleryModal/PublicGalleryModal';
+import './PublicGallery.scss';
 
 const PublicGallery = () => {
-    const [publicGalleryImages, setPublicGalleryImages] = useState([]); // State to hold gallery images
+    const [publicGalleryImages, setPublicGalleryImages] = useState([]);
     const [error, setError] = useState(null);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [prompt, setPrompt] = useState(null);
+    const [imageId, setImageId] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+
     const apiKey = process.env.REACT_APP_API_KEY;
 
+    // Fetch images when component mounts
     useEffect(() => {
         fetchPublicGalleryImages(); // Fetch gallery images when component mounts
-    }, []);
+    }, []); 
 
     const fetchPublicGalleryImages = async () => {
         try {
@@ -28,32 +43,69 @@ const PublicGallery = () => {
 
             // Check if responseData contains the generations array
             if (responseData && responseData.generations) {
-                const images = [];
-                // Iterate over each generation
-                responseData.generations.forEach(generation => {
-                    // Iterate over each generated image within the generation
-                    generation.generated_images.forEach(image => {
-                        images.push(image.url);
-                    });
-                });
+                const images = responseData.generations.map((generation) => ({
+                    image: generation.generated_images[0].url,
+                    prompt: generation.prompt,
+                    imageId: generation.id
+                }));
                 setPublicGalleryImages(images);
                 setError(null);
             } else {
                 throw new Error('Invalid response data format');
             }
         } catch (error) {
-            console.error('Error fetching gallery images:', error);
             setError('Error fetching gallery images. Please try again.');
+        } finally {
+            setIsLoading(false); // Set loading to false after fetching images
         }
+    };
+
+    // Function to handle image click and open modal
+    const handleImageClick = (image) => {
+        setSelectedImage(image);
+        setPrompt(image.prompt);
+        setImageId(image.imageId);
+        setIsModalOpen(true); // Update state to open the modal
+    };
+
+    // Function to close modal
+    const closeModal = () => {
+        setIsModalOpen(false);
     };
 
     return (
         <section className="gallery__container">
-            <div className="gallery">
-                {publicGalleryImages.map((image, index) => (
-                    <img key={index} src={image} className='gallery__image' alt={`Public Gallery Image ${index}`} />
-                ))}
-            </div>
+            {isLoading ? ( // Show loading GIF while fetching images
+                <div className='news__loading-container'>
+                    <img src={loadingNews} className="news__loading" alt="Loading news..." />
+                </div>
+            ) : (
+                <div className="gallery">
+                    {publicGalleryImages.map((image, index) => (
+                        <Link
+                            className='gallery__link'
+                            key={index}
+                            to={`/gallery/${image.imageId}`}
+                            onClick={(event) => {
+                                event.preventDefault(); // Prevent default link behavior
+                                handleImageClick(image); // Open modal instead
+                            }}>
+                            <img
+                                src={image.image}
+                                className='gallery__image'
+                                alt={`From Community Creations number ${index}`}
+                            />
+                        </Link>
+                    ))}
+                    {selectedImage && isModalOpen && (
+                        <PublicGalleryModal
+                            isOpen={isModalOpen}
+                            onClose={closeModal}
+                            image={selectedImage} // Ensure the prop name matches what PublicGalleryModal expects
+                            prompt={prompt} />
+                    )}
+                </div>
+            )}
         </section>
     );
 };

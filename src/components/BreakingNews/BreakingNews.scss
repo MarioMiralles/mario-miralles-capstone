@@ -5,7 +5,7 @@
 .news {
     width: 100%;
     max-width: 600px;
-    @include display (row, center, nowrap);
+    @include display(row, center, nowrap);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -15,59 +15,162 @@
         gap: 0.5rem;
     }
 
+    &__container {
+        padding: 0.5rem;
+        background-color: transparent;
+        background-image: linear-gradient(180deg, $secondary1 0%, $background1 100%);
+        // min-height: 34rem;
+
+        @include tablet {
+            padding: 0;
+            background-image: none;
+        }
+
+        @include desktop {
+            min-height: 18.875rem;
+        }
+    }
+
+    &-desktop__news {
+        background-color: transparent;
+    }
+
+    &__heading {
+        padding: 0.25rem;
+        border-top: 1.5px solid $primary1;
+        border-radius: 3px 3px 0 0;
+        cursor: pointer;
+        font-family: "Lovelo Black";
+        font-weight: 400;
+        width: fit-content;
+        margin-left: auto;
+
+        @include desktop {
+            cursor: default;
+            border-top: none;
+        }
+    }
+
     &__image {
         width: calc((100% - 0.5rem) / 3);
 
         @include tablet {
             width: calc((100% - 1rem) / 3);
         }
-
     }
 
     &__loading {
         width: 100%;
-        height: 100%;
+        object-fit: contain;
+        background-color: transparent;
 
         &-container {
             display: flex;
             justify-content: center;
+            background-color: transparent;
+            align-items: flex-start;
         }
     }
 
     &__page-title {
         padding: 1.25rem;
         margin-bottom: 0.25rem;
-        background-color: #FFFFFFB5;
+        background-color: $background4;
         color: black;
-        border-radius: 8px;
-        border-top: 2px solid $primary1;
-        border-bottom: 2px solid $primary1;
-        box-shadow: inset 0 0 10px 5px #000000;
+        border-radius: 5px;
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+        box-shadow: inset 0 0 10px 5px $background1;
+        cursor: pointer;
+        font-family: "Inter bold";
+        letter-spacing: -0.005rem;
+
+        // @include tablet {
+            
+        // }
+
+        @include desktop {
+            font-size: 1rem;
+            font-family: "Inter Light";
+            padding: 1.75rem;
+            margin-bottom: 0;
+        }
+
+        &:hover {
+            background-color: $background1;
+            color: white;
+        }
+    }
+
+    &__pages {
+        @include display(column, center, nowrap);
+        background-color: transparent;
+
+        @include desktop {
+            gap: 0.25rem;
+        }
     }
 
     &__pagination {
-        @include display (row, flex-end, nowrap);
+        @include display(row, flex-end, nowrap);
         padding: 0.25rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
+        background-color: transparent;
+
+        @include tablet {
+            padding: 0;
+            margin: 0;
+        }
 
         &-button {
-            padding: 0.5rem;
+            padding: 0.5rem 0.825rem;
             border-radius: 0.5rem;
-            margin-right: 0.5rem;
+            margin-right: 0.35rem;
             background-color: #33333385;
-            border-style: none;
+            border: 3px double transparent;
+            text-decoration: none;
+            font-family: "Lovelo Black";
+            font-size: 0.75rem;
+            cursor: pointer;
 
-            &.first-page {
-                background-color: $primary1;
+            @include desktop {
+                font-size: 1rem;
+            }
+
+            &:hover {
+                // background-color: $primary1;
+                border: 3px double $secondary1;
             }
 
             &.active {
-                background-color: #33333385;
+                border: 3px double $secondary1;
+                background-color: $secondary1;
             }
 
-            &:focus {
-                background-color: $primary1;
+            // &:focus {
+            //     background-color: $primary1;
+            // }
+
+        }
+
+        &-container {
+            @include display(column, space-between, nowrap);
+            height: 100%;
+            background-color: transparent;
+
+            @include tablet {
+                height: 24rem;
+                max-height: 20rem;
+            }
+
+            @include desktop {
+                max-height: 18.875rem;
             }
         }
+
     }
+}
+
+#news__heading--pad-bottom {
+    padding-bottom: 0.5rem;
 }

@@ -1,0 +1,81 @@
+@use '../../styles/partials/mixins' as *;
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/typography' as *;
+
+.featured-headline {
+    min-height: 3rem;
+    width: 100vw;
+    max-width: 75rem;
+    z-index: 2;
+
+    &__container {
+        @include display (row, flex-start, nowrap);
+        align-items: center;
+        min-height: 3rem;
+        height: 100%;
+        background-color: transparent;
+        border-bottom: 4px solid transparent;
+
+        @include tablet {
+            max-height: 3.75rem;
+        }
+
+        @include desktop {
+            background-color: $secondary1;
+            border-bottom: none;
+        }
+    }
+
+    &__label {
+        width: auto;
+        font-family: "Lovelo Black";
+        align-self: stretch;
+        align-content: center;
+        background-color: transparent;
+        cursor: pointer;
+        padding: 0.5rem;
+
+        @include desktop {
+            font-size: 1rem;
+            padding: 1rem;
+            min-height: 3rem;
+            background-color: $secondary1;
+            border: 3px double transparent;
+            border-right-color: black;
+        }
+    }
+
+    &__title {
+        color: white;
+        // box-shadow: inset 0 0 10px 5px $background1;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-family: "Inter";
+        font-weight: bold;
+        background-color: transparent;
+        border: 3px double transparent;
+        border-left-color: $background3;
+        align-self: stretch;
+        align-content: center;
+        padding: 0.5rem;
+        width: auto;
+
+        &:hover {
+            background-image: none;
+            background-color: $background3;
+            // box-shadow: none;
+        }
+
+        @include desktop {
+            background-image: linear-gradient(90deg, $secondary1 0%, $background1 100%);
+            padding: 1rem 1rem 1rem 1.5rem;
+            border: 3px solid $secondary1;
+            border-right-width: 0.5rem;
+            min-height: 3rem;
+            letter-spacing: -0.005rem;
+            flex-grow: 1;
+            border-radius: 0 1rem 1rem 0;
+            border-left: 1px solid black;
+        }
+    }
+}

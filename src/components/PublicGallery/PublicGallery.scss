@@ -4,45 +4,110 @@
 
 .gallery {
     width: 100%;
-    max-width: 600px;
+    max-width: 37.5rem;
     @include display (row, center, nowrap);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 0.25rem;
+    gap: 0.125rem;
+
     @include tablet {
-       gap: 0.5rem; 
+        gap: 0.25rem;
+        max-width: 100%;
     }
 
+    @include desktop {
+        justify-content: space-between;
+    }
+
+    &__container {
+        min-height: 34rem;
+        display: flex;
+        justify-content: space-evenly;
+
+        @include tablet {
+            padding: 0;
+        }
+    } 
+
     &__heading {
-        padding: 0.25rem;
-        border-top: 1.5px solid $primary1;
-        border-radius: 3px 3px 0 0;
+        padding: 0.25rem 1rem;
+        border: 3px solid transparent;
+        border-bottom: 3px solid $primary1;
         cursor: pointer;
+        font-family: "Lovelo Black";
+        font-weight: 400;
+
+        @include tablet {
+            cursor: default;
+            border-top: none;
+            font-size: 1rem;
+        }
 
         &-container {
-            padding-bottom: 0.25rem;
             @include display (row, space-between, nowrap);
+
+            @include tablet {
+                padding: 0 1rem;
+            }
+
+            @include desktop {
+                padding: 0;
+            }
+        }
+
+        &--breaking-news{
+            border: 3px double transparent;
+            border-bottom: 3px double black !important;
+            background-color: $secondary1 !important;
         }
 
         &--inactive {
             color: rgba(255, 255, 255, 0.34);
-            border-top: 1.5px solid transparent;
-            padding: 0.25rem;
+            padding: 0.25rem 1rem;
             cursor: pointer;
+            font-family: "Lovelo Black";
+            font-weight: 800;
+            border: 3px double transparent;
+
+            &:hover {
+                color: rgb(200, 200, 200);
+            }
         }
     }
 
     &__image {
-        width: calc((100% - 0.5rem) / 3);
+        max-width: 100%;
+        object-fit: contain;
+    }
+
+    &__link {
+        width: calc((100% - 0.25rem) / 3);
+        border-radius: 1px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+
+        // @include tablet {
+        //     width: calc((100% - 1rem) / 3);
+        // }
+
         @include tablet {
-           width: calc((100% - 1rem) / 3); 
+            flex: 1 1 calc(16.66%); 
         }
-        
     }
 
     &__news {
         max-width: 38rem;
         width: 100%;
+
+        @include tablet {
+            max-width: 75rem;
+            padding: 2rem;
+        }
+
+        @include desktop {
+            padding: 0;
+        }
     }
 }
