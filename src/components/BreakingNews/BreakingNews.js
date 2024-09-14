@@ -29,7 +29,7 @@ const BreakingNews = forwardRef(({ setInputText, userInputVisible, promptGenerat
     const totalPages = Math.ceil((pages.length - 1) / titlesPerPage); // Adjust totalPages calculation by excluding the first headline
     const indexOfLastTitle = currentPage * titlesPerPage;
     const indexOfFirstTitle = indexOfLastTitle - titlesPerPage;
-    const currentTitles = pages.slice(1).slice(indexOfFirstTitle, indexOfLastTitle); // Slice after excluding the first headline
+    const currentTitles = pages.slice(indexOfFirstTitle, indexOfLastTitle); // Slice after excluding the first headline
 
     useEffect(() => {
         breakingNewsPages();
@@ -39,7 +39,7 @@ const BreakingNews = forwardRef(({ setInputText, userInputVisible, promptGenerat
         setCurrentPage(pageNumber);
         setActivePaginationButton(pageNumber); // Update active button state
     }
-    
+
     useImperativeHandle(ref, () => ({
         resetPagination: () => {
             setCurrentPage(1);
@@ -95,8 +95,10 @@ const BreakingNews = forwardRef(({ setInputText, userInputVisible, promptGenerat
                         <section className='news__pagination-container'>
                             <div className='news__pages'>
                                 {currentTitles.map((page, index) => {
+                                    const isFirstHeadline = index === 0;
                                     return (
-                                        <h3 key={index} className='news__page-title' onClick={() => handleHeadlineClick(page)}>
+                                        <h3 key={index}
+                                            className='news__page-title' onClick={() => handleHeadlineClick(page)}>
                                             {page.title.rendered}
                                         </h3>
                                     );

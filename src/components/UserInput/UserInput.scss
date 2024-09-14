@@ -4,10 +4,11 @@
 fieldset {
     border: 4px double grey;
     @include display(column, flex-start, nowrap);
+    margin-bottom: 0.5rem;
 
     @include tablet {
-        height: 22rem;
-        max-height: 24rem;
+        height: 23rem;
+        max-height: 23rem;
     }
 
     @include desktop {
@@ -31,8 +32,8 @@ fieldset {
         flex-direction: column;
 
         @include tablet {
-            height: 24rem;
-            max-height: 24rem;
+            height: 26rem;
+            max-height: 26rem;
             padding: 0;
         }
 
@@ -240,7 +241,7 @@ fieldset {
     &__section {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-items: start;
         width: 100%;
         height: 100%;
@@ -270,7 +271,7 @@ fieldset {
     background-color: transparent;
 
     @include tablet {
-        background-image: linear-gradient(180deg, #08090A 0%, black 100%)
+        // background-image: linear-gradient(180deg, #08090A 0%, black 100%)
     }
 }
 

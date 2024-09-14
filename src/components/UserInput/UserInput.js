@@ -88,6 +88,7 @@ function UserInput() {
             return;
         }
         try {
+            setError(null);
             setIsLoading(true);
             setGeneratedImage(null); // Clear any existing generated image
             console.log('isLoading set to true');

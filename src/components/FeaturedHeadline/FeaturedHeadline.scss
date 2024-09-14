@@ -16,6 +16,10 @@
         background-color: transparent;
         border-bottom: 4px solid transparent;
 
+        @include tablet {
+            max-height: 3.75rem;
+        }
+
         @include desktop {
             background-color: $secondary1;
             border-bottom: none;
