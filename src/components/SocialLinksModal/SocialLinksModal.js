@@ -59,18 +59,22 @@ function SocialLinksModal({ closeModal }) {
                         </div>
                     </div>
                     <div className="social-share__row--links">
-                        <Link className='news-desktop__scan-share' id="copy__button" onClick={copyUrlToClipboard}>
-                            <lord-icon
-                                id="social__button"
-                                src="https://cdn.lordicon.com/cbigqefp.json"
-                                trigger="morph"
-                                state="morph-link"
-                                colors="primary:#fff,secondary:#b4b4b4">
-                            </lord-icon>{copyText}
-                        </Link>
-                        <WhatsappShareButton id="share-button__whatsapp" title={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} className='social-share__icons'><WhatsappIcon className='social-share__icons' /><h3 className='social-share__text'>WhatsApp</h3></WhatsappShareButton>
-                        <EmailShareButton id="share-button__email" title={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} className='social-share__icons'><EmailIcon className='social-share__icons' /><h3 className='social-share__text'>Email</h3></EmailShareButton>
-                        <TelegramShareButton id="share-button__telegram" title={"Check out this AI Art Generator!"} description={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} className='social-share__icons'><TelegramIcon className='social-share__icons' /><h3 className='social-share__text'>Telegram</h3></TelegramShareButton>
+                        <div className="social-share__row-social">
+                            <Link className='news-desktop__scan-share' id="copy__button" onClick={copyUrlToClipboard}>
+                                <lord-icon
+                                    id="social__button"
+                                    src="https://cdn.lordicon.com/cbigqefp.json"
+                                    trigger="morph"
+                                    state="morph-link"
+                                    colors="primary:#fff,secondary:#b4b4b4">
+                                </lord-icon>{copyText}
+                            </Link>
+                            <WhatsappShareButton id="share-button__whatsapp" title={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} className='social-share__icons'><WhatsappIcon className='social-share__icons' /><h3 className='social-share__text'>WhatsApp</h3></WhatsappShareButton>
+                        </div>
+                        <div className="social-share__row-social">
+                            <EmailShareButton id="share-button__email" title={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} className='social-share__icons'><EmailIcon className='social-share__icons' /><h3 className='social-share__text'>Email</h3></EmailShareButton>
+                            <TelegramShareButton id="share-button__telegram" title={"Check out this AI Art Generator!"} description={"Check out this AI Art Generator!"} url={'https://otdnews.netlify.app'} className='social-share__icons'><TelegramIcon className='social-share__icons' /><h3 className='social-share__text'>Telegram</h3></TelegramShareButton>
+                        </div>
                     </div>
                 </section>
             </article>

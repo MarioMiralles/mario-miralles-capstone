@@ -13,7 +13,7 @@ import NewsInfo from '../NewsInfo/NewsInfo';
 const wordpressPagesURL = "https://onthedai.com/wp-json/wp/v2/pages"
 const excludePageIds = [873, 2663, 3676, 3700, 25455, 25458, 28770]; // Excludes certain pages from the OTD website
 
-const BreakingNews = forwardRef(({ setInputText, userInputVisible, promptGenerated, handleGenerate, inputText, setShowButtonAnimation, setPromptGenerated, handleButtonAnimation, isTabletView, isDesktopView, handleRandomArt, isTextareaVisible }, ref) => {
+const BreakingNews = forwardRef(({ setInputText, userInputVisible, promptGenerated, handleGenerate, inputText, setShowButtonAnimation, setPromptGenerated, handleButtonAnimation, isTabletView, isDesktopView, handleRandomArt, isTextareaVisible, excludeFeaturedHeadline }, ref) => {
     const [pages, setPages] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -25,11 +25,12 @@ const BreakingNews = forwardRef(({ setInputText, userInputVisible, promptGenerat
     //============//
     // PAGINATION //
     //============//
-    const titlesPerPage = isTabletView || isDesktopView ? 3 : 5; // Set titlesPerPage to 4 for desktop view, 5 for others
-    const totalPages = Math.ceil((pages.length - 1) / titlesPerPage); // Adjust totalPages calculation by excluding the first headline
+    const titlesPerPage = isTabletView || isDesktopView ? 3 : 5; // Set titlesPerPage to 3 for tablet/desktop view, 5 for others
+    const actualPages = excludeFeaturedHeadline ? pages.slice(1) : pages;
+    const totalPages = Math.ceil(actualPages.length / titlesPerPage);
     const indexOfLastTitle = currentPage * titlesPerPage;
     const indexOfFirstTitle = indexOfLastTitle - titlesPerPage;
-    const currentTitles = pages.slice(indexOfFirstTitle, indexOfLastTitle); // Slice after excluding the first headline
+    const currentTitles = actualPages.slice(indexOfFirstTitle, indexOfLastTitle);
 
     useEffect(() => {
         breakingNewsPages();

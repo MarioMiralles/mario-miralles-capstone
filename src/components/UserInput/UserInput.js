@@ -285,6 +285,7 @@ function UserInput() {
                             <section className='news-desktop__news'>
                                 <BreakingNews
                                     ref={breakingNewsRef}
+                                    excludeFeaturedHeadline={true}
                                     setInputText={setInputText}
                                     userInputVisible={!isLoading && !generatedImage}
                                     promptGenerated={promptGenerated}

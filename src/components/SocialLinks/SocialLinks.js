@@ -1,6 +1,6 @@
 import "../SocialLinks/SocialLinks.scss";
 import { Link } from "react-router-dom";
-import rumble from '../../../src/assets/icons/rumble.png';
+import rumble from '../../../src/assets/icons/rumble.svg';
 import otdPromoVideo from '../../../src/assets/videos/promo.mp4';
 import poster from '../../../src/assets/icons/poster.png';
 import footerLogo from '../../../src/assets/images/otdlogogiftransparent.gif';
@@ -113,7 +113,7 @@ function SocialLinks() {
                                         state="hover-roll"
                                         colors="primary:#ef8e6d,secondary:#ffffff">
                                     </lord-icon>Facebook</Link>
-                                    <Link className='news-desktop__social-icon' to="https://rumble.com/c/c-3329336" target='_blank'><img id="social-icon__rumble" className='news-desktop__social-icon' src={rumble} alt="Rumble" /></Link>
+                                    <Link className='news-desktop__social-icon' to="https://rumble.com/c/c-3329336" target='_blank'><img id="social__button--rumble" className='news-desktop__social-icon' src={rumble} alt="Rumble" />Rumble</Link>
                                 </div>
                             </div>
                         </div>
