@@ -13,9 +13,9 @@ import NewsInfo from '../NewsInfo/NewsInfo';
 const wordpressPagesURL = "https://onthedai.com/wp-json/wp/v2/pages"
 const excludePageIds = [873, 2663, 3676, 3700, 25455, 25458, 28770]; // Excludes certain pages from the OTD website
 
-const BreakingNews = forwardRef(({ setInputText, userInputVisible, promptGenerated, handleGenerate, inputText, setShowButtonAnimation, setPromptGenerated, handleButtonAnimation, isTabletView, isDesktopView, handleRandomArt, isTextareaVisible }, ref) => {
+const BreakingNews = forwardRef(({ setInputText, userInputVisible, promptGenerated, handleGenerate, inputText, setShowButtonAnimation, setPromptGenerated, handleButtonAnimation, isTabletView, isDesktopView, handleRandomArt, isTextareaVisible, excludeFeaturedHeadline }, ref) => {
     const [pages, setPages] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [activePaginationButton, setActivePaginationButton] = useState(0);
@@ -25,11 +25,12 @@ const BreakingNews = forwardRef(({ setInputText, userInputVisible, promptGenerat
     //============//
     // PAGINATION //
     //============//
-    const titlesPerPage = isTabletView || isDesktopView ? 3 : 5; // Set titlesPerPage to 4 for desktop view, 5 for others
-    const totalPages = Math.ceil((pages.length - 1) / titlesPerPage); // Adjust totalPages calculation by excluding the first headline
+    const titlesPerPage = isTabletView || isDesktopView ? 3 : 5; // Set titlesPerPage to 3 for tablet/desktop view, 5 for others
+    const actualPages = excludeFeaturedHeadline ? pages.slice(1) : pages;
+    const totalPages = Math.ceil(actualPages.length / titlesPerPage);
     const indexOfLastTitle = currentPage * titlesPerPage;
     const indexOfFirstTitle = indexOfLastTitle - titlesPerPage;
-    const currentTitles = pages.slice(1).slice(indexOfFirstTitle, indexOfLastTitle); // Slice after excluding the first headline
+    const currentTitles = actualPages.slice(indexOfFirstTitle, indexOfLastTitle);
 
     useEffect(() => {
         breakingNewsPages();
@@ -39,7 +40,7 @@ const BreakingNews = forwardRef(({ setInputText, userInputVisible, promptGenerat
         setCurrentPage(pageNumber);
         setActivePaginationButton(pageNumber); // Update active button state
     }
-    
+
     useImperativeHandle(ref, () => ({
         resetPagination: () => {
             setCurrentPage(1);
@@ -61,10 +62,10 @@ const BreakingNews = forwardRef(({ setInputText, userInputVisible, promptGenerat
             }));
             setPages(decodedPages);
             setError(null);
-            setLoading(false); // Set loading to false after fetching data
+            setIsLoading(false); // Set loading to false after fetching data
         } catch (error) {
             setError('Error, please try again');
-            setLoading(false);
+            setIsLoading(false);
         }
     }
 
@@ -85,7 +86,7 @@ const BreakingNews = forwardRef(({ setInputText, userInputVisible, promptGenerat
 
     return (
         <article className="news__container">
-            {loading ? ( // Show the loadingNews gif while loading is true
+            {isLoading ? ( // Show the loadingNews gif while loading is true
                 <div className='news__loading-container'>
                     <img src={loadingNews} className="news__loading" alt="Loading news..." />
                 </div>
@@ -95,8 +96,10 @@ const BreakingNews = forwardRef(({ setInputText, userInputVisible, promptGenerat
                         <section className='news__pagination-container'>
                             <div className='news__pages'>
                                 {currentTitles.map((page, index) => {
+                                    const isFirstHeadline = index === 0;
                                     return (
-                                        <h3 key={index} className='news__page-title' onClick={() => handleHeadlineClick(page)}>
+                                        <h3 key={index}
+                                            className='news__page-title' onClick={() => handleHeadlineClick(page)}>
                                             {page.title.rendered}
                                         </h3>
                                     );

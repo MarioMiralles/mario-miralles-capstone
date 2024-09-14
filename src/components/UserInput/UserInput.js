@@ -88,6 +88,7 @@ function UserInput() {
             return;
         }
         try {
+            setError(null);
             setIsLoading(true);
             setGeneratedImage(null); // Clear any existing generated image
             console.log('isLoading set to true');
@@ -284,6 +285,7 @@ function UserInput() {
                             <section className='news-desktop__news'>
                                 <BreakingNews
                                     ref={breakingNewsRef}
+                                    excludeFeaturedHeadline={true}
                                     setInputText={setInputText}
                                     userInputVisible={!isLoading && !generatedImage}
                                     promptGenerated={promptGenerated}
@@ -348,9 +350,11 @@ function UserInput() {
                 </section>
                 {/* {!isDesktopView && <SocialLinks />} */}
             </main >
-            <footer className="footer">
-                <SocialLinks />
-            </footer>
+            {!isDesktopView && (
+                <footer className="footer">
+                    <SocialLinks />
+                </footer>
+            )}
         </>
     );
 }

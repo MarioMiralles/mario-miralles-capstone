@@ -40,7 +40,7 @@ function NewsInfo({ newsTitle, newsExcerpt, onBackClick, storyUrl, setInputText,
             setIsLoading(true);
             const response = await axios.post('http://localhost:5000/api/art/prompt', { newsExcerpt });
             setIsLoading(false);
-    
+
             if (response.data && response.data.success) {
                 let promptData;
                 if (typeof response.data.prompt === 'string') {
@@ -53,7 +53,7 @@ function NewsInfo({ newsTitle, newsExcerpt, onBackClick, storyUrl, setInputText,
                 } else {
                     promptData = response.data.prompt;
                 }
-    
+
                 const { style, prompt } = promptData;
                 console.log(style);
                 setInputText(prompt);
@@ -66,7 +66,7 @@ function NewsInfo({ newsTitle, newsExcerpt, onBackClick, storyUrl, setInputText,
             console.error('Error prompting with AI:', error);
             setIsLoading(false);
         }
-    };    
+    };
 
     // Render the component only if newsTitle is provided
     if (!newsTitle) {
@@ -92,11 +92,8 @@ function NewsInfo({ newsTitle, newsExcerpt, onBackClick, storyUrl, setInputText,
                 <a href={storyUrl} className='news-info__button' target="_blank" rel="noopener noreferrer">
                     <lord-icon
                         id="news-info__img-button"
-                        src="https://cdn.lordicon.com/xahuqqcs.json"
-                        trigger="hover"
-                        stroke="bold"
-                        state="hover-rotate-up-to-down"
-                        colors="primary:#121331,secondary:#ef8e6d">
+                        src="https://cdn.lordicon.com/ijahpotn.json"
+                        trigger="hover">
                     </lord-icon>
                     <p className='news-info__p'>View Story</p>
                 </a>
@@ -128,7 +125,7 @@ function NewsInfo({ newsTitle, newsExcerpt, onBackClick, storyUrl, setInputText,
                         src="https://cdn.lordicon.com/zfzufhzk.json"
                         trigger="hover"
                         delay="1500"
-                        state="default">
+                        state="hover-line">
                     </lord-icon>
                     <p className='news-info__p'>AI Prompt</p>
                 </button>
@@ -140,9 +137,7 @@ function NewsInfo({ newsTitle, newsExcerpt, onBackClick, storyUrl, setInputText,
                         src="https://cdn.lordicon.com/zfzufhzk.json"
                         trigger="in"
                         state="in-dynamic"
-                        delay="500"
-                        colors="primary:#121331,secondary:#08a88a,tertiary:#4bb3fd,quaternary:#ffc738,quinary:#d59f80,senary:#242424,septenary:#f4f19c"
-                    />
+                        delay="500"                    />
                 </div>
             )}
         </article>
