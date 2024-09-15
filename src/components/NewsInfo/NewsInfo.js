@@ -9,7 +9,7 @@ import './NewsInfo.scss';
 import axios from 'axios'; // Import axios for API calls
 import leftArrow from '../../assets/icons/left-arrow.png';
 
-function NewsInfo({ newsTitle, newsExcerpt, onBackClick, storyUrl, setInputText, setPromptGenerated, handleButtonAnimation, handleRandomArt, isTextareaVisible }) {
+function NewsInfo({ newsTitle, newsExcerpt, onBackClick, storyUrl, setInputText, setPromptGenerated, handleButtonAnimation, handleRandomArt, isTextareaVisible, onResetFeaturedHeadline }) {
     const [copied, setCopied] = useState(false); // State variable to track whether the headline has been copied
     const [isLoading, setIsLoading] = useState(false);
 
@@ -68,6 +68,11 @@ function NewsInfo({ newsTitle, newsExcerpt, onBackClick, storyUrl, setInputText,
         }
     };
 
+    const handleBackToHeadlines = () => {
+        onBackClick();
+        onResetFeaturedHeadline();
+    }
+
     // Render the component only if newsTitle is provided
     if (!newsTitle) {
         return null;
@@ -76,7 +81,7 @@ function NewsInfo({ newsTitle, newsExcerpt, onBackClick, storyUrl, setInputText,
     return (
         <article className='news-info'>
             <div className='news-info__nav'>
-                <Link className='news-info__nav-back' onClick={onBackClick}><img className='news-info__nav-back--arrow' src={leftArrow} alt="Back arrow" />Back to Headlines</Link>
+                <Link className='news-info__nav-back' onClick={handleBackToHeadlines}><img className='news-info__nav-back--arrow' src={leftArrow} alt="Back arrow" />Back to Headlines</Link>
                 <button className='news-info__nav-copy' onClick={copyHeadline}>{copied ? 'Copied!' : 'Copy Headline'} {/* Change text based on copied state */}
                     <lord-icon
                         id="news-info__img"

@@ -131,6 +131,10 @@
         font-family: "Lovelo Black";
         font-size: 0.625rem;
         text-align: center;
+
+        &:hover {
+            color: black;
+        }
     }
 }
 

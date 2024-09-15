@@ -39,6 +39,7 @@ function UserInput() {
     const [isTextareaVisible, setIsTextareaVisible] = useState(true);
     const [featuredHeadline, setFeaturedHeadline] = useState(null);
     const [selectedHeadline, setSelectedHeadline] = useState(null);
+    const [isHeadlineSelected, setIsHeadlineSelected] = useState(false);
 
     const breakingNewsRef = useRef();
 
@@ -218,6 +219,7 @@ function UserInput() {
     }
 
     const handleLabelClick = () => {
+        setIsHeadlineSelected(false);
         if (breakingNewsRef.current && breakingNewsRef.current.resetPagination) {
             breakingNewsRef.current.resetPagination();
         }
@@ -225,9 +227,15 @@ function UserInput() {
 
     const handleHeadlineClick = (headline) => {
         setSelectedHeadline(headline);
+        setIsHeadlineSelected(true);
         if (breakingNewsRef.current) {
             breakingNewsRef.current.showNewsInfo(headline);
         }
+    };
+
+    const resetFeaturedHeadline = () => {
+        setIsHeadlineSelected(false);
+        setSelectedHeadline(null);
     };
 
     return (
@@ -236,9 +244,10 @@ function UserInput() {
                 <article className="featured-headline">
                     {isDesktopView && (
                         <FeaturedHeadline
-                            headline={featuredHeadline}
+                            headline={selectedHeadline || featuredHeadline}
                             onHeadlineClick={handleHeadlineClick}
-                            onLabelClick={handleLabelClick} />
+                            onLabelClick={handleLabelClick}
+                            isSelected={isHeadlineSelected} />
                     )}
                 </article>
                 <div className="form__container">
@@ -280,9 +289,10 @@ function UserInput() {
                         <aside className='news-desktop'>
                             {isTabletView && (
                                 <FeaturedHeadline
-                                    headline={featuredHeadline}
+                                    headline={selectedHeadline || featuredHeadline}
                                     onHeadlineClick={handleHeadlineClick}
                                     onLabelClick={handleLabelClick}
+                                    isSelected={isHeadlineSelected}
                                 />
                             )}
                             <section className='news-desktop__news'>
@@ -300,7 +310,9 @@ function UserInput() {
                                     isTabletView={isTabletView}
                                     isDesktopView={isDesktopView}
                                     handleRandomArt={handleRandomArt}
-                                    isTextareaVisible={isTextareaVisible} />
+                                    isTextareaVisible={isTextareaVisible}
+                                    onHeadlineClick={handleHeadlineClick}
+                                    onResetFeaturedHeadline={resetFeaturedHeadline} />
                             </section>
                         </aside>
                     )}
