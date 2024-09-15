@@ -45,6 +45,10 @@ const BreakingNews = forwardRef(({ setInputText, userInputVisible, promptGenerat
         resetPagination: () => {
             setCurrentPage(1);
             setActivePaginationButton(0);
+        },
+        showNewsInfo: (headline) => {
+            setSelectedHeadline(headline);
+            setShowNewsInfo(true);
         }
     }));
 

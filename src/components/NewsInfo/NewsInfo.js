@@ -137,7 +137,8 @@ function NewsInfo({ newsTitle, newsExcerpt, onBackClick, storyUrl, setInputText,
                         src="https://cdn.lordicon.com/zfzufhzk.json"
                         trigger="in"
                         state="in-dynamic"
-                        delay="500"                    />
+                        delay="500"
+                    />
                 </div>
             )}
         </article>

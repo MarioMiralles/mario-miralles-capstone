@@ -45,13 +45,16 @@
         display: inline;
         vertical-align: middle;
         padding: 0.25rem 0.375rem 0 0.375rem;
-        border: 2px double transparent;
-        border-top-color: $primary1;
-        border-bottom-color: $primary1;
+        border: 2px double $primary1;
+        // border-top-color: $primary1;
+        // border-bottom-color: $primary1;
         border-radius: 0.5rem;
+        box-shadow: 2px 2px 0 0 $primary1;
 
         &:hover {
             border-color: $primary1;
+            // background-color: $primary1;
+            font-family: "Lovelo Bold";
         }
 
         @include tablet {

@@ -38,6 +38,7 @@ function UserInput() {
     const [isDesktopView, setIsDesktopView] = useState(window.innerWidth >= 1280);
     const [isTextareaVisible, setIsTextareaVisible] = useState(true);
     const [featuredHeadline, setFeaturedHeadline] = useState(null);
+    const [selectedHeadline, setSelectedHeadline] = useState(null);
 
     const breakingNewsRef = useRef();
 
@@ -222,11 +223,12 @@ function UserInput() {
         }
     };
 
-    // const handleHeadlineClick = (headline) => {
-    //     // Implement the logic for handling headline click
-    //     // When headline is clicked it will show the NewsInfo in BreakingNews section
-    //     console.log("Headline clicked:", headline.title.rendered);
-    // };
+    const handleHeadlineClick = (headline) => {
+        setSelectedHeadline(headline);
+        if (breakingNewsRef.current) {
+            breakingNewsRef.current.showNewsInfo(headline);
+        }
+    };
 
     return (
         <>
@@ -235,7 +237,7 @@ function UserInput() {
                     {isDesktopView && (
                         <FeaturedHeadline
                             headline={featuredHeadline}
-                            // onHeadlineClick={handleHeadlineClick}
+                            onHeadlineClick={handleHeadlineClick}
                             onLabelClick={handleLabelClick} />
                     )}
                 </article>
@@ -261,7 +263,7 @@ function UserInput() {
                             </form>
                         )}
                         <figure className='generated__section'>
-                            {(!isDesktopView && isLoading || !isDesktopView && generatedImage) && (
+                            {((!isDesktopView && isLoading) || (!isDesktopView && generatedImage)) && (
                                 <img onClick={handleRefreshBrowser} className='generated__logo' src={otdLogo} alt='OTDNews' />
                             )}
                             {error && <div>{error}</div>}
@@ -279,6 +281,7 @@ function UserInput() {
                             {isTabletView && (
                                 <FeaturedHeadline
                                     headline={featuredHeadline}
+                                    onHeadlineClick={handleHeadlineClick}
                                     onLabelClick={handleLabelClick}
                                 />
                             )}
@@ -297,9 +300,7 @@ function UserInput() {
                                     isTabletView={isTabletView}
                                     isDesktopView={isDesktopView}
                                     handleRandomArt={handleRandomArt}
-                                    isTextareaVisible={isTextareaVisible}
-                                    excludeFeaturedHeadline={true}
-                                />
+                                    isTextareaVisible={isTextareaVisible} />
                             </section>
                         </aside>
                     )}
