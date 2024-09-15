@@ -16,7 +16,12 @@ const FeaturedHeadline = ({ headline, onHeadlineClick, onLabelClick, isSelected 
     if (!headline) return null;
 
     const handleHeadlineClick = () => {
-        onHeadlineClick(headline);
+        const strippedExcerpt = headline.excerpt.rendered.replace(/<\/?[^>]+(>|$)/g, "");
+        onHeadlineClick({
+            title: headline.title.rendered,
+            excerpt: strippedExcerpt,
+            storyUrl: headline.link
+        });
         setIsHeadlineClicked(true);
     };
 
@@ -24,6 +29,8 @@ const FeaturedHeadline = ({ headline, onHeadlineClick, onLabelClick, isSelected 
         onLabelClick();
         setIsHeadlineClicked(false);
     };
+
+    console.log('Headline title:', JSON.stringify(headline.title));
 
     const title = headline.title?.rendered || headline.title;
 

@@ -52,6 +52,7 @@ function UserInput() {
             const excludePages = excludePageIds.join(',');
             const response = await axios.get(`${wordpressPagesURL}?per_page=1&exclude=${excludePages}`);
             if (response.data && response.data.length > 0) {
+                console.log('Featured headline fetched:', response.data[0]);
                 setFeaturedHeadline(response.data[0]);
             }
         } catch (error) {
