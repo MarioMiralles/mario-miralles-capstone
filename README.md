@@ -72,6 +72,9 @@ This is one page where users can input prompts to generate AI art, plus componen
 
 ### Mockups
 
+<<<<<<< HEAD
+<img src="./src/assets/mockup/App.png" width="250" height="250" /><img src="./src/assets/mockup/Loading.png" width="250" height="250" /><img src="./src/assets/mockup/GeneratedImage.png" width="250" height="250" /><img src="./src/assets/mockup/BreakingNews.png" width="250" height="250" /><img src="./src/assets/mockup/Headlines.png" width="250" height="250" />
+=======
 <div style="display: flex; flex-wrap: wrap;">
     <img src="./src/assets/mockup/App.png" width="200" height="200" style="margin-right: 10px; margin-bottom: 10px;">
     <img src="./src/assets/mockup/Loading.png" width="200" height="200" style="margin-right: 10px; margin-bottom: 10px;">
@@ -79,6 +82,7 @@ This is one page where users can input prompts to generate AI art, plus componen
     <img src="./src/assets/mockup/BreakingNews.png" width="200" height="200" style="margin-right: 10px; margin-bottom: 10px;">
     <img src="./src/assets/mockup/Headlines.png" width="200" height="200" style="margin-right: 10px; margin-bottom: 10px;">
 </div>
+>>>>>>> develop
 
 ### Data
 
