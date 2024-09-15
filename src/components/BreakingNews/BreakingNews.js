@@ -13,7 +13,7 @@ import NewsInfo from '../NewsInfo/NewsInfo';
 const wordpressPagesURL = "https://onthedai.com/wp-json/wp/v2/pages"
 const excludePageIds = [873, 2663, 3676, 3700, 25455, 25458, 28770]; // Excludes certain pages from the OTD website
 
-const BreakingNews = forwardRef(({ setInputText, userInputVisible, promptGenerated, handleGenerate, inputText, setShowButtonAnimation, setPromptGenerated, handleButtonAnimation, isTabletView, isDesktopView, handleRandomArt, isTextareaVisible, excludeFeaturedHeadline }, ref) => {
+const BreakingNews = forwardRef(({ setInputText, userInputVisible, promptGenerated, handleGenerate, inputText, setShowButtonAnimation, setPromptGenerated, handleButtonAnimation, isTabletView, isDesktopView, handleRandomArt, isTextareaVisible, excludeFeaturedHeadline, onHeadlineClick, onResetFeaturedHeadline }, ref) => {
     const [pages, setPages] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -84,8 +84,10 @@ const BreakingNews = forwardRef(({ setInputText, userInputVisible, promptGenerat
     const handleHeadlineClick = (page) => {
         const { link, title, excerpt } = page; // Extract link and title from the page object
         const strippedExcerpt = excerpt.rendered.replace(/<\/?[^>]+(>|$)/g, ""); // Remove HTML tags
-        setSelectedHeadline({ title: title.rendered, storyUrl: link, excerpt: strippedExcerpt }); // Pass both title and URL
+        const headlineData = { title: title.rendered, storyUrl: link, excerpt: strippedExcerpt };
+        setSelectedHeadline(headlineData); // Pass both title and URL
         setShowNewsInfo(true); // Show NewsInfo component
+        onHeadlineClick(headlineData);
     }
 
     return (
@@ -99,15 +101,12 @@ const BreakingNews = forwardRef(({ setInputText, userInputVisible, promptGenerat
                     {!showNewsInfo && ( // Only render if no headline is selected
                         <section className='news__pagination-container'>
                             <div className='news__pages'>
-                                {currentTitles.map((page, index) => {
-                                    const isFirstHeadline = index === 0;
-                                    return (
-                                        <h3 key={index}
-                                            className='news__page-title' onClick={() => handleHeadlineClick(page)}>
-                                            {page.title.rendered}
-                                        </h3>
-                                    );
-                                })}
+                                {currentTitles.map((page, index) => (
+                                    <h3 key={index}
+                                        className='news__page-title' onClick={() => handleHeadlineClick(page)}>
+                                        {page.title.rendered}
+                                    </h3>
+                                ))}
                             </div>
                             <div className='news__pagination'>
                                 {Array.from({ length: totalPages }, (_, index) => (
@@ -141,6 +140,7 @@ const BreakingNews = forwardRef(({ setInputText, userInputVisible, promptGenerat
                     handleButtonAnimation={handleButtonAnimation}
                     handleRandomArt={handleRandomArt}
                     isTextareaVisible={isTextareaVisible}
+                    onResetFeaturedHeadline={onResetFeaturedHeadline}
                 />}
         </article>
     );
