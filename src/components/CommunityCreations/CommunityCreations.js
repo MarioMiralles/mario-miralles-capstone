@@ -13,7 +13,7 @@ const CommunityCreations = ({ isOpen, onClose, images }) => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const imagesPerPage = 30;
+    const imagesPerPage = 24;
     const indexOfLastImage = currentPage * imagesPerPage;
     const indexOfFirstImage = indexOfLastImage - imagesPerPage;
     const currentImages = images.slice(indexOfFirstImage, indexOfLastImage);
@@ -38,7 +38,7 @@ const CommunityCreations = ({ isOpen, onClose, images }) => {
     return (
         <article className="community-creations">
             <section className="community-creations__header">
-                <h2>Community Creations</h2>
+                <h2 className="community-creations__heading">Community Creations</h2>
                 <button className="community-creations__close-button" onClick={onClose}>X</button>
             </section>
             <section className="community-creations__gallery">

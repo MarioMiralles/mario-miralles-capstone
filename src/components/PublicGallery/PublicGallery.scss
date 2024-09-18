@@ -39,8 +39,8 @@
 
     &__heading {
         padding: 0.25rem 1rem;
-        border: 3px solid transparent;
-        border-bottom: 3px solid $primary1;
+        border: 8px double transparent;
+        border-bottom-color: $primary1;
         cursor: pointer;
         font-family: "Lovelo Black";
         font-weight: 400;
@@ -49,16 +49,18 @@
             cursor: default;
             border-top: none;
             font-size: 1rem;
+            padding: 0.25rem;
+            width: 39.5%;
+        }
+
+        @include desktop {
+            padding: 0 1rem;
         }
 
         &-container {
             @include display (row, space-between, nowrap);
 
             @include tablet {
-                padding: 0 1rem;
-            }
-
-            @include desktop {
                 padding: 0;
             }
         }
@@ -117,6 +119,7 @@
             padding: 0;
             height: 100%;
             max-height: 12rem;
+            max-width: 75rem;
         }
     }
 

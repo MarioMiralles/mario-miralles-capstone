@@ -65,6 +65,19 @@
         padding: 0.5rem;
         line-height: 1.5rem;
         font-family: "Inter bold";
+        max-height: 11.5rem;
+        overflow-y: auto;
+        word-break: break-word;
+        scroll-behavior: smooth;
+
+        &::-webkit-scrollbar {
+            width: 0.125rem;
+            background-color: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: linear-gradient(transparent 0%, black 50%, transparent 100%);
+        }
 
         // @include tablet {
         //     font-size: 0.625rem;
@@ -73,7 +86,9 @@
         @include desktop {
             padding: 1rem;
             font-size: 1rem;
+            line-height: 1.75rem;
             font-family: "Inter Semi Bold";
+            max-height: 9.5rem;
         }
     }
 

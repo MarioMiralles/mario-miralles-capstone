@@ -345,7 +345,8 @@ function UserInput() {
                             key={publicGalleryKey}
                             inputText={inputText}
                             handleFetchImage={handleFetchImage}
-                            isDesktopView={isDesktopView} />
+                            isDesktopView={isDesktopView}
+                            isTabletView={isTabletView} />
                     )}
                     {!isTabletView && !showPublicGallery && (
                         <BreakingNews
@@ -360,6 +361,8 @@ function UserInput() {
                             handleButtonAnimation={handleButtonAnimation}
                             handleRandomArt={handleRandomArt}
                             isTextareaVisible={isTextareaVisible}
+                            onHeadlineClick={handleHeadlineClick}
+                            onResetFeaturedHeadline={resetFeaturedHeadline}
                         />
                     )}
                 </section>

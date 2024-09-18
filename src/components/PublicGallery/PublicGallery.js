@@ -10,12 +10,12 @@ import PublicGalleryModal from '../PublicGalleryModal/PublicGalleryModal';
 import CommunityCreations from '../CommunityCreations/CommunityCreations';
 import './PublicGallery.scss';
 
-const PublicGallery = ({ isDesktopView }) => {
+const PublicGallery = ({ isDesktopView, isTabletView }) => {
     const [publicGalleryImages, setPublicGalleryImages] = useState([]);
     const [error, setError] = useState(null);
-    const [selectedImage, setSelectedImage] = useState(null);
-    const [prompt, setPrompt] = useState(null);
-    const [imageId, setImageId] = useState(null);
+    const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+    // const [prompt, setPrompt] = useState(null);
+    // const [imageId, setImageId] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [isCommunityCreationsOpen, setIsCommunityCreationsOpen] = useState(false);
@@ -37,7 +37,7 @@ const PublicGallery = ({ isDesktopView }) => {
                 }
             };
 
-            const response = await fetch('https://cloud.leonardo.ai/api/rest/v1/generations/user/5fc49543-399b-4eb1-ab31-ca611e89df0e?offset=0&limit=30', options);
+            const response = await fetch('https://cloud.leonardo.ai/api/rest/v1/generations/user/5fc49543-399b-4eb1-ab31-ca611e89df0e?offset=0&limit=48', options);
             if (!response.ok) {
                 throw new Error('Failed to fetch gallery images');
             }
@@ -63,11 +63,11 @@ const PublicGallery = ({ isDesktopView }) => {
     };
 
     // Function to handle image click and open modal
-    const handleImageClick = (image) => {
-        setSelectedImage(image);
-        setPrompt(image.prompt);
-        setImageId(image.imageId);
-        setIsModalOpen(true); // Update state to open the modal
+    const handleImageClick = (index) => {
+        setSelectedImageIndex(index);
+        // setPrompt(image.prompt);
+        // setImageId(image.imageId);
+        setIsModalOpen(true);
     };
 
     // Function to close modal
@@ -108,19 +108,21 @@ const PublicGallery = ({ isDesktopView }) => {
             ) : (
                 <div className="gallery">
                     {renderGalleryImages()}
-                    {isDesktopView &&(
+                    {isDesktopView && (
                         <button
                             className="gallery__view-more"
                             onClick={handleViewMoreClick}>
                             View More
                         </button>
                     )}
-                    {selectedImage && isModalOpen && (
+                    {isModalOpen && (
                         <PublicGalleryModal
+                            images={publicGalleryImages}
+                            initialIndex={selectedImageIndex}
                             isOpen={isModalOpen}
                             onClose={closeModal}
-                            image={selectedImage} // Ensure the prop name matches what PublicGalleryModal expects
-                            prompt={prompt} />
+                            isTabletView={isDesktopView}
+                            isDesktopView={isDesktopView} />
                     )}
                     {isCommunityCreationsOpen && (
                         <CommunityCreations
