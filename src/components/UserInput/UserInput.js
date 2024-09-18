@@ -344,7 +344,8 @@ function UserInput() {
                         <PublicGallery
                             key={publicGalleryKey}
                             inputText={inputText}
-                            handleFetchImage={handleFetchImage} />
+                            handleFetchImage={handleFetchImage}
+                            isDesktopView={isDesktopView} />
                     )}
                     {!isTabletView && !showPublicGallery && (
                         <BreakingNews

@@ -1,0 +1,60 @@
+@use '../../styles/partials/mixins' as *;
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/typography' as *;
+
+.community-creations {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    max-height: 35rem;
+    padding: 2rem;
+
+    &__close-button {
+        background-color: $background2;
+        font-size: 1.25rem;
+        font-family: "Lovelo";
+        cursor: pointer;
+        display: inline;
+        vertical-align: middle;
+        padding: 0.25rem 0.375rem 0 0.375rem;
+        border: 2px double $primary1;
+        // border-top-color: $primary1;
+        // border-bottom-color: $primary1;
+        border-radius: 0.5rem;
+        box-shadow: 2px 2px 0 0 $primary1;
+
+        &:hover {
+            border-color: $primary1;
+            // background-color: $primary1;
+            font-family: "Lovelo Bold";
+        }
+    }
+
+    &__gallery {
+        @include display(row, flex-start, wrap);
+        max-width: 100%;
+        object-fit: contain;
+    }
+
+    &__header {
+        padding-bottom: 1.5rem;
+        @include display(row, space-between, nowrap);
+    }
+
+    &__image {
+        max-width: 100%;
+        object-fit: contain;
+    }
+
+    &__link {
+        width: calc((100% - 0.25rem) / 6);
+        flex: 1 1 16.66%;
+    }
+
+    &__pagination {
+        display: flex;
+        justify-content: flex-end;
+    }
+}
