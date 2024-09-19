@@ -5,15 +5,8 @@ import logo from '../../assets/images/OTDLogo.png';
 
 function PublicGalleryModal({ images, initialIndex = 0, prompt, isOpen, onClose, isTabletView, isDesktopView }) {
     const [copied, setCopied] = useState(false); // State variable to track whether the headline has been copied
-    // const [imageUrl, setImageUrl] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(initialIndex);
-
-    // // For future use to add imageId as route url
-    // useEffect(() => {
-    //     if (image && image.image) {
-    //         setImageUrl(image.image);
-    //     }
-    // }, [image]);
+    const [showFullPrompt, setShowFullPrompt] = useState(false);
 
     // Effect to handle body overflow scrolling
     useEffect(() => {
@@ -61,6 +54,26 @@ function PublicGalleryModal({ images, initialIndex = 0, prompt, isOpen, onClose,
         return null;
     }
 
+    const renderPrompt = (promptText) => {
+        let maxWords = 13;
+        const words = promptText.split(' ');
+
+        const truncatedPrompt = words.slice(0, maxWords).join(' ') + (words.length > maxWords ? ' ' : ' ');
+
+        return (
+            <>
+                <h4 className={`pg-modal__prompt-description ${showFullPrompt ? 'full' : 'clamped'}`}>
+                    {showFullPrompt ? promptText : truncatedPrompt}
+                    {!showFullPrompt && words.length > maxWords && (
+                        <button className='pg-modal__more-button' onClick={() => setShowFullPrompt(true)}>
+                            ...more
+                        </button>
+                    )}
+                </h4>
+            </>
+        );
+    };
+
     const renderImages = () => {
         if (isTabletView || isDesktopView) {
             return (
@@ -88,7 +101,7 @@ function PublicGalleryModal({ images, initialIndex = 0, prompt, isOpen, onClose,
                                 </lord-icon>
                             </button>
                         </div>
-                        <h4 className='pg-modal__prompt-description'>{image.prompt}</h4>
+                        {renderPrompt(image.prompt)}
                     </section>
                 </figure>
             ));
@@ -123,7 +136,7 @@ function PublicGalleryModal({ images, initialIndex = 0, prompt, isOpen, onClose,
                                             </lord-icon>
                                         </button>
                                     </div>
-                                    <h4 className='pg-modal__prompt-description'>{images[currentIndex].prompt}</h4>
+                                    {renderPrompt(images[currentIndex].prompt)}
                                 </section>
                             )}
                         </article>

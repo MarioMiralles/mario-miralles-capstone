@@ -94,6 +94,13 @@
     //     }
     // }
 
+    &__more-button {
+        border: none;
+        background-color: transparent;
+        color: gray;
+        cursor: pointer;
+    }
+
     &__nav {
         @include display (row, flex-end, nowrap);
         width: 100%;
@@ -125,6 +132,7 @@
         &-description {
             font-size: 0.875rem;
             background-color: $background3;
+            line-height: 1.125rem;
         }
 
         &-heading {
