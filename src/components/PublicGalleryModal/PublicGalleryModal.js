@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import './PublicGalleryModal.scss';
 import logo from '../../assets/images/OTDLogo.png';
@@ -6,7 +6,8 @@ import logo from '../../assets/images/OTDLogo.png';
 function PublicGalleryModal({ images, initialIndex = 0, prompt, isOpen, onClose, isTabletView, isDesktopView }) {
     const [copied, setCopied] = useState(false); // State variable to track whether the headline has been copied
     const [currentIndex, setCurrentIndex] = useState(initialIndex);
-    const [showFullPrompt, setShowFullPrompt] = useState(false);
+    const [expandedPrompts, setExpandedPrompts] = useState({});
+    const selectedImageRef = useRef(null);
 
     // Effect to handle body overflow scrolling
     useEffect(() => {
@@ -20,6 +21,12 @@ function PublicGalleryModal({ images, initialIndex = 0, prompt, isOpen, onClose,
             document.body.style.overflow = 'auto';
         };
     }, [isOpen]);
+
+    useEffect(() => {
+        if(!isTabletView && !isDesktopView && selectedImageRef.current) {
+            selectedImageRef.current.scrollIntoView();
+        }
+    }, [currentIndex, isTabletView, isDesktopView]);
 
     //=====================//
     // COPY PROMPT FEATURE //
@@ -54,23 +61,29 @@ function PublicGalleryModal({ images, initialIndex = 0, prompt, isOpen, onClose,
         return null;
     }
 
-    const renderPrompt = (promptText) => {
-        let maxWords = 13;
-        const words = promptText.split(' ');
+    const togglePromptExpansion = (index) => {
+        setExpandedPrompts((prevState) => ({
+            ...prevState,
+            [index]: !prevState[index],
+        }));
+    };
 
+    const renderPrompt = (promptText, index) => {
+        let maxWords = 10;
+        const words = promptText.split(' ');
         const truncatedPrompt = words.slice(0, maxWords).join(' ') + (words.length > maxWords ? ' ' : ' ');
 
+        const isExpanded = expandedPrompts[index] || false;
+
         return (
-            <>
-                <h4 className={`pg-modal__prompt-description ${showFullPrompt ? 'full' : 'clamped'}`}>
-                    {showFullPrompt ? promptText : truncatedPrompt}
-                    {!showFullPrompt && words.length > maxWords && (
-                        <button className='pg-modal__more-button' onClick={() => setShowFullPrompt(true)}>
-                            ...more
+                <h4 className={`pg-modal__prompt-description ${isExpanded ? 'full' : 'clamped'}`}>
+                    {isExpanded ? promptText : truncatedPrompt}
+                    {words.length > maxWords && (
+                        <button className='pg-modal__more-button' onClick={() => togglePromptExpansion(index)}>
+                              {isExpanded ? ' ▲collapse' : '...more▼'}
                         </button>
                     )}
                 </h4>
-            </>
         );
     };
 
@@ -84,27 +97,32 @@ function PublicGalleryModal({ images, initialIndex = 0, prompt, isOpen, onClose,
                 </section>
             );
         } else {
-            return images.map((image, index) => (
-                <figure key={index} className='pg-modal__image-container'>
-                    <img src={image.image} className='pg-modal__image' alt={`Gallery image ${index + 1}`} />
-                    <section className='pg-modal__prompt'>
-                        <div className='pg-modal__prompt-nav'>
-                            <h3 className='pg-modal__prompt-heading'>Prompt:</h3>
-                            <button className='pg-modal__prompt-nav-copy' onClick={() => copyPrompt(image.prompt)}>
-                                {copied ? 'Copied!' : 'Copy Prompt'}
-                                <lord-icon
-                                    id="news-info__img"
-                                    src="https://cdn.lordicon.com/pcllgpqm.json"
-                                    trigger="click"
-                                    stroke="bold"
-                                    colors="primary:#121331,secondary:#ef8e6d,tertiary:#ffffff">
-                                </lord-icon>
-                            </button>
-                        </div>
-                        {renderPrompt(image.prompt)}
-                    </section>
-                </figure>
-            ));
+            return (
+                <section className='pg-modal__vertical-list'>
+                    {images.map((image, index) => (
+                        <figure key={index} className={`pg-modal__image-container ${currentIndex === index ? 'selected' : ''}`}
+                            ref={currentIndex === index ? selectedImageRef : null} >
+                            <img src={image.image} className='pg-modal__image' alt={`Gallery image ${index + 1}`} />
+                            <section className='pg-modal__prompt'>
+                                <div className='pg-modal__prompt-nav'>
+                                    <h3 className='pg-modal__prompt-heading'>Prompt:</h3>
+                                    <button className='pg-modal__prompt-nav-copy' onClick={() => copyPrompt(image.prompt)}>
+                                        {copied ? 'Copied!' : 'Copy Prompt'}
+                                        <lord-icon
+                                            id="news-info__img"
+                                            src="https://cdn.lordicon.com/pcllgpqm.json"
+                                            trigger="click"
+                                            stroke="bold"
+                                            colors="primary:#121331,secondary:#ef8e6d,tertiary:#ffffff">
+                                        </lord-icon>
+                                    </button>
+                                </div>
+                                {renderPrompt(image.prompt, index)}
+                            </section>
+                        </figure >
+                    ))}
+                </section>
+            );
         }
     };
 
@@ -136,7 +154,7 @@ function PublicGalleryModal({ images, initialIndex = 0, prompt, isOpen, onClose,
                                             </lord-icon>
                                         </button>
                                     </div>
-                                    {renderPrompt(images[currentIndex].prompt)}
+                                    {renderPrompt(images[currentIndex].prompt, currentIndex)}
                                 </section>
                             )}
                         </article>

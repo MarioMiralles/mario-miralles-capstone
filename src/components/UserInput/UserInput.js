@@ -326,7 +326,7 @@ function UserInput() {
                         {!isDesktopView && (
                             <>
                                 <h2
-                                    className={showPublicGallery ? "gallery__heading" : "gallery__heading--inactive"}
+                                    className={showPublicGallery ? "gallery__heading" : "gallery__heading--inactive-cc"}
                                     onClick={() => toggleComponent('Public Gallery')}>
                                     Community Creations
                                 </h2>

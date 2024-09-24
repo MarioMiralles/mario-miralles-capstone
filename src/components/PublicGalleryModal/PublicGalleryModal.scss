@@ -13,7 +13,50 @@
 
     @include tablet {
         height: 100%;
-        padding-top: 4rem;
+    }
+
+    &__carousel {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        overflow: hidden; // Hide overflow to show only one image at a time
+        padding: 1rem 0;
+
+        @include tablet {
+            max-width: 100%;
+            height: auto;
+        }
+
+        @include desktop {
+            max-width: 60%;  // Limit width for desktop view
+            margin: 0 auto;
+        }
+    }
+
+    &__carousel-image {
+        width: 100%;
+        height: auto;
+        max-height: 80vh; // Adjust the height for better scaling
+        object-fit: contain;
+    }
+
+    &__carousel-button {
+        background: none;
+        border: none;
+        font-size: 2rem;
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+
+        &--left {
+            left: 0.5rem;
+        }
+
+        &--right {
+            right: 0.5rem;
+        }
     }
 
     &__delete-close {
@@ -30,16 +73,16 @@
 
         &:hover {
             border-color: $primary1;
-            
             font-family: "Lovelo Bold";
         }
 
         @include tablet {
-            font-size: 2rem;
+            font-size: 1.5rem;
         }
 
         &-link {
             text-decoration: none;
+            height: 2rem;
         }
     }
 
@@ -49,19 +92,29 @@
         background-color: $background2;
         object-fit: contain;
 
+        @include tablet {
+            width: 80%;
+            max-width: 80%;
+            margin: 0 auto;
+        }
+
         @include desktop {
             width: 60%;
+            max-width: 60%;
+            margin: 0 auto;
         }
 
         &-container {
             background-color: $background1;
+            padding-top: 4rem;
 
             @include tablet {
                 padding: 0 2rem;
             }
 
             @include desktop {
-                @include display (row, space-between, nowrap);
+                @include display (column, center, nowrap);
+                align-items: center;
             }
         }
     }
@@ -105,11 +158,15 @@
         @include display (row, flex-end, nowrap);
         width: 100%;
         padding: 1rem;
+        height: 3.5rem;
         align-items: center;
         background-color: $background1;
+        position: absolute;
+        z-index: 4;
 
         @include tablet {
             padding: 0.5rem 2rem;
+            height: 3.5rem;
         }
 
         @include desktop {
@@ -132,7 +189,6 @@
         &-description {
             font-size: 0.875rem;
             background-color: $background3;
-            line-height: 1.125rem;
         }
 
         &-heading {

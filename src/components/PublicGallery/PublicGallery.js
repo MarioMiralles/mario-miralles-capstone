@@ -13,9 +13,7 @@ import './PublicGallery.scss';
 const PublicGallery = ({ isDesktopView, isTabletView }) => {
     const [publicGalleryImages, setPublicGalleryImages] = useState([]);
     const [error, setError] = useState(null);
-    const [selectedImageIndex, setSelectedImageIndex] = useState(null);
-    // const [prompt, setPrompt] = useState(null);
-    // const [imageId, setImageId] = useState(null);
+    const [selectedImage, setSelectedImage] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [isCommunityCreationsOpen, setIsCommunityCreationsOpen] = useState(false);
@@ -63,10 +61,8 @@ const PublicGallery = ({ isDesktopView, isTabletView }) => {
     };
 
     // Function to handle image click and open modal
-    const handleImageClick = (index) => {
-        setSelectedImageIndex(index);
-        // setPrompt(image.prompt);
-        // setImageId(image.imageId);
+    const handleImageClick = (image, index) => {
+        setSelectedImage({ ...image, index });
         setIsModalOpen(true);
     };
 
@@ -88,7 +84,7 @@ const PublicGallery = ({ isDesktopView, isTabletView }) => {
                 to={`/gallery/${image.imageId}`}
                 onClick={(event) => {
                     event.preventDefault();
-                    handleImageClick(image);
+                    handleImageClick(image, index);
                 }}>
                 <img
                     src={image.image}
@@ -118,7 +114,7 @@ const PublicGallery = ({ isDesktopView, isTabletView }) => {
                     {isModalOpen && (
                         <PublicGalleryModal
                             images={publicGalleryImages}
-                            initialIndex={selectedImageIndex}
+                            initialIndex={selectedImage.index}
                             isOpen={isModalOpen}
                             onClose={closeModal}
                             isTabletView={isDesktopView}
