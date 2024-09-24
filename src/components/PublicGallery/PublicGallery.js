@@ -117,7 +117,7 @@ const PublicGallery = ({ isDesktopView, isTabletView }) => {
                             initialIndex={selectedImage.index}
                             isOpen={isModalOpen}
                             onClose={closeModal}
-                            isTabletView={isDesktopView}
+                            isTabletView={isTabletView}
                             isDesktopView={isDesktopView} />
                     )}
                     {isCommunityCreationsOpen && (

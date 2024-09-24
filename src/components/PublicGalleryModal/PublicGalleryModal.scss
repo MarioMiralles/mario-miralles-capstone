@@ -20,7 +20,7 @@
         align-items: center;
         justify-content: space-between;
         position: relative;
-        overflow: hidden; // Hide overflow to show only one image at a time
+        overflow: hidden; // Hides overflow to show only one image at a time
         padding: 1rem 0;
 
         @include tablet {
@@ -29,7 +29,7 @@
         }
 
         @include desktop {
-            max-width: 60%;  // Limit width for desktop view
+            max-width: 60%;
             margin: 0 auto;
         }
     }
@@ -37,7 +37,7 @@
     &__carousel-image {
         width: 100%;
         height: auto;
-        max-height: 80vh; // Adjust the height for better scaling
+        max-height: 80vh;
         object-fit: contain;
     }
 
