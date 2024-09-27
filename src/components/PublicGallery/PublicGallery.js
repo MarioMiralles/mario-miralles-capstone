@@ -125,6 +125,8 @@ const PublicGallery = ({ isDesktopView, isTabletView }) => {
                             isOpen={isCommunityCreationsOpen}
                             onClose={() => setIsCommunityCreationsOpen(false)}
                             images={publicGalleryImages}
+                            isTabletView={isTabletView}
+                            isDesktopView={isDesktopView}
                         />
                     )}
                 </div>

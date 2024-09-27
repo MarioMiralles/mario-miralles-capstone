@@ -23,7 +23,7 @@ function PublicGalleryModal({ images, initialIndex = 0, prompt, isOpen, onClose,
     }, [isOpen]);
 
     useEffect(() => {
-        if(!isTabletView && !isDesktopView && selectedImageRef.current) {
+        if (!isTabletView && !isDesktopView && selectedImageRef.current) {
             selectedImageRef.current.scrollIntoView();
         }
     }, [currentIndex, isTabletView, isDesktopView]);
@@ -75,15 +75,23 @@ function PublicGalleryModal({ images, initialIndex = 0, prompt, isOpen, onClose,
 
         const isExpanded = expandedPrompts[index] || false;
 
-        return (
-                <h4 className={`pg-modal__prompt-description ${isExpanded ? 'full' : 'clamped'}`}>
-                    {isExpanded ? promptText : truncatedPrompt}
-                    {words.length > maxWords && (
-                        <button className='pg-modal__more-button' onClick={() => togglePromptExpansion(index)}>
-                              {isExpanded ? ' ▲collapse' : '...more▼'}
-                        </button>
-                    )}
+        if (isDesktopView) {
+            return (
+                <h4 className='pg-modal__prompt-description full'>
+                    {promptText}
                 </h4>
+            );
+        }
+
+        return (
+            <h4 className={`pg-modal__prompt-description ${isExpanded ? 'full' : 'clamped'}`}>
+                {isExpanded ? promptText : truncatedPrompt}
+                {words.length > maxWords && (
+                    <button className='pg-modal__more-button' onClick={() => togglePromptExpansion(index)}>
+                        {isExpanded ? ' ⇪collapse' : '...more⤵'}
+                    </button>
+                )}
+            </h4>
         );
     };
 
@@ -91,9 +99,9 @@ function PublicGalleryModal({ images, initialIndex = 0, prompt, isOpen, onClose,
         if (isTabletView || isDesktopView) {
             return (
                 <section className='pg-modal__carousel'>
-                    <button className='pg-modal__carousel-button pg-modal__carousel-button--left' onClick={prevImage}>&lt;</button>
+                    <button className='pg-modal__carousel-button pg-modal__carousel-button--left' onClick={prevImage}>⯇</button>
                     <img src={images[currentIndex].image} className='pg-modal__carousel-image' alt={`Gallery image ${currentIndex + 1}`} />
-                    <button className='pg-modal__carousel-button pg-modal__carousel-button--right' onClick={nextImage}>&gt;</button>
+                    <button className='pg-modal__carousel-button pg-modal__carousel-button--right' onClick={nextImage}>⯈</button>
                 </section>
             );
         } else {
@@ -137,26 +145,28 @@ function PublicGalleryModal({ images, initialIndex = 0, prompt, isOpen, onClose,
                                     <p className='pg-modal__delete-close' alt='close button'>X</p>
                                 </Link>
                             </div>
-                            <article className='pg-modal__images'>
-                                {renderImages()}
-                            </article>
-                            {(isTabletView || isDesktopView) && (
-                                <section className='pg-modal__prompt'>
-                                    <div className='pg-modal__prompt-nav'>
-                                        <h3 className='pg-modal__prompt-heading'>Prompt:</h3>
-                                        <button className='pg-modal__prompt-nav-copy' onClick={copyPrompt}>{copied ? 'Copied!' : 'Copy Prompt'}
-                                            <lord-icon
-                                                id="news-info__img"
-                                                src="https://cdn.lordicon.com/pcllgpqm.json"
-                                                trigger="click"
-                                                stroke="bold"
-                                                colors="primary:#121331,secondary:#ef8e6d,tertiary:#ffffff">
-                                            </lord-icon>
-                                        </button>
-                                    </div>
-                                    {renderPrompt(images[currentIndex].prompt, currentIndex)}
+                            <figure className='pg-modal__container'>
+                                <section className='pg-modal__images'>
+                                    {renderImages()}
                                 </section>
-                            )}
+                                {(isTabletView || isDesktopView) && (
+                                    <section className='pg-modal__prompt'>
+                                        <div className='pg-modal__prompt-nav'>
+                                            <h3 className='pg-modal__prompt-heading'>Prompt:</h3>
+                                            <button className='pg-modal__prompt-nav-copy' onClick={copyPrompt}>{copied ? 'Copied!' : 'Copy Prompt'}
+                                                <lord-icon
+                                                    id="news-info__img"
+                                                    src="https://cdn.lordicon.com/pcllgpqm.json"
+                                                    trigger="click"
+                                                    stroke="bold"
+                                                    colors="primary:#121331,secondary:#ef8e6d,tertiary:#ffffff">
+                                                </lord-icon>
+                                            </button>
+                                        </div>
+                                        {renderPrompt(images[currentIndex].prompt, currentIndex)}
+                                    </section>
+                                )}
+                            </figure>
                         </article>
                     </div>
                 </main>

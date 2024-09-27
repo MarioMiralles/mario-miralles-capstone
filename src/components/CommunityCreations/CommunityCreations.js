@@ -8,9 +8,9 @@ import { Link } from "react-router-dom";
 import PublicGalleryModal from "../PublicGalleryModal/PublicGalleryModal";
 import './CommunityCreations.scss';
 
-const CommunityCreations = ({ isOpen, onClose, images }) => {
+const CommunityCreations = ({ isOpen, onClose, images, isTabletView, isDesktopView }) => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [selectedImage, setSelectedImage] = useState(null);
+    const [currentIndex, setCurrentIndex] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const imagesPerPage = 24;
@@ -24,8 +24,9 @@ const CommunityCreations = ({ isOpen, onClose, images }) => {
         setCurrentPage(pageNumber);
     }
 
-    const handleImageClick = (image) => {
-        setSelectedImage(image);
+    const handleImageClick = (index) => {
+        const globalIndex = indexOfFirstImage + index;
+        setCurrentIndex(globalIndex);
         setIsModalOpen(true);
     }
 
@@ -49,8 +50,9 @@ const CommunityCreations = ({ isOpen, onClose, images }) => {
                         to={`/gallery/${image.imageId}`}
                         onClick={(event) => {
                             event.preventDefault();
-                            handleImageClick(image); }}>
-                            <img
+                            handleImageClick(index);
+                        }}>
+                        <img
                             src={image.image}
                             className="community-creations__image"
                             alt={`Community Creation ${indexOfFirstImage + index + 1}`} />
@@ -67,12 +69,14 @@ const CommunityCreations = ({ isOpen, onClose, images }) => {
                     </button>
                 ))}
             </div>
-            {selectedImage && isModalOpen && (
+            {isModalOpen && (
                 <PublicGalleryModal
                     isOpen={isModalOpen}
                     onClose={closeModal}
-                    image={selectedImage}
-                    prompt={selectedImage.prompt} />
+                    images={images}
+                    initialIndex={currentIndex}
+                    isTabletView={isTabletView}
+                    isDesktopView={isDesktopView} />
             )}
         </article>
     );

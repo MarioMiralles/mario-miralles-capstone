@@ -13,6 +13,15 @@
 
     @include tablet {
         height: 100%;
+        background-image: linear-gradient(180deg, #08090afb 0%, #08090aec 100%);
+        background-color: transparent;
+        @include display (column, center, nowrap);
+        align-items: center;
+    }
+
+    @include desktop {
+        justify-content: flex-start;
+        padding-top: 10rem;
     }
 
     &__carousel {
@@ -20,25 +29,33 @@
         align-items: center;
         justify-content: space-between;
         position: relative;
-        overflow: hidden; // Hides overflow to show only one image at a time
+        overflow: hidden; // Hide overflow to show only one image at a time
         padding: 1rem 0;
+        background-color: transparent;
 
         @include tablet {
             max-width: 100%;
             height: auto;
+            justify-content: center;
+            padding: 0;
         }
 
         @include desktop {
-            max-width: 60%;
-            margin: 0 auto;
+            max-width: 100%;
+            margin: 0;
         }
     }
 
     &__carousel-image {
-        width: 100%;
+        width: 80%;
         height: auto;
         max-height: 80vh;
         object-fit: contain;
+        max-width: 62.5rem;
+
+        @include desktop {
+            width: 50rem;
+        }
     }
 
     &__carousel-button {
@@ -51,11 +68,35 @@
         transform: translateY(-50%);
 
         &--left {
-            left: 0.5rem;
+            left: 2rem;
+
+            @include desktop {
+                position: fixed;
+                top: 20rem;
+            }
         }
 
         &--right {
-            right: 0.5rem;
+            right: 2rem;
+
+            @include desktop {
+                position: fixed;
+                top: 20rem;
+            }
+        }
+
+        
+    }
+
+    &__container {
+        @include display (column, center, nowrap);
+        align-items: center;
+
+        @include desktop {
+            @include display (row, center, nowrap);
+            align-items: center;
+            padding: 0 2rem;
+            max-width: 75rem;
         }
     }
 
@@ -105,6 +146,7 @@
         }
 
         &-container {
+            max-width: 38rem;
             background-color: $background1;
             padding-top: 4rem;
 
@@ -124,28 +166,12 @@
         padding: 1rem 0;
         @include display (column, center, nowrap);
         gap: 3rem;
+
+        @include tablet {
+            background-color: transparent;
+            padding: 0;
+        }
     }
-
-    // &__logo {
-    //     background-color: $background3;
-    //     width: 100%;
-    //     display: flex;
-    //     padding: 0 0.5rem;
-
-    //     &-link {
-    //         width: 100%;
-    //         max-width: 8rem;
-
-    //         @include tablet {
-    //             width: 30%;
-    //             max-width: 100%;
-    //         }
-
-    //         @include desktop {
-    //             max-width: 20%;
-    //         }
-    //     }
-    // }
 
     &__more-button {
         border: none;
@@ -162,6 +188,7 @@
         align-items: center;
         background-color: $background1;
         position: absolute;
+        top: 0;
         z-index: 4;
 
         @include tablet {
@@ -181,14 +208,29 @@
         border-top-color: darkslategray;
         background-color: black;
 
+        @include tablet {
+            width: 80%;
+            max-width: 50rem;
+        }
+
         @include desktop {
-            padding: 1.5rem;
-            width: 100%;
+            padding: 0;
+            width: 60%;
+            height: 28.26rem;
+            border-bottom-color: black;
         }
 
         &-description {
             font-size: 0.875rem;
             background-color: $background3;
+
+            @include desktop {
+                padding: 0 1rem;
+                max-height: 25rem;
+                overflow-y: auto;
+                word-break: break-word;
+                scroll-behavior: smooth;
+            }
         }
 
         &-heading {
@@ -203,7 +245,7 @@
             background-color: $background3;
 
             @include desktop {
-                padding-bottom: 1rem;
+                padding: 1rem 0.5rem 0.5rem 1rem;
             }
 
             &-copy {
@@ -225,5 +267,10 @@
                 }
             }
         }
+    }
+
+    &__vertical-list {
+        @include display (column, center, nowrap);
+        align-items: center;
     }
 }
