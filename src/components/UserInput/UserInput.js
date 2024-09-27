@@ -326,7 +326,7 @@ function UserInput() {
                         {!isDesktopView && (
                             <>
                                 <h2
-                                    className={showPublicGallery ? "gallery__heading" : "gallery__heading--inactive"}
+                                    className={showPublicGallery ? "gallery__heading" : "gallery__heading--inactive-cc"}
                                     onClick={() => toggleComponent('Public Gallery')}>
                                     Community Creations
                                 </h2>
@@ -344,7 +344,9 @@ function UserInput() {
                         <PublicGallery
                             key={publicGalleryKey}
                             inputText={inputText}
-                            handleFetchImage={handleFetchImage} />
+                            handleFetchImage={handleFetchImage}
+                            isDesktopView={isDesktopView}
+                            isTabletView={isTabletView} />
                     )}
                     {!isTabletView && !showPublicGallery && (
                         <BreakingNews
@@ -359,6 +361,8 @@ function UserInput() {
                             handleButtonAnimation={handleButtonAnimation}
                             handleRandomArt={handleRandomArt}
                             isTextareaVisible={isTextareaVisible}
+                            onHeadlineClick={handleHeadlineClick}
+                            onResetFeaturedHeadline={resetFeaturedHeadline}
                         />
                     )}
                 </section>

@@ -22,7 +22,8 @@
 
     // M H4 - Table Header
     h4 {
-        @include typography-style (0.6875rem, 1rem, 400);
+        @include typography-style (0.6875rem, 1.25rem, 400);
+        font-family: "Inter Light";
     }
 
     // M P1 - Body Large

@@ -84,6 +84,7 @@
         cursor: pointer;
         font-family: "Inter bold";
         letter-spacing: -0.005rem;
+        font-size: 0.825rem;
 
         // @include tablet {
             
@@ -91,7 +92,7 @@
 
         @include desktop {
             font-size: 1rem;
-            font-family: "Inter Light";
+            font-family: "Inter Semi Bold";
             padding: 1.75rem;
             margin-bottom: 0;
         }
