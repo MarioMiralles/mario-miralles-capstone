@@ -38,7 +38,7 @@ function NewsInfo({ newsTitle, newsExcerpt, onBackClick, storyUrl, setInputText,
         }
         try {
             setIsLoading(true);
-            const response = await axios.post('https://1dkw3kerpe.execute-api.us-east-2.amazonaws.com/prod/art/prompt', { newsExcerpt });
+            const response = await axios.post('https://1dkw3kerpe.execute-api.us-east-2.amazonaws.com/api/art/prompt', { newsExcerpt });
             setIsLoading(false);
 
             if (response.data && response.data.success) {
