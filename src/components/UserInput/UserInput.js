@@ -95,7 +95,7 @@ function UserInput() {
             setIsLoading(true);
             setGeneratedImage(null); // Clear any existing generated image
             console.log('isLoading set to true');
-            const response = await axios.post('http://localhost:5000/api/art/random-art', { headlineTitle });
+            const response = await axios.post('https://1dkw3kerpe.execute-api.us-east-2.amazonaws.com/prod/art/random-art', { headlineTitle });
             if (response.data.success) {
                 setGenerationId(response.data.generationId);
                 setInputText(response.data.prompt);
@@ -142,7 +142,7 @@ function UserInput() {
         setIsLoading(true);
 
         try {
-            const response = await fetch('http://localhost:5000/api/art/generate', {
+            const response = await fetch('https://1dkw3kerpe.execute-api.us-east-2.amazonaws.com/prod/art/generate', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
