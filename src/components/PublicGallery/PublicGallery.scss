@@ -38,14 +38,15 @@
     }
 
     &__heading {
-        padding: 0.25rem 0.5rem;
+        padding: 0.25rem;
         border: 8px double transparent;
         border-bottom-color: $primary1;
         cursor: pointer;
         font-family: "Lovelo Black";
         font-weight: 400;
-        @include display (row, flex-start, wrap);
+        @include display (row, flex-start, nowrap);
         align-items: stretch;
+        white-space: nowrap;
 
         @include tablet {
             cursor: default;
@@ -78,7 +79,7 @@
 
         &--inactive {
             color: rgba(255, 255, 255, 0.34);
-            padding: 0.25rem 0.5rem;
+            padding: 0.25rem;
             width: 50%;
             text-align: right;
             cursor: pointer;
