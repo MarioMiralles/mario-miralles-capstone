@@ -19,6 +19,7 @@ import FeaturedHeadline from '../FeaturedHeadline/FeaturedHeadline';
 const apiKey = process.env.REACT_APP_API_KEY;
 const wordpressPagesURL = "https://onthedai.com/wp-json/wp/v2/pages";
 const excludePageIds = [873, 2663, 3676, 3700, 25455, 25458, 28770];
+const baseUrl = 'https://i1d75f8txi.execute-api.us-east-2.amazonaws.com/api';
 
 function UserInput() {
     const navigate = useNavigate();
@@ -95,7 +96,7 @@ function UserInput() {
             setIsLoading(true);
             setGeneratedImage(null); // Clear any existing generated image
             console.log('isLoading set to true');
-            const response = await axios.post('https://1dkw3kerpe.execute-api.us-east-2.amazonaws.com/api/art/random-art', { headlineTitle });
+            const response = await axios.post(`${baseUrl}/random-art`, { headlineTitle });
             if (response.data.success) {
                 setGenerationId(response.data.generationId);
                 setInputText(response.data.prompt);
@@ -142,7 +143,7 @@ function UserInput() {
         setIsLoading(true);
 
         try {
-            const response = await fetch('https://1dkw3kerpe.execute-api.us-east-2.amazonaws.com/api/art/generate', {
+            const response = await fetch(`${baseUrl}/generate`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
