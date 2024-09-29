@@ -32,14 +32,16 @@ function PublicGalleryModal({ images, initialIndex = 0, prompt, isOpen, onClose,
     // COPY PROMPT FEATURE //
     //=====================//
     const copyPrompt = (imagePrompt) => {
-        const promptToCopy = imagePrompt;
+        // Extract the 'prompt' property if imagePrompt is an object
+        const promptToCopy = typeof imagePrompt === 'object' ? imagePrompt.prompt : imagePrompt || prompt;
+    
         navigator.clipboard.writeText(promptToCopy)
             .then(() => {
                 setCopied(true);
                 setTimeout(() => setCopied(false), 2000);
             })
             .catch((error) => console.error(error));
-    };    
+    };      
 
     // Function to close the modal
     const closeModal = () => {
