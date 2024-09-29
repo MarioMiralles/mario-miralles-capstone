@@ -32,6 +32,11 @@ function PublicGalleryModal({ images, initialIndex = 0, prompt, isOpen, onClose,
     // COPY PROMPT FEATURE //
     //=====================//
     const copyPrompt = (promptText) => {
+        if (typeof promptText === 'object') {
+            console.error("Expected a string, but got an object:", promptText);
+            return;
+        }
+    
         navigator.clipboard.writeText(promptText)
             .then(() => {
                 setCopied(true);
