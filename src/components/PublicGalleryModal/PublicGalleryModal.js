@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import './PublicGalleryModal.scss';
 import logo from '../../assets/images/OTDLogo.png';
 
-function PublicGalleryModal({ images, initialIndex = 0, prompt, isOpen, onClose, isTabletView, isDesktopView }) {
-    const [copied, setCopied] = useState(false); // State variable to track whether the headline has been copied
+function PublicGalleryModal({ images, initialIndex = 0, isOpen, onClose, isTabletView, isDesktopView }) {
+    const [copied, setCopied] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(initialIndex);
     const [expandedPrompts, setExpandedPrompts] = useState({});
     const selectedImageRef = useRef(null);
@@ -31,19 +31,15 @@ function PublicGalleryModal({ images, initialIndex = 0, prompt, isOpen, onClose,
     //=====================//
     // COPY PROMPT FEATURE //
     //=====================//
-    const copyPrompt = (promptText) => {
-        if (typeof promptText === 'object') {
-            console.error("Expected a string, but got an object:", promptText);
-            return;
-        }
-    
+    const copyPrompt = (promptText, index) => {
+        console.log(promptText, index);
         navigator.clipboard.writeText(promptText)
             .then(() => {
-                setCopied(true);
-                setTimeout(() => setCopied(false), 2000);
+                setCopied((prev) => ({ ...prev, [index]: true }));
+                setTimeout(() => setCopied((prev) => ({ ...prev, [index]: false })), 2000);
             })
             .catch((error) => console.error(error));
-    };       
+    };
 
     // Function to close the modal
     const closeModal = () => {
@@ -77,9 +73,9 @@ function PublicGalleryModal({ images, initialIndex = 0, prompt, isOpen, onClose,
         let maxWords = 10;
         const words = promptText.split(' ');
         const truncatedPrompt = words.slice(0, maxWords).join(' ') + (words.length > maxWords ? ' ' : ' ');
-    
+
         const isExpanded = expandedPrompts[index] || false;
-    
+
         if (isDesktopView) {
             return (
                 <h4 className='pg-modal__prompt-description full'>
@@ -87,7 +83,7 @@ function PublicGalleryModal({ images, initialIndex = 0, prompt, isOpen, onClose,
                 </h4>
             );
         }
-    
+
         return (
             <h4 className={`pg-modal__prompt-description ${isExpanded ? 'full' : 'clamped'}`}>
                 {isExpanded ? promptText : truncatedPrompt}
@@ -99,7 +95,7 @@ function PublicGalleryModal({ images, initialIndex = 0, prompt, isOpen, onClose,
             </h4>
         );
     };
-    
+
     const renderImages = () => {
         if (isTabletView || isDesktopView) {
             return (
@@ -119,8 +115,8 @@ function PublicGalleryModal({ images, initialIndex = 0, prompt, isOpen, onClose,
                             <section className='pg-modal__prompt'>
                                 <div className='pg-modal__prompt-nav'>
                                     <h3 className='pg-modal__prompt-heading'>Prompt:</h3>
-                                    <button className='pg-modal__prompt-nav-copy' onClick={() => copyPrompt(image.prompt.prompt)}>
-                                        {copied ? 'Copied!' : 'Copy Prompt'}
+                                    <button className='pg-modal__prompt-nav-copy' onClick={() => copyPrompt(image.prompt, index)}>
+                                        {copied[index] ? 'Copied!' : 'Copy Prompt'}
                                         <lord-icon
                                             id="news-info__img"
                                             src="https://cdn.lordicon.com/pcllgpqm.json"
@@ -130,14 +126,14 @@ function PublicGalleryModal({ images, initialIndex = 0, prompt, isOpen, onClose,
                                         </lord-icon>
                                     </button>
                                 </div>
-                                {renderPrompt(image.prompt.prompt, index)}
+                                {renderPrompt(image.prompt, index)}
                             </section>
-                        </figure>
+                        </figure >
                     ))}
                 </section>
             );
         }
-    };    
+    };
 
     return (
         <>
@@ -158,7 +154,8 @@ function PublicGalleryModal({ images, initialIndex = 0, prompt, isOpen, onClose,
                                     <section className='pg-modal__prompt'>
                                         <div className='pg-modal__prompt-nav'>
                                             <h3 className='pg-modal__prompt-heading'>Prompt:</h3>
-                                            <button className='pg-modal__prompt-nav-copy' onClick={copyPrompt}>{copied ? 'Copied!' : 'Copy Prompt'}
+                                            <button className='pg-modal__prompt-nav-copy' onClick={() => copyPrompt(images[currentIndex].prompt, currentIndex)}>
+                                                {copied[currentIndex] ? 'Copied!' : 'Copy Prompt'}
                                                 <lord-icon
                                                     id="news-info__img"
                                                     src="https://cdn.lordicon.com/pcllgpqm.json"
