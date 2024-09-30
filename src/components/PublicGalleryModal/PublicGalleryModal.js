@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import './PublicGalleryModal.scss';
-import logo from '../../assets/images/OTDLogo.png';
 
 function PublicGalleryModal({ images, initialIndex = 0, isOpen, onClose, isTabletView, isDesktopView }) {
     const [copied, setCopied] = useState(false);
@@ -32,7 +31,6 @@ function PublicGalleryModal({ images, initialIndex = 0, isOpen, onClose, isTable
     // COPY PROMPT FEATURE //
     //=====================//
     const copyPrompt = (promptText, index) => {
-        console.log(promptText, index);
         navigator.clipboard.writeText(promptText)
             .then(() => {
                 setCopied((prev) => ({ ...prev, [index]: true }));
@@ -101,7 +99,7 @@ function PublicGalleryModal({ images, initialIndex = 0, isOpen, onClose, isTable
             return (
                 <section className='pg-modal__carousel'>
                     <button className='pg-modal__carousel-button pg-modal__carousel-button--left' onClick={prevImage}>⯇</button>
-                    <img src={images[currentIndex].image} className='pg-modal__carousel-image' alt={`Gallery image ${currentIndex + 1}`} />
+                    <img src={images[currentIndex].image} className='pg-modal__carousel-image' alt={`Gallery ${currentIndex + 1}`} />
                     <button className='pg-modal__carousel-button pg-modal__carousel-button--right' onClick={nextImage}>⯈</button>
                 </section>
             );
@@ -111,7 +109,7 @@ function PublicGalleryModal({ images, initialIndex = 0, isOpen, onClose, isTable
                     {images.map((image, index) => (
                         <figure key={index} className={`pg-modal__image-container ${currentIndex === index ? 'selected' : ''}`}
                             ref={currentIndex === index ? selectedImageRef : null} >
-                            <img src={image.image} className='pg-modal__image' alt={`Gallery image ${index + 1}`} />
+                            <img src={image.image} className='pg-modal__image' alt={`Gallery ${index + 1}`} />
                             <section className='pg-modal__prompt'>
                                 <div className='pg-modal__prompt-nav'>
                                     <h3 className='pg-modal__prompt-heading'>Prompt:</h3>

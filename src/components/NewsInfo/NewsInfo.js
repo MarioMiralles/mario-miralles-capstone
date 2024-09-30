@@ -10,7 +10,7 @@ import axios from 'axios'; // Import axios for API calls
 import leftArrow from '../../assets/icons/left-arrow.png';
 
 function NewsInfo({ newsTitle, newsExcerpt, onBackClick, storyUrl, setInputText, setPromptGenerated, handleButtonAnimation, handleRandomArt, isTextareaVisible, onResetFeaturedHeadline }) {
-    const [copied, setCopied] = useState(false); // State variable to track whether the headline has been copied
+    const [copied, setCopied] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
     //=======================//
@@ -42,23 +42,19 @@ function NewsInfo({ newsTitle, newsExcerpt, onBackClick, storyUrl, setInputText,
             setIsLoading(false);
 
             if (response.data && response.data.success) {
-                let promptData;
-                if (typeof response.data.prompt === 'string') {
-                    try {
-                        promptData = JSON.parse(response.data.prompt);
-                    } catch (error) {
-                        console.error('Error parsing prompt data:', error);
-                        return;
-                    }
-                } else {
-                    promptData = response.data.prompt;
-                }
+                const promptData = response.data.prompt;
+                console.log("Received prompt data:", promptData);
 
-                const { style, prompt } = promptData;
-                console.log(style);
-                setInputText(prompt);
-                setPromptGenerated(true);
-                handleButtonAnimation();
+                if (promptData && typeof promptData === 'object') {
+                    const { style, prompt } = promptData;
+                    console.log("Style:", style);
+                    console.log("Prompt:", prompt);
+                    setInputText(prompt);
+                    setPromptGenerated(true);
+                    handleButtonAnimation();
+                } else {
+                    console.error('Unexpected prompt data format:', promptData);
+                }
             } else {
                 console.error('Error from server:', response.data.message);
             }
