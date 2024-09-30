@@ -45,7 +45,12 @@ function NewsInfo({ newsTitle, newsExcerpt, onBackClick, storyUrl, setInputText,
                 const promptData = response.data.prompt;
                 console.log("Received prompt data:", promptData);
 
-                if (promptData && typeof promptData === 'object') {
+                if (typeof promptData === 'string') {
+                    console.log("Prompt:", promptData);
+                    setInputText(promptData);
+                    setPromptGenerated(true);
+                    handleButtonAnimation();
+                } else if (promptData && typeof promptData === 'object') {
                     const { style, prompt } = promptData;
                     console.log("Style:", style);
                     console.log("Prompt:", prompt);
