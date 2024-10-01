@@ -104,7 +104,7 @@
     }
 
     &__pages {
-        @include display(column, center, nowrap);
+        @include display(column, flex-start, nowrap);
         background-color: transparent;
 
         @include desktop {
@@ -169,6 +169,7 @@
             }
 
             @include desktop {
+                min-height: 22rem;
                 height: 100%;
                 max-height: 22rem;
             }

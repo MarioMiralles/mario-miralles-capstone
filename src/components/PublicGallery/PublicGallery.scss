@@ -44,7 +44,7 @@
         border-bottom-color: $primary1;
         // border-top-color: $primary1;
         cursor: pointer;
-        font-family: "Lovelo Black";
+        font-family: "Lovelo";
         font-weight: 400;
         @include display (row, flex-start, nowrap);
         align-items: stretch;
@@ -78,6 +78,7 @@
             // background-color: $secondary1;
             @include display (row, flex-end, wrap);
             align-items: center;
+            font-family: "Lovelo Black";
         }
 
         &--inactive {
@@ -97,7 +98,7 @@
                 width: 50%;
                 text-align: left;
                 cursor: pointer;
-                font-family: "Lovelo Black";
+                font-family: "Lovelo";
                 font-weight: 800;
                 border: 8px double transparent;
                 @include display (row, flex-start, wrap);
@@ -137,7 +138,7 @@
 
         @include tablet {
             max-width: 75rem;
-            padding: 2rem;
+            padding: 0 2rem;
         }
 
         @include desktop {
