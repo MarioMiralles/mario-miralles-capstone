@@ -95,10 +95,12 @@ fieldset {
         resize: none;
         padding: 0.75rem;
         border-radius: 3px;
-        scrollbar-color: black rgb(26, 25, 25);
         background-color: black;
         color: white;
         font-weight: 600;
+        overflow-y: auto;
+        word-break: break-word;
+        scroll-behavior: smooth;
 
         @include tablet {
             height: 15rem;
@@ -107,9 +109,9 @@ fieldset {
 
         @include desktop {
             font-size: 1rem;
-            min-height: 12rem;
-            height: 12rem;
-            max-height: 12rem;
+            min-height: 13rem;
+            height: 13rem;
+            max-height: 13rem;
         }
 
         &:focus {

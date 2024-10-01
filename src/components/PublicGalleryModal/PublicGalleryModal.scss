@@ -20,8 +20,10 @@
     }
 
     @include desktop {
+        position: absolute;
+        top: 0;
         justify-content: flex-start;
-        padding-top: 2rem;
+        padding-top: 3rem;
     }
 
     &__carousel {
@@ -98,7 +100,7 @@
         @include desktop {
             @include display (row, center, nowrap);
             align-items: center;
-            max-width: 64rem;
+            max-width: 66rem;
             max-height: 22.25rem;
         }
     }
@@ -202,7 +204,7 @@
         @include desktop {
             position: static;
             padding: 0.5rem 0;
-            max-width: 64rem;
+            max-width: 66rem;
         }
     }
 
