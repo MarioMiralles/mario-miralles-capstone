@@ -31,7 +31,7 @@ function NewsInfo({ newsTitle, newsExcerpt, onBackClick, storyUrl, setInputText,
     //=============================//
     // HANDLE AI PROMPT FUNCTION //
     //=============================//
-    const handleAIPrompt = async () => {
+    const handleAIPrompt = async (newsExcerpt) => {
         if (!isTextareaVisible) {
             handleButtonAnimation();
             return;
@@ -40,7 +40,6 @@ function NewsInfo({ newsTitle, newsExcerpt, onBackClick, storyUrl, setInputText,
             setIsLoading(true);
             const response = await axios.post('https://i1d75f8txi.execute-api.us-east-2.amazonaws.com/api/prompt', { newsExcerpt });
             setIsLoading(false);
-
             if (response.data && response.data.success) {
                 const promptData = response.data.prompt;
                 console.log("Received prompt data:", promptData);
@@ -121,7 +120,7 @@ function NewsInfo({ newsTitle, newsExcerpt, onBackClick, storyUrl, setInputText,
                 </button>
                 <button className='news-info__button' onClick={() => {
                     if (isTextareaVisible) {
-                        handleAIPrompt();
+                        handleAIPrompt(newsExcerpt);
                     } else {
                         handleButtonAnimation();
                     }

@@ -6,11 +6,14 @@
 import React, { useEffect, useState } from 'react';
 import './FeaturedHeadline.scss';
 
-const FeaturedHeadline = ({ headline, onHeadlineClick, onLabelClick, isSelected }) => {
+const FeaturedHeadline = React.memo(({ headline, onHeadlineClick, onLabelClick, isSelected }) => {
     const [isHeadlineClicked, setIsHeadlineClicked] = useState(false);
 
     useEffect(() => {
-        setIsHeadlineClicked(false);
+        if (headline) {
+            setIsHeadlineClicked(false);
+            console.log('Headline title:', JSON.stringify(headline.title));
+        }
     }, [headline]);
 
     if (!headline) return null;
@@ -29,8 +32,6 @@ const FeaturedHeadline = ({ headline, onHeadlineClick, onLabelClick, isSelected 
         onLabelClick();
         setIsHeadlineClicked(false);
     };
-
-    console.log('Headline title:', JSON.stringify(headline.title));
 
     const title = headline.title?.rendered || headline.title;
 
@@ -54,6 +55,6 @@ const FeaturedHeadline = ({ headline, onHeadlineClick, onLabelClick, isSelected 
             )}
         </div>
     );
-};
+});
 
 export default FeaturedHeadline;

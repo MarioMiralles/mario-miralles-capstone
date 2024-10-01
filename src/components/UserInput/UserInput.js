@@ -86,7 +86,7 @@ function UserInput() {
     //===========================//
     // HANDLE RANDOM ART FUNCTION //
     //===========================//
-    const handleRandomArt = async (headlineTitle) => {
+    const handleRandomArt = async (newsExcerpt) => {
         if (!isTextareaVisible) {
             handleButtonAnimation();
             return;
@@ -94,9 +94,9 @@ function UserInput() {
         try {
             setError(null);
             setIsLoading(true);
-            setGeneratedImage(null); // Clear any existing generated image
+            setGeneratedImage(null);
             console.log('isLoading set to true');
-            const response = await axios.post(`${baseUrl}/random-art`, { headlineTitle });
+            const response = await axios.post(`${baseUrl}/random-art`, { newsExcerpt });
             if (response.data.success) {
                 setGenerationId(response.data.generationId);
                 setInputText(response.data.prompt);
