@@ -15,8 +15,8 @@
 
     @include desktop {
         background-image: linear-gradient(180deg, $secondary1 0%, $background1 85%);
-        min-height: 18.875rem;
-        max-height: 18.875rem;
+        min-height: 22rem;
+        max-height: 22rem;
         box-shadow: 0 -5px 5px $secondary1;
     }
 
