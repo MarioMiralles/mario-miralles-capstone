@@ -5,12 +5,11 @@
 .community-creations {
     position: fixed;
     top: 0;
-    left: 5;
     z-index: 2;
     height: 45rem;
     max-height: 45rem;
     padding: 6rem 0;
-    max-width: 75.5rem;
+    max-width: 64.5rem;
 
     &__close-button {
         background-color: $background2;
