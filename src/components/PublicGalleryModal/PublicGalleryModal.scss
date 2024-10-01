@@ -21,7 +21,7 @@
 
     @include desktop {
         justify-content: flex-start;
-        padding-top: 6rem;
+        padding-top: 2rem;
     }
 
     &__carousel {
@@ -73,7 +73,7 @@
 
             @include desktop {
                 position: fixed;
-                top: 20rem;
+                top: 15rem;
                 left: 8vw;
             }
         }
@@ -83,7 +83,7 @@
 
             @include desktop {
                 position: fixed;
-                top: 20rem;
+                top: 15rem;
                 right: 8vw;
             }
         }
