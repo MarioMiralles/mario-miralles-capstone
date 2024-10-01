@@ -21,7 +21,7 @@
 
     @include desktop {
         justify-content: flex-start;
-        padding-top: 10rem;
+        padding-top: 6rem;
     }
 
     &__carousel {
@@ -54,7 +54,8 @@
         max-width: 62.5rem;
 
         @include desktop {
-            width: 50rem;
+            height: 100%;
+            width: 100%;
         }
     }
 
@@ -73,6 +74,7 @@
             @include desktop {
                 position: fixed;
                 top: 20rem;
+                left: 8vw;
             }
         }
 
@@ -82,10 +84,11 @@
             @include desktop {
                 position: fixed;
                 top: 20rem;
+                right: 8vw;
             }
         }
 
-        
+
     }
 
     &__container {
@@ -95,8 +98,7 @@
         @include desktop {
             @include display (row, center, nowrap);
             align-items: center;
-            padding: 0 2rem;
-            max-width: 75rem;
+            max-width: 64rem;
         }
     }
 
@@ -197,7 +199,9 @@
         }
 
         @include desktop {
-            padding: 0.5rem 2rem;
+            position: static;
+            padding: 0.5rem 0;
+            max-width: 64rem;
         }
     }
 
@@ -216,8 +220,11 @@
         @include desktop {
             padding: 0;
             width: 60%;
-            height: 28.26rem;
+            height: 22.25rem;
             border-bottom-color: black;
+            overflow-y: auto;
+            word-break: break-word;
+            scroll-behavior: smooth;
         }
 
         &-description {
@@ -225,7 +232,7 @@
             background-color: $background3;
 
             @include desktop {
-                padding: 0 1rem;
+                padding: 0 1rem 1rem 1rem;
                 max-height: 25rem;
                 overflow-y: auto;
                 word-break: break-word;

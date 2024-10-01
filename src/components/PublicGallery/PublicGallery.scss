@@ -42,6 +42,7 @@
         padding: 0.25rem;
         border: 8px double transparent;
         border-bottom-color: $primary1;
+        // border-top-color: $primary1;
         cursor: pointer;
         font-family: "Lovelo Black";
         font-weight: 400;
@@ -72,8 +73,9 @@
 
         &--breaking-news {
             border: 8px double transparent;
-            border-bottom-color: black;
-            background-color: $secondary1;
+            border-bottom-color: $secondary1;
+            // border-top-color: $secondary1;
+            // background-color: $secondary1;
             @include display (row, flex-end, wrap);
             align-items: center;
         }
@@ -91,7 +93,7 @@
             &-cc {
                 flex-grow: 1;
                 color: rgba(255, 255, 255, 0.34);
-                padding: 0.25rem 0.5rem;
+                padding: 0.25rem;
                 width: 50%;
                 text-align: left;
                 cursor: pointer;

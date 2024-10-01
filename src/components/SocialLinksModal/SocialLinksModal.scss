@@ -101,7 +101,7 @@
     &__nav {
         @include display (row, space-between, nowrap);
         align-items: center;
-        padding: 0.5rem 1rem 0.5rem 1.5rem;
+        padding: 0.5rem 1rem;
 
         @include tablet {
             border: 3px double transparent;
