@@ -159,6 +159,17 @@
     width: 10rem;
     height: 10rem;
     background-color: $background2;
+
+    @include tablet {
+        position: absolute;
+        top: 15vw;
+        left: 20vw;
+    }
+
+    @include desktop {
+        top: 13%;
+        left: 28%;
+    }
 }
 
 #news-info__img {
