@@ -1,5 +1,7 @@
 ![](./src/assets/images/Logo_GIF.gif)
 
+# This project has been decomissioned as of December 31st, 2024. OTDNews has taken a new direction and will discontinue the AI Art Generator feature. It may be re-implemented in the future, sorry for the incovenience at this time.
+
 Deployed at <a href="https://otdnews.netlify.app">https://otdnews.netlify.app</a>
 
 ## Overview
